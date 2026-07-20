@@ -1,0 +1,14 @@
+# secrets — NEVER commit
+.env
+# heavy raw data & caches (keep locally, not in git)
+raw_data/
+cache/
+# python
+__pycache__/
+*.pyc
+fyp_env/
+.venv/
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/

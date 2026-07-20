@@ -1,0 +1,21 @@
+{
+  "method": "national-anchored (Option A): KV = national x kv_share; dealer state labels never used",
+  "national_ev_total_2020_2026mar": 97951,
+  "dealer_records_rakan_niaga": 72502,
+  "genuine_records": 25449,
+  "genuine_kv": {
+    "W.P. Kuala Lumpur": 12378,
+    "Selangor_whole_state": 4183,
+    "W.P. Putrajaya": 1
+  },
+  "selangor_kv5_population_factor_2023": 0.8647,
+  "kv_share_central_data_driven": 0.6286,
+  "kv_share_sensitivity": {
+    "low": 0.55,
+    "high": 0.7
+  },
+  "ir_cited_assumption_for_reference": 0.6,
+  "note_2026": "partial year through 2026-03",
+  "allocation_weights_primary": "population 2023",
+  "allocation_weights_sensitivity": "population x relative median income 2022"
+}

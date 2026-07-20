@@ -1,0 +1,536 @@
+station_id,station_name,operator,latitude,longitude,address,town,postcode,status,total_ports,max_power_kw,district,state,source
+459549,[Restricted] RESIDENSI SUNGAI LONG (Residential Condo),ChargeSini,3.04404,101.803787,Sungai Long Residence,Kajang,43000.0,Operational,2.0,22.0,Hulu Langat,Selangor,OCM
+459544,[Restricted] IRIS RESIDENCES (Residential Condo),ChargeSini,3.04221,101.807518,Iris Residence,Kajang,43000.0,Operational,3.0,22.0,Hulu Langat,Selangor,OCM
+459575,[Restricted] GREEN RESIDENCE (Residential Condo),ChargeSini,3.072992,101.755684,Jalan Sayang 1,Cheras,43200.0,Operational,6.0,22.0,Hulu Langat,Selangor,OCM
+459574,[Restricted] IMPERIAL RESIDENCE (Residential Condo),ChargeSini,3.072718,101.759346,Imperial Residence,Cheras,43200.0,Operational,2.0,22.0,Hulu Langat,Selangor,OCM
+459576,[Restricted] YOU CITY-YOU VISTA (Residential Condo),ChargeSini,3.074682,101.762955,You City - You Vista,Cheras,43200.0,Operational,5.0,22.0,Hulu Langat,Selangor,OCM
+459559,BMC MALL (Shopping Mall),ChargeSini,3.054651,101.786812,BMC Mall,Cheras,43200.0,Operational,2.0,40.0,Hulu Langat,Selangor,OCM
+459557,[Restricted] EMERALD RESIDENCES (Residential Condo),ChargeSini,3.052281,101.794403,Emerald Residence,Cheras,43200.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+459552,[Restricted] THE NETIZEN (Residential Condo),ChargeSini,3.049329,101.772591,The Netizen Cheras Homestay,Cheras,43200.0,Operational,2.0,60.0,Hulu Langat,Selangor,OCM
+459543,[Restricted] PARKLAND RESIDENCES (Residential Condo),ChargeSini,3.041734,101.772774,"10, Jalan Seksyen 2/2",Cheras,43200.0,Operational,2.0,22.0,Hulu Langat,Selangor,OCM
+459553,[Restricted] VINA RESIDENCY (Residential Condo),ChargeSini,3.049642,101.753036,Vina Residency,Cheras,43200.0,Operational,2.0,22.0,Hulu Langat,Selangor,OCM
+459562,[Restricted] CASA GREEN CONDOMINIUM (TOWER A) (Residential Condo),ChargeSini,3.057322,101.761642,Casa Green Condominium - Cheras,Cheras,43200.0,Operational,3.0,22.0,Hulu Langat,Selangor,OCM
+484840,[Public] SAVILLE @ CHERAS (Residential Condo),Unknown,3.0623,101.773537,Saville @ Cheras Service Apartment,Cheras,43200.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+459573,[Restricted] CHERAS HEIGHTS CONDOMINIUM (Residential Condo),ChargeSini,3.068582,101.747993,"no 2, Jalan Bukit Cheras 18",Kuala Lumpur,56000.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459546,[Restricted] CLOUD TREE RESIDENCE A (Residential Condo),ChargeSini,3.04292,101.73111,CloudTree Residence,Seri Kembangan,43300.0,Operational,3.0,22.0,Hulu Langat,Selangor,OCM
+459548,[Restricted] CLOUD TREE RESIDENCE C (Residential Condo),ChargeSini,3.043346,101.733009,CloudTree Residence,Seri Kembangan,43300.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+459589,[Restricted] WIDURI IMPIAN CONDOMINIUM (Residential Condo),ChargeSini,3.084177,101.713982,Widuri Impian Condominium,Desa Petaling,57100.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459596,[Restricted] THE HOLMES 2 CONDOMINIUM (Residential Condo),ChargeSini,3.088864,101.720764,The Holmes 2,Jln Tun Razak,56000.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459577,[Restricted] ALTITUDE 236 (Residential Condo),ChargeSini,3.076023,101.735252,"9, Persiaran Alam Damai",Cheras,56000.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459579,[Restricted] RIANA SOUTH CONDOMINIUM (Residential Condo),ChargeSini,3.076233,101.732903,Riana South @ Bukit Manda'rina - IJM Land,Kuala Lumpur,56000.0,Operational,2.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459585,IKON CONNAUGHT MALL (Shopping Mall),ChargeSini,3.081166,101.731636,IKON Connaught,Cheras,56000.0,Operational,2.0,47.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459605,PROTON E.MAS CHERAS- ABLE MOBILITY SDN BHD (Car Showroom),ChargeSini,3.102519,101.734657,Proton e.MAS Cheras - Able Mobility Sdn Bhd,Willayah Persekutuan,56100.0,Operational,2.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459620,[Restricted] SUNWAY VELOCITY TWO (Residential Condo),ChargeSini,3.129367,101.725037,Sunway Velocity TWO TOWER C&D,Kuala Lumpur,55100.0,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459615,[Restricted] TRION 2 @ KL (Residential Condo),ChargeSini,3.12525,101.712776,Trion 2 @ KL,Kuala Lumpur,55200.0,Operational,3.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459629,PLAZA BERJAYA (Shopping Mall),ChargeSini,3.143053,101.709023,Plaza Berjaya,Jln Raja Laut,55100.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459630,MELIA HOTEL (Hotel),ChargeSini,3.143214,101.709831,Meliá Kuala Lumpur,Kuala Lumpur,51000.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+279460,Pavilion KL,Shell Recharge (Malaysia),3.1506265487112097,101.7076360551264,"Pavilion Kuala Lumpur, 168 Jalan Bukit Bintang",,55100.0,Operational,2.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459637,WISMA CHUANG (Commercial),ChargeSini,3.149054,101.711357,Wisma Chuang,Kuala Lumpur,50250.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459634,JOURNAL HOTEL BUKIT BINTANG (Hotel),ChargeSini,3.148212,101.710533,The Kuala Lumpur Journal Hotel,Jalan Tun Ismail,50200.0,Operational,2.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+295953,Pavilion Hotel,Shell Recharge (Malaysia),3.1484076738907305,101.71524155835608,"170, Jln Bukit Bintang, Bukit Bintang",Kuala Lumpur,55100.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+460902,[Restricted] TRX RESIDENCES TOWER B (Residential Condo),Unknown,3.143634,101.719177,TRX Residences @ TRX,Kuala Lumpur,55188.0,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459631,[Restricted] THE HORIZON RESIDENCES (Residential Condo),ChargeSini,3.145089,101.722572,The Horizon Residences KL,Jln Tun Razak,55000.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+259247,BYD Trec Kuala Lumpur (TNBX),Go ToU,3.1411330863188027,101.72109755703808,Jln Tun Razak,"Kuala Lumpur,",55100.0,Operational,1.0,30.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+274440,ParkEasy @ MyTOWN Shopping Centre,(Unknown Operator),3.134935653344625,101.72291988173652,"Level 3, No.6, Jalan Cochrane, Seksyen 90",,55100.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459628,[Restricted] RESIDENSI PANDANMAS 2 (Residential Condo),ChargeSini,3.140326,101.737648,Residensi Pandanmas 2,Kampung Pandan,55100.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459635,[Restricted] SENTRIO PANDAN CONDOMINIUM (OUTDOOR) (Residential Condo),ChargeSini,3.148235,101.737785,Sentrio Pandan,Kuala Lumpur,55100.0,Operational,2.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459617,SHAMELIN STAR RESIDENCE (Residential Condo),ChargeSini,3.126423,101.737045,Shamelin Star Residences Rigel,Kuala Lumpur,56100.0,Operational,2.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459614,[Restricted] PARC 3 RESIDENCE (Residential Condo),ChargeSini,3.121749,101.730713,"5, Jalan Pudu Perdana",Kuala Lumpur,56100.0,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459611,[Restricted] VILA VISTA CHERAS CONDOMINIUM (Residential Condo),ChargeSini,3.114405,101.730003,Vila Vista Condominium,Kuala Lumpur,56100.0,Operational,3.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459674,[Restricted] PANGSAPURI ONE JELATEK (Residential Condo),ChargeSini,3.173146,101.734619,One Jelatek Condominium,Klang,54200.0,Operational,2.0,22.0,Gombak,Selangor,OCM
+459653,[Restricted] GCB COURT (Residential Condo),ChargeSini,3.160379,101.748093,GCB Court Condominium,Kuala Lumpur,55000.0,Operational,2.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459641,[Restricted] D'SURIA CONDOMINIUM (Residential Condo),ChargeSini,3.151467,101.747108,D'Suria Condominium - Ampang,Ampang,68000.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+459654,[Restricted] NOVO AMPANG (Residential Condo),ChargeSini,3.160543,101.739365,NOVO Ampang,Kuala Lumpur,55000.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459652,GREAT EASTERN MALL OUTDOOR (Shopping Mall),ChargeSini,3.160346,101.736938,Great Eastern Mall,Kuala Lumpur,55000.0,Operational,2.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459655,GREAT EASTERN MALL (LEVEL P1) (Shopping Mall),ChargeSini,3.16059,101.736671,Great Eastern Mall,Kuala Lumpur,55000.0,Operational,2.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459649,[Restricted] SERI HENING RESIDENCE (Residential Condo),ChargeSini,3.158469,101.737213,"28, Jalan Ampang Hilir",Kuala Lumpur,55000.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+484846,[Restricted] MUTIARA UPPER EAST @ DESA PANDAN (BLOCK A) (Residential Condo),Unknown,3.15241,101.738159,"39, Jln 1/76, Desa Pandan",Desa Pandan,55100.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+484845,[Restricted] MUTIARA UPPER EAST @ DESA PANDAN (BLOCK C1) (Residential Condo),Unknown,3.151889,101.738106,Mutiara Upper East @Desa Pandan,Kuala Lumpur,55100.0,Operational,3.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459643,[Restricted] DAMAI SURIA CONDOMINIUM (Residential Condo),ChargeSini,3.154796,101.730087,Damai Suria,Jln Ampang,55000.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459668,[Restricted] CHYMES GURNEY RESIDENCY (Residential Condo),ChargeSini,3.169267,101.726036,Chymes Gurney Residency,Keramat,54000.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459656,[Restricted] 202 DESA CAHAYA (Residential Condo),ChargeSini,3.161202,101.725151,202DC Desa Cahaya,Keramat,55000.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459642,[Restricted] THE MANOR KL (Residential Condo),ChargeSini,3.152432,101.719872,The Manor,Jln Tun Razak,50450.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459651,INTERCONTINENTAL HOTEL KL (Hotel),ChargeSini,3.159514,101.717857,"InterContinental Kuala Lumpur, an IHG Hotel",KLCC,50450.0,Operational,2.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+299195,Wisma MCA Jalan Ampang by DC Handal,DC Handal,3.1599740630678923,101.71657119717622,"163, Jalan Ampang",Kuala Lumpur,50450.0,Operational,1.0,150.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459648,SHOPPES AT FOUR SEASON PLACE (Commercial),ChargeSini,3.158184,101.713768,"145, Jln Ampang",Kuala Lumpur,50088.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+210875,GENTARI @ PANTAI HOSPITAL KL ,Jom Charge,3.1538604000008377,101.71300489999624,"8, Jalan Bukit Pantai,",Kuala Lumpur,59100.0,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+210871,GENTARI @ KUALA LUMPUR CONVENTION CENTRE,Jom Charge,3.154223516420899,101.71278508646026,"Kuala Lumpur Convention Centre, Kuala Lumpur City Centre,",Kuala Lumpur,50088.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+57460,Persiaran Petronas,Shell Recharge Solutions (BE),3.1559369,101.7117102,Persiaran Petronas,Kuala Lumpur,50088.0,Operational,1.0,37.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+270836,Menara Hap Seng 2,Shell Recharge (Malaysia),3.1518490314483643,101.70696258544922,Menara Hap Seng 2 LEVEL BASEMENT 1 PARKING, Kuala Lumpur,50250.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+210685,GENTARI @ SURIA KLCC,Jom Charge,3.158277,101.712381,"Lot Lot 241, Jalan Pinang",Kuala Lumpur,50450.0,Operational,2.0,30.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459657,MENARA TOKIO MARINE (Commercial),ChargeSini,3.16296,101.717049,Tokio Marine Life Insurance Malaysia Bhd.,Kuala Lumpur,50400.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459671,[Restricted] EXPRESSIONZ PROFESSIONAL SUITES (Residential Condo),ChargeSini,3.171628,101.712433,Expressionz Professional Suites by EXSIM,Kuala Lumpur,50400.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459670,GURNEY MALL (Shopping Mall),ChargeSini,3.171486,101.72126,Gurney Mall,Keramat,54000.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459692,[Restricted] BENNINGTON RESIDENCES (Residential Condo),ChargeSini,3.194103,101.714622,"1, Jalan Arena 1",Kuala Lumpur,53200.0,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+485140,[Restricted] SUNWAY ARTESSA RESIDENCES (Residential Condo),Unknown,3.195318,101.737114,Sunway Artessa Residence,Kuala Lumpur,53300.0,Operational,5.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459696,[Restricted] QUINN RESIDENCE (Residential Condo),Unknown,3.199034,101.738152,Quinn Residence Official,Kuala Lumpur,53300.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459693,[Restricted] SERI RIANA RESIDENCES (Residential Condo),Unknown,3.196209,101.739929,Seri Riana Residence,Kuala Lumpur,53300.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+486081,[Restricted] SUNWAY ARTESSA RESIDENCE (Residential Condo),Unknown,3.195273,101.736145,Sunway Artessa Residence,Kuala Lumpur,53300.0,Operational,5.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459689,[Restricted] FERA RESIDENCE (Residential Condo),ChargeSini,3.191956,101.737511,Fera Residence,Kuala Lumpur,53300.0,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459687,[Restricted] LEXA RESIDENCE (Residential Condo),ChargeSini,3.191246,101.736626,Lexa Residence,Kuala Lumpur,53300.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459698,SMILE HOTEL WANGSA MAJU (Hotel),ChargeSini,3.20335,101.736328,"No.36&37, jalan metro wangsa,",Setiawangsa,53300.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459700,[Restricted] GAYA APARTMENT (Residential Condo),ChargeSini,3.212245,101.745728,Gaya Apartment Block 6,Kuala Lumpur,53100.0,Operational,2.0,60.0,Gombak,Selangor,OCM
+459702,[Restricted] NADAYU 62 (Residential Condo),ChargeSini,3.221433,101.75145,"8a, Jalan Melawati",Kuala Lumpur,53100.0,Operational,2.0,40.0,Gombak,Selangor,OCM
+210070,D One Motorsports Sdn Bhd,(Unknown Operator),3.24099245612112,101.71863601816348,"Lot 17972, Jln Gombak Bt 7 1/4 53100, Gombak, Selangor, Malaysia",Gombak,53100.0,Operational,2.0,40.0,Gombak,Selangor,OCM
+459703,[Restricted] NADAYU 63 (Residential Condo),ChargeSini,3.22253,101.752602,Nadayu 63,Kuala Lumpur,53100.0,Operational,4.0,22.0,Gombak,Selangor,OCM
+474266,AEON Mall Rawang,chargeEV (MY),3.3160697420560723,101.5366024310074,Kompleks Beli Belah AEON Anggun Rawang,Rawang,48000.0,Operational,3.0,240.0,Gombak,Selangor,OCM
+305530,Gamuda Gardens (200kW DC x 4),Gentari Go (MY),3.283483660240023,101.54025882934668,"Waterfront Village, ",Rawang,48050.0,Operational,1.0,200.0,Gombak,Selangor,OCM
+474265,Lotus's Rawang,Jom Charge,3.302155389564064,101.5979721638696,Jalan Rawan,Rawang,48000.0,Operational,2.0,50.0,Gombak,Selangor,OCM
+474264,Petronas Sg Buloh Layby,Jom Charge,3.2247062119811005,101.57709930360306,Hentian Sungai Buloh Arah Selatan,,47000.0,Operational,1.0,180.0,Gombak,Selangor,OCM
+459694,[Restricted] SPHERE DAMANSARA (Residential Condo),ChargeSini,3.197164,101.599075,SPHERE Damansara,Petaling Jaya,47830.0,Operational,2.0,22.0,Petaling,Selangor,OCM
+479661,DA Square,Shell Recharge (Malaysia),3.191804885864258,101.61730194091795,"6, PERSIARAN PERDANA,",Kuala Lumpur,52200.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+479659,Ativo Plaza,Shell Recharge (Malaysia),3.1950082778930664,101.6168212890625,"PERSIARAN PERDANA,",Kuala Lumpur,52200.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+459690,[Restricted] DUA MENJALARA KONDOMINIUM (Residential Condo),ChargeSini,3.192754,101.635666,Dua Menjalara Condominium,Jinjang Kepong,52200.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459691,SINCHOIWAH RESTAURANT SDN BHD (Restaurant),ChargeSini,3.194077,101.634285,Sinchoiwah Restaurant,Jinjang Kepong,52200.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459688,[Restricted] UNITED POINT RESIDENCES (Residential Condo),ChargeSini,3.191765,101.653366,JALAN LANG EMAS,Segambut,51200.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+484850,[Restricted] FORTUNE CENTRA RESIDENCES (Residential Condo),Unknown,3.215377,101.643318,Fortune Centra Residence,Kuala Lumpur,52100.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+189601,Kiara Bay Sales Gallery,chargEV,3.2255662859760434,101.65056532499057,Off Middle Ring Road 2,Kiara Bay,52000.0,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+210972,GENTARI @ THE BEAT KIARA BAY,Jom Charge,3.226195265,101.6503368,"Kiara Bay, Karya Bayu Metropolitan, 51, Persiaran Putra Bayu, ",Kuala Lumpur,52100.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+470421,EVPower - 168 Park Mall Selayang,EVPower (MY),3.2480458119633084,101.64911251194712,"UG Parking, 168 Park Mall",Batu Caves,68100.0,Operational,2.0,60.0,Gombak,Selangor,OCM
+459704,SELAYANG CAPITOL KOMPLEX (Shopping Mall),ChargeSini,3.243213,101.649673,Selayang Capitol Kompleks,Batu Caves,68100.0,Operational,2.0,40.0,Gombak,Selangor,OCM
+459705,"[Restricted] RAINTREE BATU CAVES, SELANGOR (Residential Condo)",ChargeSini,3.245793,101.68248,Taman Raintree,Batu Caves,68100.0,Operational,3.0,22.0,Gombak,Selangor,OCM
+459699,[Restricted] LAKEVILLE RESIDENCE TAMAN WAHYU (Residential Condo),ChargeSini,3.209003,101.668945,"68, Jalan Sibu",Jalan Ipoh,68100.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+299196,Bamboo Hills DUKE by DC Handal,DC Handal,3.1940416424604336,101.67292912732864,"Bamboo Hills, Off Lebuhraya Duta",Kuala Lumpur,51200.0,Operational,1.0,200.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459697,[Restricted] 1 SENTUL CONDOMINIUM (Residential Condo),ChargeSini,3.200006,101.689575,1 Sentul Condominium,Sentul,51100.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459686,[Restricted] THE REACH @ TITIWANGSA (Residential Condo),ChargeSini,3.18707,101.704689,The Reach @ Titiwangsa,Setapak,53200.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459685,[Restricted] HERITAGE CONDOMINIUM (Residential Condo),ChargeSini,3.186329,101.700851,Heritage Condominium,Setapak,53000.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459682,[Restricted] THE FENNEL SENTUL EAST (Residential Condo),ChargeSini,3.182122,101.693649,The Fennel Sentul East,Sentul,51000.0,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459650,[Restricted] THE FACE SUITES (Residential Condo),ChargeSini,3.158533,101.703842,THE FACE Suites,Kuala Lumpur,50250.0,Operational,6.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459644,CONCORDE HOTEL (Hotel),ChargeSini,3.155288,101.705879,Concorde Hotel Kuala Lumpur,KLCC,50250.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459646,[PARTNER EVHUB] PERTAMA COMPLEX (Shopping Mall),ChargeSini,3.157289,101.695572,Pertama Complex | First Shopping Center,Jalan Duta,50100.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459645,SOGO KL (Shopping Mall),ChargeSini,3.156078,101.69529,Sogo,Kuala Lumpur,50100.0,Operational,2.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459673,[Restricted] HARTAMAS REGENCY 2 (Residential Condo),ChargeSini,3.173123,101.66275,Hartamas Regency 2,Kuala Lumpur,50480.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459680,[Restricted] ICON RESIDENCE MONT KIARA (Residential Condo),ChargeSini,3.179405,101.663658,"20, Persiaran Dutamas",Cheras,50480.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+300078,Menara MATRADE West Wing by DC Handal,DC Handal,3.177577,101.666105,"West Wing Menara MATRADE, ","Kuala Lumpur,",50480.0,Operational,2.0,200.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+306732,United Point Mall Segambut by DC Handal,DC Handal,3.1907406783919754,101.6533966831288,Jalan 1/38C,Kuala Lumpur,52000.0,Operational,1.0,120.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459683,[Restricted] ANJALI NORTH KIARA (Residential Condo),ChargeSini,3.183415,101.652992,Anjali North Kiara,Mont Kiara,51200.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459676,[Restricted] CONCERTO NORTH KIARA CONDOMINIUM BLOCK B (Residential Condo),ChargeSini,3.177837,101.658791,Concerto North Kiara,Mont Kiara,51200.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459679,[Restricted] CONCERTO NORTH KIARA CONDOMINIUM GROUND PARKING (Residential Condo),ChargeSini,3.178471,101.658821,Concerto North Kiara,Segambut,51200.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459672,[Restricted] KIARAVILLE CONDOMINIUM (Residential Condo),ChargeSini,3.172485,101.659172,Kiaraville,Kuala Lumpur,50480.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+484848,[Restricted] TIFFANI KIARA (Residential Condo),Unknown,3.173578,101.658791,"Mont Kiara, 50480 Kuala Lumpur, Federal Territory of Kuala Lumpur",Mont Kiara,50480.0,Operational,5.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459675,[Restricted] WEDGEWOOD RESIDENCES (Residential Condo),ChargeSini,3.174555,101.657722,Wedgewood Residences,Mont Kiara,50480.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459678,[Restricted] RESIDENSI HARMONI 2 (Residential Condo),ChargeSini,3.178458,101.644836,Residensi Harmoni 2,Segambut,51200.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459677,[Restricted] VILLA ORKID CONDOMINIUM (Residential Condo),ChargeSini,3.178057,101.644402,Villa Orkid,Segambut,51200.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479658,Plaza Arkadia,Shell Recharge (Malaysia),3.185770273208618,101.63587951660156,"JALAN RESIDEN 3, DESA PARKCITY",Kuala Lumpur,52200.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459684,[Restricted] BREEZEWAY RESIDENCES (Residential Condo),ChargeSini,3.185125,101.634544,"12, Persiaran Residen",Pandan Perdana,52200.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+272730,The Waterfront,Shell Recharge (Malaysia),3.186992993439432,101.62775212846486,"5, Persiaran Residen",Kuala Lumpur,52200.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+189600,Petronas Penchala Link KL-Bound,chargEV,3.16462824487445,101.6206206353678,Petronas,Kampung Palimbayan Indah,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+189599,"Hamza Motors, The Nizra Building",chargEV,3.1614231844645246,101.62373989272623,No. 8 Jalan Seri Penchala,Wilayah Persekutuan,60000.0,Operational,3.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459663,[Restricted] KIARAMAS SUTERA CONDO (Residential Condo),ChargeSini,3.167461,101.643799,Kiaramas Sutera,Mont Kiara,50480.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459666,[Restricted] CASA KIARA 2 CONDOMINIUM (Residential Condo),ChargeSini,3.168871,101.646622,Casa Kiara 2,Mont Kiara,50480.0,Operational,5.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459669,[Restricted] SUNWAY MONT RESIDENCE (Residential Condo),ChargeSini,3.169577,101.647079,Sunway Mont Residences,Mont Kiara,50480.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459665,[Restricted] KIARA DESIGNERS SUITES (Residential Condo),ChargeSini,3.16838,101.647987,Kiara Designer Suites - Serviced Condominium,Mont Kiara,50480.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459659,[Restricted] LANAI KIARA CONDOMINIUM (Residential Condo),ChargeSini,3.165365,101.648788,Lanai Kiara Condominium,Mont Kiara,50480.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459661,[Restricted] I-ZEN KIARA 2 (Residential Condo),ChargeSini,3.165764,101.654022,I-zen @ Kiara 2,Kuala Lumpur,50480.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479665,1 Mont Kiara,Shell Recharge (Malaysia),3.165937185287476,101.6531982421875,"8, JALAN KIARA, MONT KIARA",Kuala Lumpur,50480.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+484847,[Public] SUNWAY 163 MALL (Shopping Mall),Unknown,3.166467,101.652313,"8, Jalan Kiara, Mont Kiara",Kuala Lumpur,,Operational,2.0,80.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459660,[Restricted] FLORA MURNI CONDOMINIUM (Residential Condo),ChargeSini,3.165466,101.650841,Flora Murni Condominium Mont Kiara,Mont Kiara,50480.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459664,[Restricted] RESIDENSI 22 MONT KIARA (Residential Condo),ChargeSini,3.167785,101.650536,"Residensi 22 Mont’Kiara, UEM Sunrise",Kuala Lumpur,50480.0,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479664,163 Retail Park,Shell Recharge (Malaysia),3.1669437885284424,101.65172576904295,"8, JALAN KIARA, MONT KIARA",Kuala Lumpur,50480.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+460903,[Restricted] ARCORIS RESIDENCES (Residential Condo),Unknown,3.16833,101.651833,Arcoris Residences,Kuala Lumpur,50480.0,Operational,2.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459667,[Restricted] LAMAN SURIA (Residential Condo),ChargeSini,3.169065,101.650833,Laman Suria,Mont Kiara,50480.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459632,[Restricted] DC RESIDENSI (Residential Condo),ChargeSini,3.146692,101.660881,DC Residensi,Kuala Lumpur,50490.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479671,Kuala Lumpur Golf and Country Club,Shell Recharge (Malaysia),3.1395366191864014,101.6402359008789,"West Member Parking,10, Jalan 1/70 D",Kuala Lumpur,60000.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+472748,The Starling Mall,chargeEV (MY),3.1358551433111472,101.62321579425316,Jalan SS 21/37,Petaling Jaya,47400.0,Operational,1.0,400.0,Petaling,Selangor,OCM
+459619,SEVENTEEN MALL (Shopping Mall),ChargeSini,3.128598,101.634811,Seventeen Mall,Petaling Jaya,46400.0,Operational,2.0,60.0,Petaling,Selangor,OCM
+479660,Atria Shopping Gallery,Shell Recharge (Malaysia),3.127364158630371,101.61653900146484,"JALAN 14/17, SEKSYEN 14,",Petaling Jaya,47400.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+62529,Jalan 13/6,Shell Recharge Solutions (BE),3.11772396783834,101.63547043055,Jalan 13/6,Petaling Jaya,46000.0,Operational,2.0,3.7,Petaling,Selangor,OCM
+459612,COLUMBIA ASIA HOSPITAL PETALING JAYA (Medical),ChargeSini,3.118356,101.637642,Columbia Asia Hospital - Petaling Jaya,Petaling Jaya,46200.0,Operational,3.0,30.0,Petaling,Selangor,OCM
+299471,Kelab Golf Perkhidmatan Awam (KGPA),(Unknown Operator),3.1302279855423905,101.64358293605466,Bukit Kiara,Petaling Jaya,,Operational,1.0,7.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+461219,South View Serviced Apartments Residential Charger,(Unknown Operator),3.1132752250227185,101.66456668698912,Jalan Kerinchi Kiri 2,,59200.0,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459613,[Restricted] SETIA SKY SEPUTEH (Residential Condo),ChargeSini,3.12028,101.681557,Setia Sky Seputeh,Kuala Lumpur,58000.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459616,[Restricted] NADI BANGSAR SERVICED RESIDENCE (Residential Condo),ChargeSini,3.125863,101.67514,Nadi Bangsar Serviced Residence,Bangsar,59100.0,Operational,2.0,80.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+290709,Nadi Bangsar,ChargeSini,3.126061587784136,101.67585923754729,Jalan Tandok,,59000.0,Operational,1.0,80.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479674,Dataran Maybank,Shell Recharge (Malaysia),3.127006769180298,101.6774673461914,"Dataran Maybank, Level 8, MaybanLife Tower,",Bangsar,59000.0,Operational,1.0,7.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459622,[Restricted] SUASANA SENTRAL LOFT (Residential Condo),ChargeSini,3.131384,101.683586,"5, Jalan Stesen Sentral",Jln Tun Razak,50470.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+272736,ParkEasy @ DC Mall,ParkEasy,3.145769851114061,101.66245708173652,"6, Jalan Damanlela, Bukit Damansara",Kuala Lumpur,50490.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479682,Pavilion Damansara Heights,Shell Recharge (Malaysia),3.1482861042022705,101.66291046142578,"3, JALAN DAMANLELA",Kuala Lumpur,50490.0,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+299294,Wisma UOA Damansara II by DC Handal [200 kW Dynamic DC],DC Handal,3.1515669104173014,101.66647547942875,"Wisma UOA Damansara II, 50, Jalan Dungun, ",Kuala Lumpur,50490.0,Operational,1.0,200.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459639,[Restricted] 10 SEMANTAN SUITES (Residential Condo),ChargeSini,3.150833,101.670433,10 Semantan Service Suite,Bukit Damansara A,50490.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459640,10 SEMANTAN SUITES  (EAST WING) (Residential Condo),ChargeSini,3.151314,101.671043,10 Semantan - East Wing Lobby,Bukit Damansara A,50490.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459624,[Restricted] Q SENTRAL (Commercial),ChargeSini,3.136605,101.687714,Q Sentral,Kuala Lumpur,50470.0,Operational,3.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+272733,Shell Recharge St. Regis KL,Unknown,3.136857095624805,101.68850911065648,"No 6, Jalan Stesen Sentral 2 ",Kuala Lumpur,50470.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459633,[Restricted] REGENCY TOWER (Residential Condo),ChargeSini,3.147179,101.704971,Regency Tower,Jln Ampang,50200.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+62530,Jalan Pudu,Shell Recharge Solutions (BE),3.14419108835014,101.705908981229,Jalan Pudu,Sentul,50150.0,Operational,2.0,3.7,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459626,MENARA TAKAFUL (AC) (Commercial),ChargeSini,3.139236,101.696205,Takaful Malaysia,Kg Attap,50000.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459625,[Restricted] OPUS RESIDENCES (Residential Condo),ChargeSini,3.137392,101.699799,Opus Residences,Kg Attap,50460.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459623,[Restricted] SUNWAY BELFIELD TOWER B (Residential Condo),Unknown,3.135861,101.696404,Residensi Sunway Belfield,Kuala Lumpur,50460.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459602,[Restricted] THE HIPSTER TAMAN DESA (Residential Condo),Unknown,3.098231,101.69014,"The Hipster, Taman Desa",Kuala Lumpur,58100.0,Operational,2.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459599,[Restricted] ABADI RIA CONDOMINIUM (Residential Condo),ChargeSini,3.095673,101.684349,Abadi Ria Condominium (Kondominium Abadi Ria),Cheras,58100.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459604,[Restricted] DANAU PERMAI CONDOMINIUM (Residential Condo),ChargeSini,3.101011,101.68837,Danau Permai Condominium,Kuala Lumpur,58100.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479662,Faber Towers,Shell Recharge (Malaysia),3.101876735687256,101.68470001220705,"TAMAN DESA,",Kuala Lumpur,58100.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459606,[Restricted] PAPILLON DESAHILL CONDOMINIUM (Residential Condo),ChargeSini,3.102913,101.679718,Papillon Desahill Condominium,Kuala Lumpur,58100.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459608,[Restricted] VIVO RESIDENCE @ 9 SEPUTEH (Residential Condo),ChargeSini,3.105652,101.677086,VIVO Residence @ 9 Seputeh,Kuala Lumpur,58000.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+484843,[Restricted] TRIA SEPUTEH RESIDENCES (Residential Condo),Unknown,3.108319,101.676819,Tria Seputeh Residences,Kuala Lumpur,58000.0,Operational,5.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+299182,Bangsar South The Horizon B1 by DC Handal ,DC Handal,3.110894168646752,101.6677757580369,"B1, The Horizon 1, Bangsar South,",Kuala Lumpur,59200.0,Operational,1.0,30.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+299183,Bangsar South The Sphere UG by DC Handal,DC Handal,3.1109152186687226,101.66784184834864,"The Sphere Upper Ground, Bangsar South, ",Kuala Lumpur,59200.0,Operational,1.0,240.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+299193,Bangsar South The Vertical B1 by DC Handal,DC Handal,3.111413745822773,101.66569946412916,Jalan Kerinchi,Kuala Lumpur,59200.0,Operational,1.0,47.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+299194,Bangsar South The Vertical (Lazada HQ) by DC Handal,DC Handal,3.111356444851495,101.66566376998094,"The Vertical, Bangsar South,",Kuala Lumpu,59200.0,Operational,1.0,100.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+297133,Jom Charge - McD Pantai Sentral Park,Jom Charge,3.102138797595174,101.66660133248251,"2, Jalan Pantai Sentral",KL,59200.0,Operational,1.0,100.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+306731,ICE Sales Gallery by DC Handal,DC Handal,3.1015790176272304,101.66692424064126,Jalan Pantai Sentral 1,Kuala Lumpur,58000.0,Operational,1.0,120.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459600,[Restricted] CASA DESA CONDOMINIUM (Residential Condo),ChargeSini,3.096656,101.679192,Casa Desa Condominium,Cheras,58100.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459595,[Restricted] KL PALACE COURT (Residential Condo),ChargeSini,3.088201,101.683678,KL Palace Court,Kuala Lumpur,58200.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+479669,Pearl Point Shopping Mall,Shell Recharge (Malaysia),3.084172487258911,101.67300415039062,MENARA PEARL POINT 2,Kuala Lumpur,58200.0,Operational,1.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+463447,[Restricted] PEARL SURIA RESIDENCE (Residential Condo),Unknown,3.085396,101.674324,Pearl Suria Residence,Kuala Lumpur,58200.0,Operational,5.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459590,[Restricted] PETALZ RESIDENCES @ OLD KLANG ROAD (Residential Condo),ChargeSini,3.084323,101.661392,Petalz Residences by EXSIM,Kuala Lumpur,58000.0,Operational,4.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459587,[Restricted] CITIZEN 2 @ OLD KLANG ROAD (Residential Condo),ChargeSini,3.081979,101.662781,Citizen 2 @ Old Klang Road,Old Klang Road,58000.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459580,[Restricted] SERINGIN RESIDENCES (Residential Condo),ChargeSini,3.076546,101.686668,Seringin Residences,Old Klang Road,58200.0,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459593,[Restricted] KUCHAI BREM PARK CONDO 1 (Residential Condo),ChargeSini,3.086742,101.686554,Kuchai Brem Park Condo 1,Kuchai Lama,58200.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459598,HJ SEAFOOD TREASURE (Restaurant),ChargeSini,3.092424,101.685303,HJ Seafood Treasure 海景大酒家,Kuchai Lama,58200.0,Operational,2.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+460899,[Restricted] THE LEAFZ BY EXSIM (Residential Condo),ChargeSini,3.085547,101.695,The Leafz by EXSIM,Kuala Lumpur,57100.0,Operational,3.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459570,PINNACLE SRI PETALING MALL (Grocery),ChargeSini,3.067885,101.693985,Pinnacle Sri Petaling (Condominium Complex),Kuala Lumpur,57000.0,Operational,3.0,47.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459561,[Restricted] SAVANNA BUKIT JALIL (Residential Condo),ChargeSini,3.056604,101.687775,Savanna Bukit Jalil,Kuala Lumpur,57000.0,Operational,6.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+301288,Shell Bukit Jalil TPM,Shell Recharge (Malaysia),3.0556299686431885,101.70437622070312,NORTH SOUTH EXPRESSWAY,Kuala Lumpur,57100.0,Operational,1.0,120.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+272728,Shell Sungai Besi,Shell Recharge (Malaysia),3.0493377015096854,101.705615160403,Lebuhraya KL-Seremban Kuala Lumpur,Kuala Lumpur,57000.0,Operational,1.0,60.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459554,[Restricted] TWIN ARKZ (Residential Condo),ChargeSini,3.051014,101.680023,Twin Arkz @ Bukit Jalil,Desa Petaling,57000.0,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+295951,Pavilion Bukit Jalil,Shell Recharge (Malaysia),3.0530607980854176,101.67292364221991,"2, Persiaran Jalil 8, Bukit Jalil",Kuala Lumpur,57000.0,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+484838,[Restricted] THE PARK 2 RESIDENCE (Residential Condo),Unknown,3.050728,101.6735,"The Park 2 Residence, Bukit Jalil City",Kuala Lumpur,57000.0,Operational,5.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459560,[Restricted] THE HAVRE BUKIT JALIL (Residential Condo),ChargeSini,3.056034,101.666908,The Havre Bukit Jalil,Kuala Lumpur,57000.0,Operational,3.0,40.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459568,THE FOOD MERCHANT WCITY OUG SALES GALLERY (Grocery),ChargeSini,3.067541,101.67411,"The Food Merchant, WCity OUG Sales Gallery",OUG,58200.0,Operational,4.0,80.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459571,[Restricted] WALTZ RESIDENCES (Residential Condo),ChargeSini,3.068148,101.672478,Waltz Residences,Puchong,58200.0,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459565,[Restricted] KIARA RESIDENCE 2 (Residential Condo),ChargeSini,3.064063,101.669563,Kiara Residence 2,Kuala Lumpur,58200.0,Operational,6.0,11.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+471376,EVPower - Bloomsvale Shopping Gallery - Outdoor Parking,EVPower (MY),3.07572,101.66087,"LGK 021 & 022 , Lower GF Bloomsvale Shopping Gallery",Kuala Lumpur,58200.0,Operational,3.0,240.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+459578,[Restricted] RIVERVILLE RESIDENCES (Residential Condo),ChargeSini,3.076086,101.65593,Riverville Residences,Kuala Lumpur,58200.0,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OCM
+57459,Jalan 52/1 33,Shell Recharge Solutions (BE),3.09918,101.6450899,Jalan 52/1 33,Petaling Jaya,46200.0,Operational,1.0,37.0,Petaling,Selangor,OCM
+65333,Menara MBPJ,Shell Recharge Solutions (BE),3.0975030000999,101.644430076582,Menara MBPJ,Petaling Jaya,46000.0,Operational,1.0,3.7,Petaling,Selangor,OCM
+479670,Jaya Shopping Centre,Shell Recharge (Malaysia),3.10904598236084,101.63665008544922,"JALAN 14/17, SEKSYEN 14,",Petaling Jaya,46100.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+459607,MILLENNIUM SQUARE,ChargeSini,3.10489,101.635345,Millennium Square,Petaling Jaya,46100.0,Operational,2.0,60.0,Petaling,Selangor,OCM
+300077,MG Motor Petaling Jaya by DC Handal,DC Handal,3.095361120767933,101.63277914241291,"Lot 8241, Ground Floor,","Petaling Jaya,",46100.0,Operational,1.0,47.0,Petaling,Selangor,OCM
+459609,KELANA D'PUTERA CONDOMINIUM (Residential Condo),ChargeSini,3.108021,101.593048,Kelana D'Putera - Main Gate | PJ Ss7 condominium,Petaling Jaya,47301.0,Operational,5.0,22.0,Petaling,Selangor,OCM
+65334,Lebuhraya Damansara-Puchong,Shell Recharge Solutions (BE),3.10508084393876,101.596059009926,Lebuhraya Damansara-Puchong,Petaling Jaya,47301.0,Operational,2.0,37.0,Petaling,Selangor,OCM
+479680,Citta Mall,Shell Recharge (Malaysia),3.112056016921997,101.57936096191406,"1, JALAN PJU 1A/48,",Petaling Jaya,47301.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+210594,Gentari x JomCharge @ XPark Sunway Serene,Jom Charge,3.090550504892434,101.60945661419488,"Lot 1, Jln SS 8/6",Petaling Jaya,47300.0,Operational,4.0,350.0,Petaling,Selangor,OCM
+459594,[Restricted] ICON CITY (Residential Condo),ChargeSini,3.087786,101.615036,Icon City,Petaling Jaya,47300.0,Operational,4.0,40.0,Petaling,Selangor,OCM
+459583,[Restricted] GREENFIELD RESIDENCE (Residential Condo),ChargeSini,3.078443,101.613419,Greenfield Residence,Petaling Jaya,46150.0,Operational,7.0,22.0,Petaling,Selangor,OCM
+259243,"Jaguar Land Rover, Ara Damansara",Go ToU,3.115026,101.568663,Jalan PJU 1A/7,Petaling Jaya,,Operational,2.0,180.0,Petaling,Selangor,OCM
+259244,Hyundai Ara Damansara (TNBX),Go ToU,3.114902655126272,101.56920836109902,"6, Jln PJU 1A/7",Petaling Jaya,,Operational,1.0,60.0,Petaling,Selangor,OCM
+204368,Jalan PJU 1A/7,(Unknown Operator),3.1155304906540664,101.56913329962627,Jalan PJU 1A/7,,40250.0,Operational,1.0,60.0,Petaling,Selangor,OCM
+259246,BYD Ara Damasara (TNBX),Go ToU,3.11558,101.57016,"Jalan PJU 1a/9,",Petaling Jaya,47301.0,Operational,1.0,90.0,Petaling,Selangor,OCM
+259245,Auto Bavaria Ara Damansara (TNBX),Go ToU,3.1145398,101.5698149,"6, Jln PJU 1A/7",Petaling Jaya,47301.0,Operational,1.0,90.0,Petaling,Selangor,OCM
+484844,[Restricted] H2O RESIDENCES (BLOCK A & B) (Residential Condo),Unknown,3.115636,101.577316,H20 Residences,Petaling Jaya,47301.0,Operational,3.0,40.0,Petaling,Selangor,OCM
+305583,Petronas NKVE,Jom Charge,3.119187,101.592813,"Lot 15385 KM 15, 3, New Klang Valley Expy, Damansara Bound",Petaling Jaya,47000.0,Operational,1.0,150.0,Petaling,Selangor,OCM
+460901,PUSAT DAGANGAN NZX (Shopping Mall),ChargeSini,3.115191,101.589211,"Pusat Dagangan NZX, 47301",Petaling Jaya,47301.0,Operational,2.0,22.0,Petaling,Selangor,OCM
+270839,Megah Rise Mall,Shell Recharge (Malaysia),3.11380386352539,101.61124420166016,"MEGAH RISE MALL, LEVEL B1",Petaling Jaya,47301.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+459621,[Restricted] LUMI TROPICANA (Residential Condo),ChargeSini,3.129476,101.59417,Lumi Tropicana,Petaling Jaya,47800.0,Operational,6.0,22.0,Petaling,Selangor,OCM
+463448,[Restricted] AETAS DAMANSARA (Residential Condo),Unknown,3.131345,101.594055,"1, PERSIARAN TROPICANA",PETALING JAYA,47410.0,Operational,1.0,22.0,Petaling,Selangor,OCM
+459636,[Restricted] OPAL DAMANSARA CONDOMINIUM (Residential Condo),ChargeSini,3.148517,101.598381,Sunway Opal Damansara Condominium,Petaling Jaya,47810.0,Operational,2.0,22.0,Petaling,Selangor,OCM
+459638,[Restricted] CASA INDAH 2 CONDOMINIUM (Residential Condo),ChargeSini,3.149504,101.587891,"2A, Persiaran Surian Tropicana Indah, PJU 3, Kota Damansara, 47410 Petaling Jaya, Selangor",Tropicana Indah,,Operational,2.0,22.0,Petaling,Selangor,OCM
+272738,Thomson Hospital,Shell Recharge (Malaysia),3.14903211593628,101.57888793945312,"11 JLN TEKNOLOGI,TMN SAINS SELANGOR",Petaling Jaya,47810.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+459647,THE CURVE (Shopping Mall),ChargeSini,3.157687,101.611427,The Curve,Petaling Jaya,47800.0,Operational,8.0,47.0,Petaling,Selangor,OCM
+62531,The Curve Mall,Shell Recharge Solutions (BE),3.15827036999565,101.612484654106,Jalan PJU 7/3,Petaling Jaya,47800.0,Operational,1.0,3.7,Petaling,Selangor,OCM
+210870,GENTARI @ MENARA KLK,Jom Charge,3.1610295319679125,101.61340371763184,"1, Jalan PJU 7/6,",Petaling Jaya,47800.0,Operational,1.0,11.0,Petaling,Selangor,OCM
+459658,MERCU MUSTAPHA KAMAL (Commercial),ChargeSini,3.164928,101.613968,Neo Damansara,Petaling Jaya,47820.0,Operational,3.0,22.0,Petaling,Selangor,OCM
+459662,MENARA MUSTAPHA KAMAL (Commercial),ChargeSini,3.167105,101.613358,Menara Mustapha Kamal,Petaling Jaya,47820.0,Operational,4.0,22.0,Petaling,Selangor,OCM
+460665,Perdana View Condo,(Unknown Operator),3.170716172795977,101.60245416683614,"No. 21, Jalan PJU 8/1.",Petaling Jaya,47820.0,Operational,1.0,40.0,Petaling,Selangor,OCM
+459681,[Restricted] DAMANSARA FORESTA (Residential Condo),ChargeSini,3.181285,101.612526,"Damansara Foresta Damansara Foresta Condominium, Persiaran Meranti, Bandar Sri Damansara,",Bukit Damansara A,52200.0,Operational,5.0,22.0,Petaling,Selangor,OCM
+459555,[Restricted] REGENCY KLANG (Residential Condo),ChargeSini,3.051143,101.462868,Regency Condominium,Klang,41300.0,Operational,2.0,22.0,Klang,Selangor,OCM
+472712,"PETRONAS KLS, Arah Kuala Selangor",Gentari Go (MY),3.269331062670304,101.50910033360742,Lebuhraya Kuala Lumpur–Kuala Selangor,Rawang,48020.0,Operational,2.0,16.0,Gombak,Selangor,OCM
+472711,PETRONAS KLS ARAH KUALA LUMPUR (LATAR 2),Gentari Go (MY),3.271279548699141,101.50649531266242,Lebuhraya Kuala Lumpur–Kuala Selangor,Rawang,48020.0,Operational,3.0,60.0,Gombak,Selangor,OCM
+460247,Petron Bandar Tasik Puteri EB by DC Handal,DC Handal,3.29193608950942,101.47926153681544,Petron Bandar Tasik Puteri EB,Rawang,48020.0,Operational,1.0,180.0,Gombak,Selangor,OCM
+459528,ECONSAVE CASH & CARRY PANDAMARAN (Grocery),ChargeSini,2.994984,101.419701,Econsave Pandamaran (Hypermarket | Wholesale),Klang,42000.0,Operational,2.0,60.0,Klang,Selangor,OCM
+270838,KSL Esplanade Mall,Shell Recharge (Malaysia),2.9582014083862305,101.46519470214844,"LEVEL 2 PILLAR 7, KSL ESPLANADE MALL",Klang,41200.0,Operational,1.0,11.0,Klang,Selangor,OCM
+459525,CANVAS HOTEL KLANG (Hotel),ChargeSini,2.992799,101.443863,The Canvas Hotel,Klang,41200.0,Operational,4.0,22.0,Klang,Selangor,OCM
+274419,KSL AUTOMOBILE ENTERPRISE,(Unknown Operator),3.0320488743881384,101.47225567832491,Lorong 3,Klang,41050.0,Operational,1.0,22.0,Klang,Selangor,OCM
+188641,RnR Dengkil Southbound,chargEV,2.9039529017553747,101.61504873781178,RnR Dengkil,Taman Sains Selangor 2,47130.0,Operational,1.0,22.0,Sepang,Selangor,OCM
+459521,[Restricted] D'AMAN RESIDENCES (Residential Condo),ChargeSini,2.975389,101.581833,D'Aman Residences,Puchong,47130.0,Operational,2.0,22.0,Sepang,Selangor,OCM
+459520,[Restricted] KOI SUITES CONDOMINIUM (Residential Condo),ChargeSini,2.974447,101.579185,Koi Suites Condominium,Puchong,47130.0,Operational,3.0,40.0,Sepang,Selangor,OCM
+459517,[Restricted] TASIK RESIDENCY (Residential Condo),ChargeSini,2.963733,101.592911,Tasik Residency,Puchong,47130.0,Operational,4.0,22.0,Sepang,Selangor,OCM
+459518,[Restricted] X2 RESIDENCY (BLOCK B) (Residential Condo),ChargeSini,2.965042,101.593376,X2 Residency,Puchong,47130.0,Operational,3.0,40.0,Sepang,Selangor,OCM
+265144,IOI Sierra,Shell Recharge (Malaysia),2.973581552505493,101.65482330322266,JLN SIERRA 10/1,Puchong,47110.0,Operational,1.0,11.0,Sepang,Selangor,OCM
+459522,[Restricted] DESARIA VILLA CONDOMINIUM (Residential Condo),ChargeSini,2.977706,101.639618,Desaria Villa Condominium,Puchong,47120.0,Operational,4.0,22.0,Sepang,Selangor,OCM
+306730,Pulse Grande Hotel Putrajaya by DC Handal,DC Handal,2.9433395118267214,101.6999759271282,Jalan Putra Perdana,Putrajaya,62519.0,Operational,1.0,47.0,WP Putrajaya,W.P. Putrajaya,OCM
+459509,[Restricted] TAMARA RESIDENCE TOWER  C (Residential Condo),ChargeSini,2.926,101.679375,Tamara Residence,Putrajaya,62250.0,Operational,2.0,22.0,WP Putrajaya,W.P. Putrajaya,OCM
+459511,[Restricted] TAMARA RESIDENCE TOWER A (Residential Condo),ChargeSini,2.927745,101.679329,Tamara Residence,Putrajaya,62250.0,Operational,2.0,22.0,WP Putrajaya,W.P. Putrajaya,OCM
+459508,SHAFTSBURY SQUARE (Commercial),ChargeSini,2.922597,101.661896,Shaftsbury Square,Cyberjaya,63000.0,Operational,4.0,22.0,Sepang,Selangor,OCM
+57456,Jalan Usahawan 2,Shell Recharge Solutions (BE),2.926689,101.662598,Jalan Usahawan 2,Cyberjaya,63000.0,Operational,2.0,37.0,Sepang,Selangor,OCM
+62527,Persiaran Semarak Api,Shell Recharge Solutions (BE),2.93814578683156,101.644753046627,Persiaran Semarak Api,Cyberia,63000.0,Operational,1.0,3.7,Sepang,Selangor,OCM
+459510,[Restricted] LAKEFRONT HOMES @ CYBERJAYA (PR1MA) (Residential Condo),ChargeSini,2.92746,101.631958,"Lakefront Homes, Cyberjaya",Cyberjaya,63000.0,Operational,3.0,22.0,Sepang,Selangor,OCM
+459513,[Restricted] LAKEFRONT RESIDENCE @ CYBERJAYA (Residential Condo),ChargeSini,2.933997,101.631264,Lakefront Residence @ Cyberjaya,Cyberjaya,63000.0,Operational,5.0,22.0,Sepang,Selangor,OCM
+62525,Persiaran APEC,Shell Recharge Solutions (BE),2.90722110779707,101.656301047816,Persiaran APEC,Cyberjaya,63000.0,Operational,2.0,3.7,Sepang,Selangor,OCM
+212604,GO TO-U EV Lifestyle Charging Hub @ Rekascape,Go ToU,2.909098501107678,101.65706353519931,Persiaran Apec,Cyberjaya,63000.0,Operational,2.0,120.0,Sepang,Selangor,OCM
+459505,HOLIDAY INN SEPANG (Hotel),ChargeSini,2.82035,101.695267,"Holiday Inn Sepang Airport, an IHG Hotel",Sepang,43900.0,Operational,4.0,22.0,Sepang,Selangor,OCM
+289617,Petronas KLIA 1 (45kW DC),Jom Charge,2.7643898019282034,101.68310825889164,"Petronas Pt3906, Jalan Terminal",Sepang,43900.0,Operational,1.0,45.0,Sepang,Selangor,OCM
+459506,[Restricted] PALMERA RESIDENCE (Residential Condo),ChargeSini,2.877094,101.793533,Palmyra Residence,Kajang,43000.0,Operational,2.0,22.0,Hulu Langat,Selangor,OCM
+459507,[Restricted] ALMYRA RESIDENCE (Residential Condo),ChargeSini,2.877916,101.795326,Almyra Residence,Kajang,43000.0,Operational,3.0,22.0,Hulu Langat,Selangor,OCM
+459512,BANGI GATEWAY MALL (Shopping Mall),ChargeSini,2.932871,101.76532,Bangi Gateway Shopping Complex,Bandar Baru Bangi,43650.0,Operational,2.0,60.0,Hulu Langat,Selangor,OCM
+459515,[Restricted] PUNCAK HIJAUAN CONDOMINIUM (Residential Condo),ChargeSini,2.944719,101.796471,Puncak Hijauan Condominium,Kajang,43000.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+479667,IOI City Mall - Lotus,Shell Recharge (Malaysia),2.9716598987579346,101.71102905273438,"IOI CITY MALL, LEBUH IRC",Putrajaya,62502.0,Operational,1.0,11.0,Sepang,Selangor,OCM
+479668,IOI City Mall - Aeon,Shell Recharge (Malaysia),2.970863103866577,101.71643829345705,"IOI CITY MALL, LEBUH IRC",Putrajaya,62502.0,Operational,1.0,11.0,Sepang,Selangor,OCM
+463445,[Public] PROTON E.MAS PUTRAJAYA - JEWEL SONIC SDN BHD (Car Showroom),Unknown,2.970161,101.717346,Proton e.MAS Putrajaya - Jewel Sonic Sdn Bhd,Putrajaya,62502.0,Operational,2.0,50.0,Sepang,Selangor,OCM
+299323,IOI City Mall Putrajaya LG Zone D by DC Handal ,DC Handal,2.9691498356477126,101.7145284443427,"LG Zone D, IOI City Mall,",Putrajaya,62502.0,Operational,3.0,240.0,Sepang,Selangor,OCM
+279459,IOI Connezion,Shell Recharge (Malaysia),2.9645142555236816,101.72149658203124,3 CAR PARK BAYS NEXT TO A-G-01,Putrajaya,62502.0,Operational,1.0,11.0,Sepang,Selangor,OCM
+53546,Jalan 9/10,Shell Recharge Solutions (BE),2.95731570182009,101.751333322754,Jalan 9/10,Bandar Baru Bangi,43650.0,Operational,1.0,37.0,Hulu Langat,Selangor,OCM
+459523,PARK INN BY RADISSON PUTRAJAYA (Hotel),ChargeSini,2.979283,101.737564,Park Inn by Radisson Putrajaya,Kajang,43000.0,Operational,3.0,22.0,Sepang,Selangor,OCM
+478508,Gentari PETRONAS Solaris Seri Kembangan,Gentari Go (MY),3.005837294190343,101.7250332842168,Lebuhraya Utara Selatan (Arah Selatan),Seri Kembangan,43400.0,Operational,1.0,150.0,Hulu Langat,Selangor,OCM
+460896,[Public] SILK SKY SERVICED APARTMENT (Residential Condo),Unknown,3.027286,101.750374,Silk Sky Service Apartment,Seri Kembangan,43300.0,Operational,4.0,40.0,Hulu Langat,Selangor,OCM
+459539,"AMERIN MALL, SERI KEMBANGAN (Shopping Mall)",ChargeSini,3.024839,101.751541,Amerin Mall,Seri Kembangan,43300.0,Operational,3.0,22.0,Hulu Langat,Selangor,OCM
+470577,[Restricted] SYMPHONY TOWER (Public Area),ChargeSini,3.02593,101.753075,Menara Simfoni (Symphony Tower),Seri Kembangan,43300.0,Operational,4.0,40.0,Hulu Langat,Selangor,OCM
+459542,[Restricted] PERMATA RESIDENCE (Residential Condo),ChargeSini,3.029084,101.786896,Permata Residence,Kajang,43000.0,Operational,3.0,40.0,Hulu Langat,Selangor,OCM
+297029,Impian Golf and Country Club,Shell Recharge (Malaysia),3.01749,101.795035,"Jalan Impian Gemilang, Saujana Impian",Kajang,43000.0,Operational,1.0,11.0,Hulu Langat,Selangor,OCM
+272734,The LINC KL,Shell Recharge (Malaysia),3.004945242919206,101.78654115835228,"360, Jln Tun Razak, Taman U Thant",Kuala Lumpur,50400.0,Operational,1.0,11.0,Hulu Langat,Selangor,OCM
+459524,[Restricted] JADITE SUITES (Residential Condo),ChargeSini,2.992677,101.757736,Persiaran Jade Hills Utama,Kajang,43000.0,Operational,2.0,22.0,Hulu Langat,Selangor,OCM
+459516,PKNS COMPLEX BANGI (Shopping Mall),ChargeSini,2.961875,101.757225,Kompleks PKNS Bangi,Bandar Baru Bangi,43650.0,Operational,3.0,40.0,Hulu Langat,Selangor,OCM
+210709,Gentari x JomCharge @ Bangi Golf Resort,Jom Charge,2.9569960938979563,101.76559011438916,1 Jalan Golf,Bandar Baru Bangi,43650.0,Operational,4.0,120.0,Hulu Langat,Selangor,OCM
+469573,[Restricted] PALM HILL RESIDENCES 3 (Residential Condo),Unknown,3.025894,101.805321,32a,KAJANG,43000.0,Operational,2.0,22.0,Hulu Langat,Selangor,OCM
+459538,[Restricted] RESIDENSI BUKIT PALMA (Residential Condo),ChargeSini,3.024755,101.805649,Palm Hill Residence 1,Kajang,43000.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+459537,[Restricted] RESIDENSI BUKIT PALMA 2 (Residential Condo),ChargeSini,3.02411,101.804726,Residensi Bukit Palma 2,Cheras,43000.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+459541,[Restricted] SUTERA PINES APARTMENT (Residential Condo),ChargeSini,3.026803,101.813782,Sutera Pines,Kajang,43000.0,Operational,3.0,22.0,Hulu Langat,Selangor,OCM
+459533,[Restricted] PANGSAPURI PUNCAK SAUJANA (Residential Condo),ChargeSini,3.017278,101.812614,Pangsapuri Puncak Saujana,Kajang,43000.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+459532,[Restricted] PANGSAPURI SAUJANA PERMAI 2 (Residential Condo),ChargeSini,3.014625,101.810944,Pangsapuri Saujana Permai 2,Kajang,43000.0,Operational,4.0,22.0,Hulu Langat,Selangor,OCM
+OSM_0,Cosmos,COSMOS Bangsar,3.1277894,101.6788434,,,,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_1,Unknown,COSMOS Munshi Abdullah,3.1525978999999995,101.69838959999998,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_2,EV Charger,Vision Motorsports,3.1337766,101.6096955,,Kampung Sungai Kayu Ara,,Operational,1.0,22.0,Petaling,Selangor,OSM
+OSM_3,EV Charger,Utama Motors,3.1606062999999995,101.7415416,,Kuala Lumpur,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_4,EV Charger,Hamza Motors,3.1616628,101.623275,,Kuala Lumpur,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_5,EV Charge,Unknown,3.1212153,101.6551042,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_6,Unknown,Gentari / EV Connection,3.0656547,101.6630485,,,,Operational,18.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_7,Unknown,ChargEV Yinson Green Tech,3.1429376,101.7106726,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_9,Unknown,Unknown,3.1301251,101.6420686,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_10,Unknown,Unknown,3.1715556,101.6649854,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_12,chargEV,chargEV,2.9088289,101.6566397,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_14,Tesla Destination Charger,Unknown,3.1281617,101.72416649999998,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_15,Tesla Destination Charger,Unknown,3.1664141,101.6917172,,,,Operational,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_16,chargEV,chargEV,3.033279499999999,101.7652185,,,,Operational,1.0,22.0,Hulu Langat,Selangor,OSM
+OSM_17,JomCharge,JomCharge,3.0271607999999994,101.7541855,,,,Operational,1.0,22.0,Hulu Langat,Selangor,OSM
+OSM_18,Tesla Supercharger,"Tesla, Inc.",3.0493739,101.6721036,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_20,Tesla Destination Charger,Unknown,2.9701078,101.7161964,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_21,Shell Recharge,Shell Recharge Solutions,2.9705213,101.7135594,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_22,DC Handal,DC Handal,2.9696481,101.7134794,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_23,Tesla Supercharger,"Tesla, Inc.",2.9698847,101.71547,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_24,EVGuru,EVGuru,3.1672296,101.6919158,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_25,Gentari,Gentari,3.1663888999999994,101.69174859999998,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_26,EVGuru,EVGuru,3.0260201,101.7509655,,,,Operational,1.0,22.0,Hulu Langat,Selangor,OSM
+OSM_27,Tesla Supercharger,"Tesla, Inc.",2.9152446000000003,101.6581696,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_28,Shell Recharge,Shell Recharge Solutions,3.1277517,101.7246183,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_29,Gentari,Gentari,3.1281132999999994,101.7220326,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_30,Gentari,Gentari,3.0274973,101.7528222,,,,Operational,1.0,22.0,Hulu Langat,Selangor,OSM
+OSM_31,Oyika Battery Swapping Station,Oyika,3.1577198,101.64986659999998,,,,Operational,8.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_34,Unknown,Unknown,3.1398375,101.6960665,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_35,Gentari,Gentari,2.765871,101.6853896,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_36,Unknown,Unknown,3.1411667000000003,101.64274989999998,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_37,GoEV,Unknown,3.1347819,101.6873764,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_38,Unknown,Unknown,3.1445924999999995,101.72218,,,,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_40,Unknown,Unknown,3.1494857,101.71637099999998,,,,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_41,Unknown,Auto Bavaria,3.1502256,101.7143777,,,,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_43,AEON Mall Rawang Rear Entrance,Yinson GreenTech Business,3.316819,101.53599459999998,,,,Operational,4.0,22.0,Gombak,Selangor,OSM
+OSM_44,Sri Hartamas Nasi Lemak Burung Hantu (DBKL),Unknown,3.163117,101.6522831,,,,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_45,Petaling Street Hello Planet & Sasha,JomCharge,3.1421039,101.6971497,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_46,Unknown,Unknown,3.0685955,101.69178159999998,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_47,Unknown,Unknown,3.0710267,101.69331889999998,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_48,Taman Desa Public Bank (DBKL),JomCharge,3.1026111,101.6825826,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_50,Sri Hartamas Watsons (DBKL),JomChargeDiKL,3.1623497,101.650315,,,,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_51,Bangsar Coffee Stain (DBKL),JomCharge x DBKL,3.1308465,101.6710324,,,,Operational,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_52,Quick Charge 22kW,Quick Charge,3.2091405,101.667805,,,,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_53,Quick Charge 40kW,Quick Charge,3.2091436,101.6678508,,,,Operational,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_54,Unknown,Unknown,3.1413489,101.6971434,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_56,Unknown,Unknown,3.145395099999999,101.6631809,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_57,Unknown,Unknown,3.1488254,101.7132488,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_58,Unknown,Unknown,3.1095851,101.66504489999998,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_59,Unknown,Unknown,3.1197621,101.67640110000002,,,,Operational,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+OSM_63,Unknown,Unknown,2.969665408893988,101.65462982755592,,,,Operational,1.0,22.0,Sepang,Selangor,OSM
+OSM_65,Mont Kiara Only 1 Kopitiam,JomCharge,3.174465420364589,101.66066381471222,,,,Operational,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,OSM
+,chargEV Charging Station,Unknown,2.7448340000000004,101.684595,"Bas Teksi Sepang 43900 MY, 43900, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,Gentari Charging Station,Unknown,2.7452683,101.6857688,"Level CP3, Pillar E1 & F1, Blok A, 26, 43900 Sepang, Selangor, Malaysia",,,OPERATIONAL,12.0,22.0,Sepang,Selangor,Google_Maps
+,Virta Global Charging Station,Unknown,2.74527,101.6857671,"Lbh KLIA, 2, KLIA2 Arrival Ln, 43900 Sepang, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,Sepang,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,2.7453810000000005,101.685233,"2, KLIA2 Arrival Lane, 64000 Sepang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,JomCharge Charging Station,Unknown,2.8236448,101.695526,"KipMall, KIPMall Kota Warisan, Kota Warisan, 43900 Sepang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,Gentari Charging Station,Unknown,2.9016978,101.6706637,"1, Jalan P5/5, Presint 5, 62000 Putrajaya, Wilayah Persekutuan Putrajaya, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Gentari Charging Station,Unknown,2.8952773000000005,101.67793,"Pr Putrajaya, Pusat Konvensyen Antarabangsa Putrajaya, Presint 5, 62000 Putrajaya, Wilayah Persekutuan Putrajaya, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Virta Global Charging Station,Unknown,2.8954915,101.6862123,"Presint 5, 62200 Putrajaya, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,JomCharge Charging Station,Unknown,2.917939,101.6572343,"Jalan Teknokrat 7, Cyberjaya, 63000 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Gentari Charging Station,Unknown,2.9188849,101.6840081,"Kompleks Perbadanan Putrajaya, 24, Persiaran Perdana, Presint 3, 62675 Putrajaya, Wilayah Persekutuan Putrajaya, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,chargEV Charging Station,Unknown,2.9136083,101.8384239,"1, Lingkaran Eco Majestic, 43700 Semenyih, Selangor, Malaysia",,,OPERATIONAL,1.0,22.0,Sepang,Selangor,Google_Maps
+,JomCharge Charging Station,Unknown,2.9193164,101.6358439,"Persiaran Multimedia, Cyberjaya, 63000 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,5.0,22.0,Sepang,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,2.9224144,101.6510632,"Persiaran Multimedia, Cyberjaya, 63000 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Electric Vehicle Charging Station,Unknown,2.9277162,101.6432757,"6, Persiaran Newron, 63100 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,Gentari Charging Station,Unknown,2.9313244,101.6701622,"Putrajaya Sentral, Presint 7, 62000 Putrajaya, Wilayah Persekutuan Putrajaya, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Virta Global Charging Station,Unknown,2.9313253,101.6701606,"7 Putrajaya Sentral, Presint 7, 62000 Presint, Wilayah Persekutuan Putrajaya, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,chargEV Charging Station,Unknown,2.924044,101.8433722,"No.1, Persiaran Ecohill Barat, 43500 Semenyih, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,DRG Resources Berhad,Unknown,2.9398293,101.6242125,"7, Jln NPT 7/1F, Bandar Nusaputra Timur, 47130 Puchong, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,2.934298,101.645605,"Persiaran Semarak Api, Cyberjaya, 63000 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,2.936038,101.634404,"Jalan Setia 4, Cyberjaya, 63000 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,JomCharge Charging Station,Unknown,2.9374897,101.6349027,"6, Jln Setia Marina 3/4, Setia Eco Glades, 63000 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,Sepang,Selangor,Google_Maps
+,Gentari Charging Station,Unknown,2.9362168,101.6615553,"Persiaran APEC, Cyberjaya, 63000 Cyberjaya, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Gentari Charging Station,Unknown,2.9380201,101.69483900000002,"Presint 1, 62000 Putrajaya, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,ChargEV Charging Station,Unknown,2.9343668000000003,101.7085416,"Putrajaya Perdana Berhad, 5, Jalan P16, Presint 16, 62150 Putrajaya, Wilayah Persekutuan Putrajaya, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,JomCharge Charging Station,Unknown,2.9490881,101.758984,"Persiaran Kemajuan, Seksyen 1, Banda, 43650 Bandar Baru Bangi, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Well Build Construction & Engineering Sdn Bhd,Unknown,2.9692263,101.4532944,"38, Jalan Delima 19, Bandar Parklands, 41200 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Klang,Selangor,Google_Maps
+,ChargeSINI Charging Station,Unknown,2.9666928,101.5932163,"X2 Residency, Jalan Putra Prima Utama, Taman Putra Prima, 47130 Puchong, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,Sepang,Selangor,Google_Maps
+,ChargeSINI Charging Station,Unknown,2.9608556,101.7523055,"35 & 36-G-01, Jalan Medan PB2B, Seksyen 9, 43650 Bandar Baru Bangi, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,EVLUTION Charging Station,Unknown,2.9733212,101.4606752,"37, Jln Jed 3, Bandar Parklands, 41200 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Klang,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,2.9733202,101.4606754,"Bandar Parklands, 42000 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Klang,Selangor,Google_Maps
+,Shell Recharge Charging Station,Unknown,2.9744855,101.655071,"Sierra Alfresco, Jln Sierra 10/1, Bandar 16 Sierra, 47110 Puchong, Selangor, Malaysia",,,OPERATIONAL,4.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,chargEV Charging Station,Unknown,2.973545,101.674255,"Lebuhraya Lembah Klang Selatan, 43400 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,TNB Electron Charging Station,Unknown,2.9714052,101.7324241,"Lakeside Parking, UNITEN Mosque, 43000 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,JomCharge Charging Station,Unknown,2.9823134,101.719939,"Unipertama Golf Club, Persiaran Golf, Universiti Putra Malaysia, 43400 Serdang, 43400 Seri Kembangan, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,TNB Electron Charging Station,Unknown,2.9775505,101.7303647,"TNB Electron, beside, UNITEN Mosque, 43000 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,chargEV Charging Station,Unknown,2.9809015,101.7439651,"SILK, Taman Perindustrian Selaman, 43650 Bandar Baru Bangi, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Gentari Charging Station,Unknown,2.9947939,101.4445936,"AEON Bukit Tinggi Mall, Bandar Bukit Tinggi 2, 41200 Pelabuhan Klang, Selangor, Malaysia",,,OPERATIONAL,4.0,22.0,Klang,Selangor,Google_Maps
+,Gentari Charging Station,Unknown,2.9950511,101.4441862,"Bandar Bukit Tinggi 2, 41200 Port Klang, Sela, Bandar Bukit Tinggi 2, 41200 Port Klang, Selangor, Malaysia",,,OPERATIONAL,6.0,22.0,Klang,Selangor,Google_Maps
+,ChargEV Charging Station,Unknown,2.994566,101.444148,"g18, Persiaran Batu Nilam 1, Bandar Bukit Tinggi 2, 41200 Klang, Selangor, Malaysia",,,CLOSED_TEMPORARILY,10.0,22.0,Klang,Selangor,Google_Maps
+,DC Handal Charging Station,Unknown,2.9861795,101.491095,"WCE E32, 3204, SAE Toll Plaza, Batu 6, Jalan Kebun, Kampung Jawa, 42000 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Klang,Selangor,Google_Maps
+,ChargeSINI Charging Station,Unknown,2.9933129,101.7569378,"Persiaran Jade Hills Utama, Jade Hills, 43000 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,CentRoy Bimmers Autoworks (HQ),Unknown,2.9904434,101.7703601,"Lot 147, Kampung Baru, Jalan Sungai Chua, Sungai Chua, 43000 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,chargEV Charging Station,Unknown,2.99157,101.79362,"1 2, Jalan Jelok 6, Bandar Kajang, 43000 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,ChargeSini Charging Station,Unknown,2.9868842,101.8086941,"8, Jalan Damai Mewah 1, Taman Damai Mewah, 43000 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Sepang,Selangor,Google_Maps
+,Virta Charging Station,Unknown,2.9982526,101.4452919,"1, Jalan Remia 5, Bandar Botanik, 41200 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Klang,Selangor,Google_Maps
+,ChargEV Charging Station,Unknown,3.0022283,101.4419131,"82623, Jalan Langat, Bandar Bukit Tinggi 2, 41200 Pelabuhan Klang, Selangor, Malaysia",,,CLOSED_TEMPORARILY,2.0,22.0,Petaling,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,2.9981854,101.4451299,"Jalan Remia 5, Bandar Botanik, 41200 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Klang,Selangor,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.0164001,101.4676729,"Hicom Town Centre, No 43, Jalan Kota Raja F27/F, Seksyen 27, 40400 Shah Alam, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Petaling,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,3.0112066,101.7748456,"Lebuhraya Cheras - Kajang, 43000 Cheras, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,ChargeSINI Charging Station,Unknown,3.0190647,101.7764885,"Lot 4711 Batu 12 Cheras, Jalan Seksyen 3/4, Taman Delima, 43000 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,X MILES Sdn Bhd (KPB 5),Unknown,3.0277384000000005,101.7385195,"Lot 1909, Jalan KPB 5 Kawasan Perindustrian, Kampung Baru Balakong, 43300 Seri Kembangan, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,chargEV Charging Station,Unknown,3.025525,101.771709,"74, Lebuhraya Cheras - Kajang, Kampung Sungai Sekamat, 43200 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,GO TO-U Charging Station,Unknown,3.0341325,101.7682858,"42A-G, Jalan Tengah, Taman Sri Indah, 43200 Cheras, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,JomCharge Charging Station,Unknown,3.0346636,101.7795205,"Jalan Besar Bandar Sungai Long, 43200 Cheras, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,chargEV Charging Station,Unknown,3.0445595,101.4445389,"Lorong Perbandaran, Kawasan 1, 41200 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Petaling,Selangor,Google_Maps
+,Din Aircond Enterprise,Unknown,3.0552467,101.4104923,"22, jln 4l/ku4, tmn dagang, Kampung Rantau Panjang, 42100 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Petaling,Selangor,Google_Maps
+,Virta Global Charging Station,Unknown,3.0621396,101.4628126,"102, Persiaran Rajawali, Bandar Baru Klang, 41150 Klang, Selangor, Malaysia",,,OPERATIONAL,4.0,22.0,Petaling,Selangor,Google_Maps
+,Nissan Charging Station,Unknown,3.0582803,101.4800371,"Jalan Batu Tiga Lama, Kawasan Perindustrian Sungai Rasau, 41300 Klang, Selangor, Malaysia",,,OPERATIONAL,1.0,22.0,Petaling,Selangor,Google_Maps
+,Tesla Supercharger,Unknown,3.050227,101.670882,"2, Persiaran Jalil 8, Bukit Jalil, 57000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EVC Charging Station,Unknown,3.0541033,101.6701699,"1, Persiaran Jalil 1, Bukit Jalil, 57000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Shell Recharge Charging Station,Unknown,3.0516407,101.6702823,"Persiaran Jalil 8, 2 Petaling, 57000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.0535336,101.6702223,"Persiaran Jalil 1, 1 Petaling, 57000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,QuickCharge Charging Station,Unknown,3.0530595,101.6777749,"G10, Jalan Jalil Perkasa 3, Bukit Jalil, 57000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.0490631,101.7587038,"2QX5+JFG, 43200 Cheras, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Powered by RISE Charging Station,Unknown,3.0497109,101.7839748,"NO A-G-01, MAHKOTA GARDEN, Jalan Mahkota Garden, Bandar Mahkota Cheras, 43200 Kajang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,Powered By RISE Charging Station,Unknown,3.0498572,101.7832368,"A-G, 01, Jalan Mahkota Garden, Bandar Mahkota Cheras, 43200 Cheras, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Putrajaya,W.P. Putrajaya,Google_Maps
+,JomCharge Charging Station,Unknown,3.0503384,101.7835786,"Persiaran Mahkota Residence, Bandar Mahkota Cheras, 43200 Cheras, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,Hulu Langat,Selangor,Google_Maps
+,Sgmv Sdn. Bhd.,Unknown,3.0642621,101.4683839,"Jln Tiara 2C, Bandar Baru Klang, 41150 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Petaling,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,3.063037,101.771346,"219, Lebuhraya Cheras - Kajang, Taman Kota Cheras, 43200 Cheras, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Hulu Langat,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,3.0807895,101.4267089,"22, Jalan Inang 9c, Bandar Bukit Raja, 41050 Klang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Petaling,Selangor,Google_Maps
+,EV Connection Sdn Bhd,Unknown,3.0903646,101.6070723,"P2-L1-01, Building 2, Sunway REIT Industrial, Lot 3, Jln SS 8/6, Sungai Way Free Trade Industrial Zone, 47300 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.0958263,101.5991331,"9, Jalan SS 7/13b, Ss 7, 47301 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,TESRA MALAYSIA BERHAD,Unknown,3.0878298,101.6137421,"NO. P-3-28-R309, Floor 3, Pusat Perdagangan Icon City Building, Jalan Ss 8/39, Section, Ss 8, 47300 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Chargesini Charging Station,Unknown,3.0874085,101.6251372,"Cycle & Carriage, Jalan 51a/219, Ss 9a, 46100 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Charging Station,Unknown,3.0989947,101.6352978,"51, Jalan 51A/221, Seksyen 51a, 46100 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,8.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Eon,Unknown,3.098893,101.632311,"Lot 17, Jalan 51a/227, Seksyen 51a, 46300 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.0905224,101.6731018,"357, Jln Klang Lama, 58200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Hyundai Charging Station,Unknown,3.1004114,101.6762118,"Jln Klang Lama, 58100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Autel Charging Station,Unknown,3.0956311,101.7386473,"Taman Mutiara Barat, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EVPower Charging Station,Unknown,3.1000891,101.7355878,"Ground Level Car Park, Arte Cheras, Jln Cheras, Taman Midah, 56000 Cheras, Taman Midah, 56000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Powered by RISE Charging Station,Unknown,3.0909361,101.7442225,"Cheras Plaza, Jalan Manis 1, Taman Segar, 56100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.1003688000000005,101.7610914,"4Q26+4C, 56100 Hulu Langat, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Hulu Langat,Selangor,Google_Maps
+,JomCharge Charging Station,Unknown,3.1083057,101.5944169,"F-G-1, Parklane Commercial Hub, Jalan SS 7/26, Ss 7, 47301 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1104719,101.638737,"Jalan Kemajuan, Seksyen 12 Petaling Jaya, 46200 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Shell Recharge Charging Station,Unknown,3.107334,101.639859,"Block 5-17-02, Vsq Pj, Jln Utara, Pjs 52, 46100 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.1129006,101.6388191,"2a, Jalan 13/2, Seksyen 13, 46200 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1128442,101.5745501,"Block G, No. 2, Jln PJU 1A/7, Ara Damansara, 47301 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Destination Charging Station,Unknown,3.11399,101.57636,"79, Jalan PJU 1a/2, Taipan 2 Damansara, 47301 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,NISSAN Charging Station,Unknown,3.115215,101.6429579,"32, Jalan Kemajuan, Pjs 13, 46200 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.115753,101.665253,"59100 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,GO TO-U Charging Station,Unknown,3.1204125,101.6694725,"Jalan Api - Api 1, Bangsar, 59100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,20.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Go Charging Station,Unknown,3.117641,101.6782057,"The Boulevard Office Mid Valley City, Mid Valley City, 58000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Volvo Charging Station,Unknown,3.1211122,101.6792443,"1, Jln Syed Putra, 58000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1189429,101.67355,"PILLAR KL ECO City Mall #2, Basement 1 Kuala Lumpur 59200, 59200 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1192383,101.6772663,"Lingkaran Syed Putra, 15, Bandar, Mid Valley City, 59200 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Chargeplus Charging Station,Unknown,3.118388,101.673783,"59200 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,GO TO-U Charging Station,Unknown,3.1215686,101.6731392,"Jalan Bangsar, 129, Bandar, Bangsar, 59000 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.115282,101.707862,"330, Jln Sungai Besi, Chan Sow Lin, 55200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,GO TO-U Charging Station,Unknown,3.1153955,101.7080921,"Lebuhraya Sungai Besi, 330, Bandar, Chan Sow Lin, 57100 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Global Charging Station,Unknown,3.1236232000000004,101.7117145,"8, Jalan dua ,off jalan Chan Sow Lin, Chan Sow Lin, 55200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Porsche Sales & Marketplace Charging Station,Unknown,3.1214395,101.7090041,"Jln Sungai Besi, Bandar, 57100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EVPower Charging Station,Unknown,3.1243752,101.7097387,"Jalan Dua, Chan Sow Lin, 55200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1232036,101.71946950000002,"85, Jln Loke Yew, Taman Miharja, 55200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargeSINI Charging Station,Unknown,3.1222378,101.7397881,"Level SB C13, Jalan 4/91, Taman Shamelin Perkasa, 56100 Wilayah Persekutuan, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Destination Charging Station,Unknown,3.130128,101.58475,"Lot 2813, Jalan Kelab Tropicana, Tropicana, 47410 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EV Connection Charging Station,Unknown,3.1326597,101.6110269,"Lebuhraya Damansara - Puchong, Kampung Kayu Ara, 47400 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EVC Charging Station,Unknown,3.1314156,101.6117964,"LOT 13639 JALAN KENANGA, OFF, Lebuhraya Damansara - Puchong, Kampung Sungai Kayu Ara, 47400 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.130799,101.627043,"Lot G-40, Jalan SS 20/27, Damansara Intan, 47300 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,SafevCharge Charging Station,Unknown,3.1339499,101.6214456,"94A, Jalan SS 21/39, Damansara Utama, 47400 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.137939,101.6477348,"Jalan Bukit Kiara 1, Bukit Kiara, 60000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1293884,101.6695786,"Lorong Terasek Kanan, Bangsar, 59100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.138484,101.659756,"9, Jalan Medang Tanduk, Bangsar, 59100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargEV Charging Station,Unknown,3.1324519,101.683543,"1, Jalan Stesen Sentral 5, Kuala Lumpur Sentral, 50470 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,CLOSED_TEMPORARILY,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.136392,101.68638,"1, Jalan Stesen Sentral 2, Kuala Lumpur Sentral, 50470 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.1353509,101.685758,"5, Jalan Stesen Sentral, Kuala Lumpur Sentral, 50470 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,KL City Pickleball @ Zebra Square,Unknown,3.1386005,101.7246212,"18, Jalan Kampung Pandan, Kelab Golf di Raja Selangor, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Zebra Square,Unknown,3.1381633,101.724481,"18, Jalan Kampung Pandan, Kelab Golf di Raja Selangor, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1340209000000003,101.7231381,"6, Jalan Cochrane, Maluri, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Go Charging Station,Unknown,3.1382319,101.7244288,"Kampung Pandan, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Destination Charging Station,Unknown,3.1388503,101.7225764,"10, Jalan Kampung Pandan, Kelab Golf di Raja Selangor, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Destination Charging Station,Unknown,3.14017,101.72284,"6, Jalan Cochrane, Seksyen 90, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargeSINI Charging Station,Unknown,3.1280514,101.753996,"L2/1, Jalan Pandan Utama, Pandan Indah, 56100 Kuala Lumpur, Selangor, Malaysia",,,OPERATIONAL,1.0,22.0,Hulu Langat,Selangor,Google_Maps
+,chargEV Charging Station,Unknown,3.1326153,101.7565961,"1a, Jalan Pandan Indah 4/7, Pandan Indah, 55100 Kuala Lumpur, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Hulu Langat,Selangor,Google_Maps
+,Powered by RISE Charging Station,Unknown,3.1515615,101.5701621,"20, Jalan Teknologi 3/4, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargEV Charging Station,Unknown,3.1508568,101.5914251,"Sunway Giza Mall, 2, Jalan PJU 5/14, Dataran Sunway, 47810 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Shell Recharge Charging Station,Unknown,3.141679,101.626358,"Lim Tayar, Lot 29398 & 41313, Pinggir Zaaba, Taman Tun Dr Ismail, 60000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.1428011,101.6446899,"Bukit Kiara, 60000 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.1431882,101.6677892,"Bangsar Shopping Centre Bangsar 59000 Kuala Lumpur, Federal Territory of Kuala Lumpur, lot g122 ground floor, No. 285, Jalan Maarof, Bukit Bandaraya, 59000 Kuala Lumpur, Wilayah Persekutuan, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Charging Station,Unknown,3.142975,101.6674885,"285, Jalan Maarof, Bangsar, 59100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Destination Charging Station,Unknown,3.143193,101.667946,"448, Jalan Sena, Bangsar, 46000 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1474386,101.6998733,"100, Jalan Tun Perak, Bukit Bintang, 50050 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EVC Charging Station,Unknown,3.1408189,101.7086085,"Lalaport, 2, Jln Hang Tuah, Bukit Bintang, 55200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1401282,101.7083664,"Jln Ampang, 2, Jln Hang Tuah, Bukit Bintang, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1501182,101.6961112,"Jalan Tun Perak, 38, Bandar, Kuala Lumpur City Centre, 50050 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.1464799,101.7154772,"160, Jln Imbi, Imbi, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Charging Station,Unknown,3.1430998,101.7183805,"Persiaran TRX, Imbi, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,8.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Volvo Charging Station,Unknown,3.1478657,101.7178751,"Jln Bukit Bintang, Kuala Lumpur, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Charging Station,Unknown,3.1436293,101.716048,"Menara Prudential, 1, Jalan Barat, Tun Razak, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Global Charging Station,Unknown,3.1431107,101.716813,"Persiaran TRX, Imbi, 55100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,5.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1487358,101.721989,"Jalan Kia Peng, 39, Bandar, Kuala Lumpur, 50450 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1405773,101.7807725,"1, Jalan Taman Putra, Kampung Lembah Jaya Selatan, 68000 Ampang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Hulu Langat,Selangor,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.1552522,101.572168,"2952, Jalan Paya Jaras Tengah 665, Kampung Paya Jaras Tengah, 47000 Sungai Buloh, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,NISSAN Charging Station,Unknown,3.1601762,101.5713033,"No. 34 & 36, Jalan Teknologi 3/1, Taman Sains Selangor, 47810 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Carcare Premium Auto Detailing Sdn Bhd,Unknown,3.1543598,101.5948727,"76, JALAN PJU 5/21 THE STRAND, Kota Damansara, 47810 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Chargesini Charging Station,Unknown,3.1587028,101.6147008,"Cycle & Carriage, Mutiara Damansara, 47800 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1594565,101.6140191,"3, Jalan PJU 7/2, Mutiara Damansara, 47810 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EVLUTION Charging Station,Unknown,3.1643335,101.6075778,"22, Jalan PJU 8/3a, Damansara Perdana, 47820 Petaling Jaya, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Charging Station,Unknown,3.1619733,101.6180498,"Lot 2805, Jalan Damansara, Kampung Sungai Penchala, 60000 Kuala Lumpur, Selangor, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Charging Station,Unknown,3.161973,101.6180501,"Pen, Lot 2805, Jalan Damansara, Kampung Sungai Penchala, 60000 Kuala Lumpur, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Charging Station,Unknown,3.1630706,101.616968,"2779, Jalan Damansara, Sungai Penchala, 60000 Kuala Lumpur, Selangor, Malaysia",,,CLOSED_TEMPORARILY,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Charging Station,Unknown,3.1635954,101.6168636,"184a, Jalan Damansara, Kampung Sungai Penchala, 60000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BYD Charging Station,Unknown,3.1637566,101.6578027,"Lot No. G-11B, G-11C & G-12, 60, Jalan Sri Hartamas 1, Taman Sri Hartamas, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,NICHCOM+ Charging Station,Unknown,3.1636299,101.655921,"Hartamas Shopping Centre, Taman Sri Hartamas, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,CLOSED_TEMPORARILY,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Destination Charging Station,Unknown,3.156327,101.672286,"3189, Jalan Ledang, Taman Duta, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1574385,101.692953,"Jalan Dato Onn, Bandar, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1554455,101.6924545,"Jalan Dato Onn, 11, Bandar, Kuala Lumpur, 50480 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,5.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.152924,101.692469,"2333, Jalan Dato Onn, Kuala Lumpur, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargePlus Charging Station,Unknown,3.157813,101.690697,"2, Jalan Dato Onn, Kuala Lumpur, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1548552,101.7106019,"Stall 7, Jalan Pinang, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Charging Station,Unknown,3.1525645,101.7060513,"Off, Jalan P. Ramlee, Kuala Lumpur, 50250 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1507638,101.7087038,"5P25+8F4, Bandar, 50200 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Charging Station,Unknown,3.1523,101.7104,"26, Jln Sultan Ismail, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Charging Station,Unknown,3.15443,101.718121,"9, Persiaran KLCC, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Electric Vehicle Charging Station Imperial Lexis Kuala Lumpur,Unknown,3.152724,101.7163934,"Jalan Kia Peng, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Shell Recharge Charging Station,Unknown,3.159368,101.7208139,"360, Jln Tun Razak, Taman U Thant, 50400 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Charging Station,Unknown,3.1532003,101.7136907,"Jalan Pinang, Bandar, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,9.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1592237,101.7201591,"199, Jln Tun Razak, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.158081,101.717936,"19, Persiaran KLCC, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1591154,101.7433297,"Lot 4258 & 4259, Jln Ampang, Desa Pahlawan, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Go Charging Station,Unknown,3.160262,101.7541405,"318, Jalan Kolam Ayer Lama, Taman Dato Ahmad Razali, 68000 Ampang, Selangor, Malaysia",,,OPERATIONAL,4.0,22.0,Hulu Langat,Selangor,Google_Maps
+,Virta Global Charging Station,Unknown,3.159725,101.75223,"1, Jln Memanda 9, Taman Dato Ahmad Razali, 68000 Ampang, Selangor, Malaysia",,,OPERATIONAL,3.0,22.0,Hulu Langat,Selangor,Google_Maps
+,EVPower Charging Stations @ Arte Mont Kiara,Unknown,3.1759779,101.665285,"Level G, Arte Mont Kiara, Jalan Sultan Haji Ahmad Shah, Kompleks Kerajaan, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Charging Station,Unknown,3.1766873,101.6988021,"1, Jalan Pahang Barat, Pekeliling, 53000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,3.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,GO TO-U Charging Station,Unknown,3.1685656,101.7097628,"Jalan Raja Muda Abdul Aziz, Bandar, 50300 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,GO TO-U Charging Station,Unknown,3.1684325,101.7104035,"Jalan Raja Uda, 171, Bandar, Kampung Baru, 50300 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Gentari Charging Station,Unknown,3.1681887,101.7133753,"Level 12, Menara KPJ, 238, Jln Tun Razak, 50400 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1632043,101.7144945,"36, Jalan Yap Kwan Seng, Bandar, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Global Charging Station,Unknown,3.1686365,101.71333,"Level 12, Menara KPJ, 238, Jln Tun Razak, 50400 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.162939,101.7135786,"Lorong Yap Kwan Seng, 3 Bandar, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Charging Station,Unknown,3.158102,101.718571,"10, Lrg Binjai, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.158526,101.7210861,"362, Jln Tun Razak, Taman U Thant, 50400 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Global Charging Station,Unknown,3.158052,101.7190959,"16, Lrg Binjai, Kuala Lumpur, 50450 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,chargEV Charging Station,Unknown,3.1771405,101.7507835,"Au 2, 54200 Kuala Lumpur, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Hulu Langat,Selangor,Google_Maps
+,Charge+ Charging Station,Unknown,3.184863,101.630795,"8, Jalan Residen 2, Desa Parkcity, 52200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,4.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargEV Charging Station,Unknown,3.1793955,101.6671557,"2, Jalan Dutamas, Kompleks Kerajaan, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,CLOSED_TEMPORARILY,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.1867138,101.6696667,"92, Jln Kuching, Kampung Pasir Segambut, 51200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,QuickCharge Charging Station,Unknown,3.1813893,101.6687134,"7, Jalan Dutamas 2, Dutamas, 50480 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Virta Charging Station,Unknown,3.1889023,101.6701705,"50009, Jln Kuching, Selangor, 51200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Powered By RISE Charging Station,Unknown,3.181955,101.6828615,"2&4, Jalan Balam, Jalan Ipoh, 51200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Chargeplus Charging Station,Unknown,3.197773,101.639083,"10435, Jalan 4/37 A, Kawasan Perusahaan Taman Bukit Maluri, 52100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,BMW Destination Charging Station,Unknown,3.193179,101.674227,"310, Jalan Cenderuh 4, Segambut, 51200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargeSINI Charging Station,Unknown,3.1984035,101.7047278,"Taman Tai Onn, 53100 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,TNB Electron Charging Station,Unknown,3.1984212,101.7162573,"5242, Jalan Genting Kelang, Kawasan Perumahan Pkns, 53000 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Nissan Charging Station,Unknown,3.1973174,101.7147178,"Jalan Genting Kelang, Kawasan Perusahaan Pkns, 53300 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,TNB Electron Charging Station,Unknown,3.1961796,101.7427703,"Ground Floor, 5, Basement Parking, AEON BiG, 6, Jalan 8/27a, Wangsa Maju, 53300 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.19844,101.741715,"9, Jalan Wangsa Delima 12, Wangsa Maju, 53300 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Charge+ Charging Station,Unknown,3.212899,101.673127,"7, Jalan 3/18a, Taman Mastiara, 51200 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,6.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Ukay Boulevard MRR2,Unknown,3.2053408,101.7569993,"Jalan Taman Zooview, Taman Zooview, 68000 Ampang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Hulu Langat,Selangor,Google_Maps
+,Electric Vehicle Charging Station,Unknown,3.2194669,101.6710059,"Eco Sky, 188, Jln Kuching, Taman Wahyu, 51200 Kuala Lumpur, Federal Territory of Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Shell Recharge Charging Station,Unknown,3.2249006,101.7305151,"823, KL East Mall, Jln Lingkaran Tengah 2, Sunway Montana (U/C), 53100 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,ChargeSINI Charging Station,Unknown,3.2402642,101.6490058,"Selayang Capitol Kompleks, Exit Lebuhraya Selayang - Kepong, Taman Selayang Jaya, 68100 Batu Caves, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Chargesini Charging Station,Unknown,3.2325333,101.6823715,"Cycle & Carriage, Jalan Perusahaan 1, Kawasan Perindustrian PKNS, 68100 Batu Caves, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,Nissan Charging Station,Unknown,3.2340213,101.680989,"Jalan Perusahaan 1, Kawasan Industri Batu Caves, 68100 Batu Caves, Selangor, Malaysia",,,OPERATIONAL,1.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,EVPower Charging Station,Unknown,3.2491939,101.6496337,"UG, 168 Park Selayang Mall, Persiaran 3, Baru Selayang, 68100 Batu Caves, 68100 Selayang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,WP Kuala Lumpur,W.P. Kuala Lumpur,Google_Maps
+,JomCharge Charging Station,Unknown,3.3207478,101.5792773,"Jalan Rawang Putra, Pusat Bandar Rawang, 48000 Rawang, Selangor, Malaysia",,,OPERATIONAL,2.0,22.0,Gombak,Selangor,Google_Maps

@@ -1,0 +1,9 @@
+h3_index,district,lat,lon,zone_type,our_public_stations_2km,jomcharge_count,gentari_count,chargev_count,other_count,notes,maps_link
+88650509b5fffff,WP Kuala Lumpur,3.151143649607716,101.62964934514186,served_KL,12,,,,,,"https://www.google.com/maps/@3.15114,101.62965,14z"
+88650509b7fffff,WP Kuala Lumpur,3.151860227006103,101.62070213957236,served_KL,16,,,,,,"https://www.google.com/maps/@3.15186,101.6207,14z"
+88650544d1fffff,WP Kuala Lumpur,3.2122292741190006,101.64427828681777,served_KL,3,,,,,,"https://www.google.com/maps/@3.21223,101.64428,14z"
+88650509b1fffff,WP Kuala Lumpur,3.143777477924369,101.62446594897672,served_KL,10,,,,,,"https://www.google.com/maps/@3.14378,101.62447,14z"
+8865050cd3fffff,Klang,3.0116773954762235,101.42758116957847,desert,0,,,,,,"https://www.google.com/maps/@3.01168,101.42758,14z"
+8865053b63fffff,Klang,2.9888661209324585,101.42099067348354,desert,1,,,,,,"https://www.google.com/maps/@2.98887,101.42099,14z"
+8865053b3dfffff,Klang,2.998369247854728,101.39932155440042,desert,0,,,,,,"https://www.google.com/maps/@2.99837,101.39932,14z"
+8865050cd7fffff,Klang,3.0190439118985197,101.4327613991441,desert,0,,,,,,"https://www.google.com/maps/@3.01904,101.43276,14z"
