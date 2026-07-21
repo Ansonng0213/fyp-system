@@ -1,0 +1,19 @@
+# Analytics-pipeline dependencies (pipeline/ stages 02-09).
+# NOT installed by the Streamlit Cloud app deploy — the app only reads the
+# processed_data/ artifacts these produce. Install locally to reproduce them:
+#     pip install -r requirements-pipeline.txt
+pandas>=2.1
+numpy>=1.26
+geopandas>=1.0
+shapely>=2.0
+h3>=4.0
+scikit-learn>=1.4
+prophet>=1.1.5
+statsmodels>=0.14
+matplotlib>=3.8
+requests>=2.31
+python-dotenv>=1.0
+# dashboard libs (also here so a full local install can run the app too)
+streamlit>=1.36
+pydeck>=0.9
+plotly>=5.20
