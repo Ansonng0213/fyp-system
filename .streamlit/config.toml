@@ -1,0 +1,9 @@
+# Streamlit theme — matches DESIGN.md UI-chrome tokens. Dark base so the app
+# renders dark regardless of the viewer's OS setting; color belongs to the map.
+[theme]
+base = "dark"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#1A1F2B"
+textColor = "#E6E9EF"
+primaryColor = "#3E7BFA"
+font = "sans serif"

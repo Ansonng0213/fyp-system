@@ -7,7 +7,36 @@ Global: `st.set_page_config(layout="wide")`. Shared cached loaders in
 `app/lib/data.py` (`@st.cache_data` on every CSV/GeoJSON read). Maps via
 pydeck `H3HexagonLayer` (hex_cdi_v1.csv has `h3_index`) — no geometry
 conversion needed. Consistent dark map style. All artifact reads from
-`processed_data/`.
+`processed_data/`. **Follow `DESIGN.md` for all visual/interaction standards
+(layout templates, semantic colors, KPI/inspector components, quality bar).**
+
+---
+
+## Home — Executive Overview  (app/Home.py)
+The landing page: orient a planner/operator in 10 seconds, then route them.
+Overview template from DESIGN.md §2b (vertical flow, sidebar collapsed, no live
+controls). Government (equity-on) framing for the headline numbers.
+
+- **KPI strip — 4 cards** (DESIGN.md KPI-card component; label + unit + context):
+  1. **People in severe charging deserts** — `756,330 people` ·
+     context "CDI ≥ 50 hexes · 439,123 in Klang alone".
+  2. **Coverage gap (2 km)** — `Klang 47.2% vs KL 98.0%` ·
+     context "population within 2 km of a public charger · KV overall 79.3%".
+  3. **Per-capita access disparity** — `7.4×` worst-to-best ·
+     context "Klang 1.68 vs Sepang 12.38 public+operational stations / 100k".
+  4. **Projected 2030 port gap** — `~23,952 ports` ·
+     context "24,819 required vs 867 today · ~2.5× the national 10,000 target".
+  (All four are static, verified figures from `hex_cdi_v1.csv` /
+  `ev_stations_kv_clean_v2.csv` / `charger_gap_2030.csv` — do not recompute.)
+- **Hero visual:** `processed_data/cdi_map.png` full-width (`st.image`), caption
+  "Charging Desert Index — Greater Klang Valley (H3 res 8)".
+- **Narrative — one paragraph:** the thesis in plain language — chargers follow
+  commercial ROI, so they cluster in KL while residential/lower-income suburbs
+  (Klang worst) become charging deserts; this system maps the gap, forecasts
+  2030 demand, and recommends equity-weighted sites.
+- **Navigation cards:** one card per page (CDI Explorer, Recommendations,
+  Forecast, What-If, Validation & Data) — title + one-line description,
+  `st.page_link` to each. This is the primary way into the tool.
 
 ---
 
