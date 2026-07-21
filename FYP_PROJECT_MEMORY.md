@@ -46,7 +46,9 @@ Methodology: CRISP-DM. SDG 10 + SDG 11 alignment. Key refs: Ermagun & Tian 2024,
 | poi_kv_clean.csv | 108,785 | shopping 35,910 / work 30,527 / residential 15,913 = 75.8%. KL 41,256 POIs, Putrajaya 783 |
 | ev_stations_kv_clean.csv | 535 | KL 326 (60.9%) / Hulu Langat 50 / Petaling 49 / Sepang 45 / Putrajaya 34 / Gombak 17 / Klang 14. Source: OCM 278, Google 205, OSM 52 |
 
-**Headline desert evidence:** Klang (1.13M pop, 21,323 POIs) has 14 stations; Gombak (966K pop) has 17; KL holds 60.9% of all stations.
+**Headline desert evidence (v2 — official-boundary corrected; USE THESE, not v1 raw share):**
+- ⚠ REPORTING CONVENTION: lead with **coverage** and **per-100k** metrics, NOT raw station-share. The old v1 "KL holds 60.9% of stations" is SUPERSEDED — after the polygon-sjoin district fix KL has 294/535 stations (55.0%) and 189/376 public+operational (50.3%), a weaker/less-defensible framing.
+- Defensible equity headlines: **2km population coverage — Klang 47.2% vs KL 98.0%** (KV overall 79.3%; full ladder: Klang 47.2 / Gombak 58.5 / Sepang 64.2 / Hulu Langat 78.1 / Petaling 89.4 / Putrajaya 95.3 / KL 98.0). **Per-100k public+operational stations — 7.4× worst-to-best disparity** (Klang 1.68 vs Sepang 12.38; KL 9.42). Verified against ev_stations_kv_clean_v2.csv + hex_cdi_v1.csv on 2026-07-21.
 
 ---
 
