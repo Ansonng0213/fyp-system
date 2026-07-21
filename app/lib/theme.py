@@ -105,6 +105,37 @@ hr{border:none;border-top:1px solid var(--border);margin:1rem 0 1.4rem;}
 .section-h{color:var(--text);font-size:1.15rem;font-weight:600;margin:6px 0 4px;}
 .narrative{color:var(--text);font-size:1.02rem;line-height:1.75;max-width:1000px;}
 .narrative b{color:var(--text);font-weight:600;}
+
+/* ---- explorer: sidebar controls, legends, inspector ---- */
+.ctl-title{color:var(--text);font-size:.9rem;font-weight:600;margin:0 0 6px;}
+
+.leg-wrap{margin:10px 0 2px;}
+.leg-label{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.05em;
+  text-transform:uppercase;margin-bottom:4px;}
+.leg-bar{height:10px;border-radius:5px;border:1px solid var(--border);
+  background:linear-gradient(90deg,#000004,#420a68,#932667,#dd513a,#fca50a,#fcffa4);}
+.leg-scale{display:flex;justify-content:space-between;color:var(--faint);
+  font-size:.7rem;margin-top:2px;}
+
+.lyr-legend{margin:6px 0 2px;}
+.lyr-item{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.8rem;margin:3px 0;}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:0 0 auto;}
+.line-swatch{width:13px;border-top:2px solid #fff;display:inline-block;flex:0 0 auto;}
+
+.insp-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:16px 18px;}
+.insp-h{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:8px;}
+.insp-cdi{color:var(--text);font-size:1.9rem;font-weight:700;line-height:1;}
+.insp-sub{color:var(--muted);font-size:.95rem;margin-top:3px;}
+.insp-reason{color:var(--text);font-size:.86rem;line-height:1.5;margin:12px 0;
+  padding:9px 11px;background:var(--surface-2);border-radius:8px;}
+.insp-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;
+  border-bottom:1px solid var(--border);font-size:.85rem;}
+.insp-row span{color:var(--muted);}
+.insp-row b{color:var(--text);font-weight:600;}
+.insp-link{display:inline-block;margin-top:12px;color:var(--accent);
+  font-size:.85rem;text-decoration:none;}
 """
 
 

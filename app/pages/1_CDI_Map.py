@@ -1,0 +1,268 @@
+"""Page 1 — CDI Explorer.
+
+Map-first explorer (DESIGN.md §2a): slim sidebar controls, a full-height inferno
+CDI map as the hero, and a right-hand inspector that appears on selection. The
+persona toggle and weight slider recompute CDI live from stored components
+(app/lib/cdi.py) — pure arithmetic, no pipeline. Reason strings are the product's
+explainability: available on hover (guaranteed) and in the inspector.
+
+Selection: the "Inspect a hex" rank/search selector (above the map, always
+reachable) is the reliable way to focus a hex; native map-click is wired as a
+bonus and falls back gracefully if the runtime doesn't surface it.
+"""
+import pandas as pd
+import pydeck as pdk
+import streamlit as st
+
+from lib import cdi as cdi_lib
+from lib import data, theme, ui
+
+st.set_page_config(page_title="CDI Explorer", layout="wide")
+theme.inject_base_css()
+
+MAP_KEY = "cdi_map"
+NONE = "__none__"
+
+# ------------------------------------------------------------------ load (cached)
+base = data.load_cdi()
+stations = data.load_stations()
+districts_geo = data.load_districts()
+pub_all = data.public_operational(stations)
+priv_all = stations[~(stations["is_public_facing"] & stations["is_operational"])]
+ALL_DISTRICTS = sorted(base["district"].unique())
+
+
+# ----------------------------------------- native map-click (bonus selection path)
+def clicked_hex() -> str | None:
+    """Read the hex clicked on the previous render from the chart's selection
+    state. Fully defensive: any shape mismatch just yields None (hover + the
+    selector remain the guaranteed paths)."""
+    state = st.session_state.get(MAP_KEY)
+    if state is None:
+        return None
+    try:
+        sel = state.get("selection") if hasattr(state, "get") else getattr(state, "selection", None)
+        objs = sel.get("objects") if hasattr(sel, "get") else getattr(sel, "objects", None)
+        for rows in (objs or {}).values():
+            if rows:
+                return rows[0].get("h3_index")
+    except Exception:
+        return None
+    return None
+
+
+clicked = clicked_hex()
+
+# ------------------------------------------------------------------ sidebar controls
+with st.sidebar:
+    st.markdown("<div class='ctl-title'>View</div>", unsafe_allow_html=True)
+    persona = st.segmented_control(
+        "Persona", ["Government", "Operator"], default="Government",
+        label_visibility="collapsed", key="persona",
+    ) or "Government"
+    st.caption("**Government** weights equity for underserved areas · "
+               "**Operator** ranks pure market demand.")
+    st.divider()
+
+    w_pop = st.slider("Population weight", 0.0, 1.0, 0.5, 0.05,
+                      help="Activity weight = 1 − population weight")
+    st.caption(f"Demand blend: population {w_pop:.2f} · activity {1 - w_pop:.2f}")
+    st.divider()
+
+    st.markdown("<div class='ctl-title'>Map layers</div>", unsafe_allow_html=True)
+    show_public = st.checkbox("Public stations", value=True)
+    show_private = st.checkbox("Private / restricted", value=False)
+    show_borders = st.checkbox("District borders", value=True)
+    st.markdown(
+        "<div class='lyr-legend'>"
+        "<div class='lyr-item'><span class='dot' style='background:#00E5FF'></span>Public stations</div>"
+        "<div class='lyr-item'><span class='dot' style='background:#7A828E'></span>Private / restricted</div>"
+        "<div class='lyr-item'><span class='line-swatch'></span>District border</div>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+    st.divider()
+
+    sel_districts = st.multiselect("Districts", ALL_DISTRICTS, default=ALL_DISTRICTS)
+
+equity_on = persona == "Government"
+
+# ------------------------------------------------------- recompute CDI, then filter
+df = base.copy()
+df["cdi_live"] = cdi_lib.recompute_cdi(df, w_pop=w_pop, equity_on=equity_on)
+
+if not sel_districts:
+    st.markdown("<div class='page-title'>CDI Explorer</div>", unsafe_allow_html=True)
+    st.info("Select at least one district in the sidebar to display the map.")
+    st.stop()
+
+view = df[df["district"].isin(sel_districts)].copy()
+
+
+def reason_of(r, eq_on: bool) -> str:
+    parts = [f"CDI {r.cdi_live:.0f}", f"{r.pop_est:,.0f} residents", f"activity {r.activity_score:.0f}"]
+    if eq_on:
+        parts.append(f"×{r.equity_mult:.2f} equity")
+    parts += [f"nearest charger {r.nearest_station_km:.1f} km", f"{int(r.stations_5km)} within 5 km"]
+    return " · ".join(parts)
+
+
+view["reason"] = [reason_of(r, equity_on) for r in view.itertuples()]
+view["fill_color"] = [theme.cdi_to_rgb(v) if v > 0 else [0, 0, 0, 0] for v in view["cdi_live"]]
+
+# inspector options: inhabited hexes in view, ranked by the live CDI
+inhabited = view[view["pop_est"] > 0].sort_values("cdi_live", ascending=False)
+opts = [NONE] + inhabited["h3_index"].tolist()
+labels = {
+    r.h3_index: f"#{i} · {r.district} · CDI {r.cdi_live:.0f} · {r.lat:.4f},{r.lon:.4f}"
+    for i, r in enumerate(inhabited.itertuples(), 1)
+}
+if st.session_state.get("hex_select") not in opts:      # stay valid across filter changes
+    st.session_state["hex_select"] = NONE
+
+# ------------------------------------------------------------------ header + legend
+st.markdown(
+    "<div class='page-title'>CDI Explorer</div>"
+    "<div class='page-sub'>Charging Desert Index by hex · brighter = more underserved · "
+    "recomputed live from stored components</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='leg-wrap' style='max-width:360px'><div class='leg-label'>Charging Desert Index</div>"
+    "<div class='leg-bar'></div><div class='leg-scale'><span>0</span><span>50</span><span>100</span></div></div>",
+    unsafe_allow_html=True,
+)
+st.markdown("<hr>", unsafe_allow_html=True)
+
+# ------------------------------------------------------------------ KPI row (reactive)
+inh_view = view[view["pop_est"] > 0]
+severe = view[view["cdi_live"] >= 50]
+k1, k2, k3 = st.columns(3, gap="medium")
+ui.kpi_card(
+    k1, "Severe desert hexes", theme.fmt_int((view["cdi_live"] >= 50).sum()),
+    f"{persona} view · CDI ≥ 50 · of {theme.fmt_int(len(inh_view))} inhabited in view",
+)
+ui.kpi_card(
+    k2, "People in severe zones", theme.fmt_int(severe["pop_est"].sum()),
+    f"CDI ≥ 50 · demand blend pop {w_pop:.2f} / act {1 - w_pop:.2f}",
+)
+median_near = view["nearest_station_km"].median() if len(view) else 0.0
+ui.kpi_card(
+    k3, "Median nearest charger", theme.fmt_km(median_near),
+    "all hexes in view · public + operational stations",
+)
+
+st.write("")
+
+# ------------------------------------------------------------ inspect-a-hex selector
+sel_col, _ = st.columns([0.5, 0.5])
+with sel_col:
+    st.selectbox(
+        "Inspect a hex", opts, key="hex_select",
+        format_func=lambda h: "— none (hover the map, or pick a hex) —" if h == NONE else labels.get(h, h),
+        help="Hover any hex for its reason string. Pick one here — or click it on the map — to inspect.",
+    )
+
+sb = st.session_state.get("hex_select", NONE)
+view_ids = set(view["h3_index"])
+if sb != NONE:
+    selected_h3 = sb
+elif clicked in view_ids:
+    selected_h3 = clicked
+else:
+    selected_h3 = None
+selected_row = view.loc[view["h3_index"] == selected_h3].iloc[0] if selected_h3 else None
+
+# ------------------------------------------------------------------ build map layers
+layers = [
+    pdk.Layer(
+        "H3HexagonLayer", id="cdi_layer",
+        data=view[["h3_index", "fill_color", "reason", "district", "cdi_live"]],
+        get_hexagon="h3_index", get_fill_color="fill_color",
+        pickable=True, auto_highlight=True, stroked=False, extruded=False, opacity=0.85,
+    )
+]
+if show_borders:
+    layers.append(pdk.Layer(
+        "GeoJsonLayer", id="districts", data=districts_geo,
+        stroked=True, filled=False, get_line_color=[255, 255, 255, 160],
+        line_width_min_pixels=1, pickable=False,
+    ))
+if selected_row is not None:
+    layers.append(pdk.Layer(
+        "H3HexagonLayer", id="highlight",
+        data=pd.DataFrame([{"h3_index": selected_row["h3_index"]}]),
+        get_hexagon="h3_index", get_fill_color=[62, 123, 250, 55],
+        stroked=True, get_line_color=[255, 255, 255, 230], line_width_min_pixels=2,
+        pickable=False, extruded=False,
+    ))
+if show_public and len(pub_all):
+    pv = pub_all[pub_all["district"].isin(sel_districts)]
+    layers.append(pdk.Layer(
+        "ScatterplotLayer", id="pub", data=pv[["longitude", "latitude"]],
+        get_position="[longitude, latitude]", get_fill_color=theme.PUBLIC_STATION + [225],
+        get_radius=70, radius_min_pixels=2, radius_max_pixels=6, pickable=False,
+    ))
+if show_private and len(priv_all):
+    prv = priv_all[priv_all["district"].isin(sel_districts)]
+    layers.append(pdk.Layer(
+        "ScatterplotLayer", id="priv", data=prv[["longitude", "latitude"]],
+        get_position="[longitude, latitude]", get_fill_color=theme.PRIVATE_STATION + [180],
+        get_radius=60, radius_min_pixels=2, radius_max_pixels=5, pickable=False,
+    ))
+
+view_state = pdk.ViewState(
+    latitude=float(view["lat"].mean()), longitude=float(view["lon"].mean()),
+    zoom=9.1 if len(sel_districts) > 2 else 10.3, pitch=0, bearing=0,
+)
+tooltip = {
+    "html": "<b>{district}</b><br/>{reason}",
+    "style": {"backgroundColor": theme.SURFACE, "color": theme.TEXT, "fontSize": "12px",
+              "border": f"1px solid {theme.BORDER}", "borderRadius": "6px",
+              "padding": "6px 8px", "maxWidth": "290px"},
+}
+deck = pdk.Deck(
+    layers=layers, initial_view_state=view_state,
+    map_provider="carto", map_style=pdk.map_styles.CARTO_DARK, tooltip=tooltip,
+)
+
+# ------------------------------------------------------------------ map + inspector
+if selected_row is not None:
+    map_col, insp_col = st.columns([0.72, 0.28], gap="large")
+else:
+    map_col, insp_col = st.container(), None
+
+with map_col:
+    st.pydeck_chart(deck, use_container_width=True, height=620,
+                    selection_mode="single-object", on_select="rerun", key=MAP_KEY)
+
+if insp_col is not None:
+    r = selected_row
+    detail = [
+        ("District", r["district"]),
+        ("Population (est.)", f"{r['pop_est']:,.0f}"),
+        ("Activity score", f"{r['activity_score']:.0f}"),
+        ("Equity multiplier", f"×{r['equity_mult']:.2f}" + ("" if equity_on else " (off — Operator)")),
+        ("Nearest public charger", f"{r['nearest_station_km']:.1f} km"),
+        ("Stations within 2 km", f"{int(r['stations_2km'])}"),
+        ("Stations within 5 km", f"{int(r['stations_5km'])}"),
+        ("Location", f"{r['lat']:.5f}, {r['lon']:.5f}"),
+    ]
+    reason_parts = [f"{r['pop_est']:,.0f} residents", f"activity {r['activity_score']:.0f}"]
+    if equity_on:
+        reason_parts.append(f"×{r['equity_mult']:.2f} equity")
+    reason_parts += [f"nearest charger {r['nearest_station_km']:.1f} km",
+                     f"{int(r['stations_5km'])} within 5 km"]
+    rows_html = "".join(f"<div class='insp-row'><span>{k}</span><b>{v}</b></div>" for k, v in detail)
+    maps_url = f"https://www.google.com/maps/@{r['lat']:.5f},{r['lon']:.5f},15z"
+    insp_col.markdown(
+        "<div class='insp-panel'>"
+        "<div class='insp-h'>Hex inspector</div>"
+        f"<div class='insp-cdi'>CDI {r['cdi_live']:.0f}</div>"
+        f"<div class='insp-sub'>{r['district']}</div>"
+        f"<div class='insp-reason'>{' · '.join(reason_parts)}</div>"
+        f"{rows_html}"
+        f"<a class='insp-link' href='{maps_url}' target='_blank'>Open in Google Maps ↗</a>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
