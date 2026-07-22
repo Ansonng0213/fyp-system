@@ -40,3 +40,17 @@ Add a cover screen shown before the Executive Overview:
 
 Build only after Pages 1–5 are done, so routing targets all exist. Follow
 DESIGN.md tone (calm, credible, not a student demo).
+
+---
+
+## 3. WorldPop population raster (deferred data enhancement)
+Blend a **WorldPop 100 m population raster** into pipeline **stage 04** to fill
+OSM-undertagged hexes — e.g. parts of Puchong currently show 0 residents despite
+visible housing, because the dasymetric weights rely on OSM residential tags.
+Using WorldPop as the population surface (or as a fallback where OSM residential
+density is 0) would remove these false "empty" hexes.
+
+Cost: requires **re-running stages 04→09** and **re-validating** all downstream
+results (hex population, CDI, recommendations, forecasts, headline numbers).
+Only do this if time allows — the current dasymetric estimate is documented and
+defensible; this is an accuracy upgrade, not a correctness fix.
