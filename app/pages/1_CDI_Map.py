@@ -15,7 +15,7 @@ import pydeck as pdk
 import streamlit as st
 
 from lib import cdi as cdi_lib
-from lib import data, theme, ui
+from lib import data, mapping, theme, ui
 
 st.set_page_config(page_title="CDI Explorer", layout="wide")
 theme.inject_base_css()
@@ -27,8 +27,8 @@ NONE = "__none__"
 base = data.load_cdi()
 stations = data.load_stations()
 districts_geo = data.load_districts()
-pub_all = data.public_operational(stations)
-priv_all = stations[~(stations["is_public_facing"] & stations["is_operational"])]
+kv_outline = data.load_kv_outline()
+kv_mask = data.load_kv_mask()
 ALL_DISTRICTS = sorted(base["district"].unique())
 
 
@@ -108,7 +108,8 @@ def reason_of(r, eq_on: bool) -> str:
 
 
 view["reason"] = [reason_of(r, equity_on) for r in view.itertuples()]
-view["fill_color"] = [theme.cdi_to_rgb(v) if v > 0 else [0, 0, 0, 0] for v in view["cdi_live"]]
+view["fill_color"] = [theme.cdi_to_rgb(v) for v in view["cdi_live"]]
+view["tip"] = [f"<b>{d}</b><br/>{rs}" for d, rs in zip(view["district"], view["reason"])]
 
 # inspector options: inhabited hexes in view, ranked by the live CDI
 inhabited = view[view["pop_est"] > 0].sort_values("cdi_live", ascending=False)
@@ -174,20 +175,18 @@ else:
 selected_row = view.loc[view["h3_index"] == selected_h3].iloc[0] if selected_h3 else None
 
 # ------------------------------------------------------------------ build map layers
-layers = [
+# mask first (dims everything outside KV), then hexes, borders, highlight, stations
+layers = mapping.mask_layer(kv_mask)
+layers.append(
     pdk.Layer(
         "H3HexagonLayer", id="cdi_layer",
-        data=view[["h3_index", "fill_color", "reason", "district", "cdi_live"]],
+        data=view[["h3_index", "fill_color", "tip"]],
         get_hexagon="h3_index", get_fill_color="fill_color",
         pickable=True, auto_highlight=True, stroked=False, extruded=False, opacity=0.85,
     )
-]
+)
 if show_borders:
-    layers.append(pdk.Layer(
-        "GeoJsonLayer", id="districts", data=districts_geo,
-        stroked=True, filled=False, get_line_color=[255, 255, 255, 160],
-        line_width_min_pixels=1, pickable=False,
-    ))
+    layers += mapping.border_layers(districts_geo, kv_outline)
 if selected_row is not None:
     layers.append(pdk.Layer(
         "H3HexagonLayer", id="highlight",
@@ -196,27 +195,18 @@ if selected_row is not None:
         stroked=True, get_line_color=[255, 255, 255, 230], line_width_min_pixels=2,
         pickable=False, extruded=False,
     ))
-if show_public and len(pub_all):
-    pv = pub_all[pub_all["district"].isin(sel_districts)]
-    layers.append(pdk.Layer(
-        "ScatterplotLayer", id="pub", data=pv[["longitude", "latitude"]],
-        get_position="[longitude, latitude]", get_fill_color=theme.PUBLIC_STATION + [225],
-        get_radius=70, radius_min_pixels=2, radius_max_pixels=6, pickable=False,
-    ))
-if show_private and len(priv_all):
-    prv = priv_all[priv_all["district"].isin(sel_districts)]
-    layers.append(pdk.Layer(
-        "ScatterplotLayer", id="priv", data=prv[["longitude", "latitude"]],
-        get_position="[longitude, latitude]", get_fill_color=theme.PRIVATE_STATION + [180],
-        get_radius=60, radius_min_pixels=2, radius_max_pixels=5, pickable=False,
-    ))
+# stations rendered last so they sit on top → their tooltip takes priority
+layers += mapping.station_layers(
+    stations[stations["district"].isin(sel_districts)],
+    show_public=show_public, show_private=show_private,
+)
 
 view_state = pdk.ViewState(
     latitude=float(view["lat"].mean()), longitude=float(view["lon"].mean()),
     zoom=9.1 if len(sel_districts) > 2 else 10.3, pitch=0, bearing=0,
 )
 tooltip = {
-    "html": "<b>{district}</b><br/>{reason}",
+    "html": "{tip}",
     "style": {"backgroundColor": theme.SURFACE, "color": theme.TEXT, "fontSize": "12px",
               "border": f"1px solid {theme.BORDER}", "borderRadius": "6px",
               "padding": "6px 8px", "maxWidth": "290px"},
@@ -255,6 +245,9 @@ if insp_col is not None:
                      f"{int(r['stations_5km'])} within 5 km"]
     rows_html = "".join(f"<div class='insp-row'><span>{k}</span><b>{v}</b></div>" for k, v in detail)
     maps_url = f"https://www.google.com/maps/@{r['lat']:.5f},{r['lon']:.5f},15z"
+    warn = ("<div class='insp-warn'>⚠ Low OpenStreetMap coverage here — "
+            "population/activity may be understated.</div>"
+            if r["pop_est"] == 0 and r["activity_score"] == 0 else "")
     insp_col.markdown(
         "<div class='insp-panel'>"
         "<div class='insp-h'>Hex inspector</div>"
@@ -263,6 +256,7 @@ if insp_col is not None:
         f"<div class='insp-reason'>{' · '.join(reason_parts)}</div>"
         f"{rows_html}"
         f"<a class='insp-link' href='{maps_url}' target='_blank'>Open in Google Maps ↗</a>"
+        f"{warn}"
         "</div>",
         unsafe_allow_html=True,
     )

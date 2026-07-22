@@ -60,6 +60,28 @@ def load_districts() -> dict:
         return json.load(fh)
 
 
+@st.cache_data(show_spinner=False)
+def load_kv_outline() -> dict | None:
+    """Dissolved outer KV boundary (single feature) for the thin boundary line.
+    Produced by pipeline/make_kv_outline.py; returns None if not generated yet."""
+    path = DATA_DIR / "kv_outline.geojson"
+    if not path.exists():
+        return None
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+@st.cache_data(show_spinner=False)
+def load_kv_mask() -> dict | None:
+    """Big box with the KV outline cut out (a hole), for the dim-outside overlay
+    that makes the study area pop. Produced by pipeline/make_kv_outline.py."""
+    path = DATA_DIR / "kv_mask.geojson"
+    if not path.exists():
+        return None
+    with open(path, "r", encoding="utf-8") as fh:
+        return json.load(fh)
+
+
 # ------------------------------------------------------------ page-2: recommend
 @st.cache_data(show_spinner=False)
 def load_recommended_sites() -> pd.DataFrame:

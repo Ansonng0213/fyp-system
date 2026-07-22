@@ -39,9 +39,13 @@ _INFERNO = [
 
 
 def cdi_to_rgb(cdi: float, alpha: int = 180) -> list[int]:
-    """CDI value (0-100) -> inferno [r, g, b, a]. Matches the pipeline cdi_map.
-    CDI == 0 stays transparent by convention (caller should skip zero hexes)."""
-    t = max(0.0, min(1.0, cdi / 100.0))
+    """CDI value (0-100) -> inferno [r, g, b, a]. CDI == 0 is transparent
+    (undrawn); faint low values render faint, which is honest and preserves real
+    intensity differences. Matches the pipeline inferno palette. Shared by all
+    live maps (Pages 1/2/4)."""
+    if cdi <= 0:
+        return [0, 0, 0, 0]
+    t = min(1.0, cdi / 100.0)
     for i in range(len(_INFERNO) - 1):
         t0, r0, g0, b0 = _INFERNO[i]
         t1, r1, g1, b1 = _INFERNO[i + 1]
@@ -136,6 +140,8 @@ hr{border:none;border-top:1px solid var(--border);margin:1rem 0 1.4rem;}
 .insp-row b{color:var(--text);font-weight:600;}
 .insp-link{display:inline-block;margin-top:12px;color:var(--accent);
   font-size:.85rem;text-decoration:none;}
+.insp-warn{color:var(--muted);font-size:.78rem;line-height:1.45;margin-top:12px;
+  padding:8px 10px;background:var(--surface-2);border-radius:6px;}
 """
 
 
