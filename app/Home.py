@@ -205,7 +205,7 @@ ui.section_header("Explore the system")
 ui.nav_row([
     {"index": "PAGE 1", "title": "CDI Explorer", "href": "CDI_Map",
      "desc": "Interactive desert map with a Government / Operator lens, weight sliders and per-hex reason strings."},
-    {"index": "PAGE 2", "title": "Recommendations", "href": None,
+    {"index": "PAGE 2", "title": "Recommendations", "href": "Sites",
      "desc": "20 optimal new sites by maximal coverage — scorecards, desert zones and a coverage-gain curve."},
     {"index": "PAGE 3", "title": "Demand Forecast", "href": None,
      "desc": "EV demand to 2030 (Prophet vs ARIMA) and the district-level public-port gap."},
