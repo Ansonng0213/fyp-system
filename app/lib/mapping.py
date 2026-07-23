@@ -20,6 +20,7 @@ _STATION_COLS = ["longitude", "latitude", "station_name", "operator", "status",
 
 
 def _esc(s) -> str:
+    """Escape HTML-special chars in free text; the tooltip is set via innerHTML."""
     return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
@@ -33,8 +34,10 @@ def _station_tip(r) -> str:
     power = (f"{r['max_power_kw']:.0f} kW"
              if bool(r["power_known"]) and pd.notna(r["max_power_kw"]) else "power n/a")
     op = str(r["operator"]).strip() if pd.notna(r["operator"]) and str(r["operator"]).strip() else "—"
-    return (f"<b>{_esc(r['station_name'])}</b><br/>"
-            f"{_esc(op)} · {access}<br/>"
+    # plain text + \n line breaks (rendered via white-space:pre-line). No <b>/<br/>
+    # tags, so it renders identically regardless of pydeck's tooltip HTML handling.
+    return (f"{_esc(r['station_name'])}\n"
+            f"{_esc(op)} · {access}\n"
             f"{_esc(r['status'])} · {ports} · {power}")
 
 

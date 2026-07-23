@@ -1,9 +1,10 @@
 # App runtime — this is what Streamlit Community Cloud installs.
-# Deliberately MINIMAL: only what app/ imports, so the deploy is fast and never
-# has to compile prophet / GDAL. The full pipeline stack is in
-# requirements-pipeline.txt (not needed to run the dashboard).
-streamlit>=1.36
-pydeck>=0.9
-pandas>=2.1
-numpy>=1.26
-plotly>=5.20
+# Deliberately MINIMAL (only what app/ imports) AND pinned to the exact versions
+# tested locally, so cloud == local and redeploys can't drift (e.g. a pydeck
+# change that breaks tooltip HTML rendering). Full pipeline stack lives in
+# requirements-pipeline.txt.
+streamlit==1.59.2
+pydeck==0.9.3
+pandas==3.0.3
+numpy==2.5.1
+plotly==6.9.0

@@ -109,7 +109,7 @@ def reason_of(r, eq_on: bool) -> str:
 
 view["reason"] = [reason_of(r, equity_on) for r in view.itertuples()]
 view["fill_color"] = [theme.cdi_to_rgb(v) for v in view["cdi_live"]]
-view["tip"] = [f"<b>{d}</b><br/>{rs}" for d, rs in zip(view["district"], view["reason"])]
+view["tip"] = [f"{d}\n{rs}" for d, rs in zip(view["district"], view["reason"])]
 
 # inspector options: inhabited hexes in view, ranked by the live CDI
 inhabited = view[view["pop_est"] > 0].sort_values("cdi_live", ascending=False)
@@ -205,11 +205,14 @@ view_state = pdk.ViewState(
     latitude=float(view["lat"].mean()), longitude=float(view["lon"].mean()),
     zoom=9.1 if len(sel_districts) > 2 else 10.3, pitch=0, bearing=0,
 )
+# tip values are PLAIN TEXT (no <b>/<br/> tags), so no pydeck version can render
+# tags literally; line breaks come from \n + white-space:pre-line, not <br/>
 tooltip = {
     "html": "{tip}",
     "style": {"backgroundColor": theme.SURFACE, "color": theme.TEXT, "fontSize": "12px",
               "border": f"1px solid {theme.BORDER}", "borderRadius": "6px",
-              "padding": "6px 8px", "maxWidth": "290px"},
+              "padding": "6px 8px", "maxWidth": "290px", "whiteSpace": "pre-line",
+              "lineHeight": "1.4"},
 }
 deck = pdk.Deck(
     layers=layers, initial_view_state=view_state,
