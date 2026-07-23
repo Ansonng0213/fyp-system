@@ -40,3 +40,13 @@ Cost: requires **re-running stages 04→09** and **re-validating** all downstrea
 results (hex population, CDI, recommendations, forecasts, headline numbers).
 Only do this if time allows — the current dasymetric estimate is documented and
 defensible; this is an accuracy upgrade, not a correctness fix.
+
+---
+
+## 4. Desert-zones table: add a "zone type" column
+On Page 2's desert-zones expander, add a **zone type** column distinguishing the
+two desert types so it's explicit at a glance: **large-population** zones
+(Petaling — high population, moderate CDI) vs **high-severity** zones (Klang —
+highest mean CDI). Classify by a simple rule (e.g. mean CDI ≥ 60 → high-severity;
+else large-population by population rank), or precompute the label in the pipeline
+recommender step.
