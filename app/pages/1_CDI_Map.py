@@ -138,20 +138,15 @@ st.markdown("<hr>", unsafe_allow_html=True)
 # ------------------------------------------------------------------ KPI row (reactive)
 inh_view = view[view["pop_est"] > 0]
 severe = view[view["cdi_live"] >= 50]
-k1, k2, k3 = st.columns(3, gap="medium")
-ui.kpi_card(
-    k1, "Severe desert hexes", theme.fmt_int((view["cdi_live"] >= 50).sum()),
-    f"{persona} view · CDI ≥ 50 · of {theme.fmt_int(len(inh_view))} inhabited in view",
-)
-ui.kpi_card(
-    k2, "People in severe zones", theme.fmt_int(severe["pop_est"].sum()),
-    f"CDI ≥ 50 · demand blend pop {w_pop:.2f} / act {1 - w_pop:.2f}",
-)
 median_near = view["nearest_station_km"].median() if len(view) else 0.0
-ui.kpi_card(
-    k3, "Median nearest charger", theme.fmt_km(median_near),
-    "all hexes in view · public + operational stations",
-)
+ui.kpi_row([
+    {"label": "Severe desert hexes", "value": theme.fmt_int((view["cdi_live"] >= 50).sum()),
+     "context": f"{persona} view · CDI ≥ 50 · of {theme.fmt_int(len(inh_view))} inhabited in view"},
+    {"label": "People in severe zones", "value": theme.fmt_int(severe["pop_est"].sum()),
+     "context": f"CDI ≥ 50 · demand blend pop {w_pop:.2f} / act {1 - w_pop:.2f}"},
+    {"label": "Median nearest charger", "value": theme.fmt_km(median_near),
+     "context": "all hexes in view · public + operational stations"},
+])
 
 st.write("")
 

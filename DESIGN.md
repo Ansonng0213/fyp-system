@@ -116,9 +116,20 @@ unambiguous. A semantic color below is used for that meaning and *nothing else*.
   it subtle.
 
 ## 5. Components (build once in `app/lib/ui.py`, reuse everywhere)
+- **Equal-height card rows (MANDATORY).** Cards in one row — KPI, nav, how-it-works
+  steps — are rendered as a SINGLE flex container (`.card-row`, `align-items:stretch`)
+  so every card matches the tallest, no matter how much text it holds. Never let each
+  card size to its own text, and never build a card row from `st.columns` of
+  individual cards (columns don't equalise height). Each card is a flex-column with
+  `height:100%`; the context line / "coming soon" badge is pinned to the bottom with
+  `margin-top:auto`. This lives in `ui.py` + `theme.py`; pages call `ui.kpi_row([...])`,
+  `ui.nav_row([...])`, `ui.steps_row([...])`.
 - **KPI card** — `value + label + context line`, on a `surface` card with a thin
   `border`. Example: value **`Klang 47.2% vs KL 98.0%`**, label
   `POPULATION WITHIN 2 KM OF A PUBLIC CHARGER`, context `KV overall 79.3%`.
+- **Nav card** — whole card is a link (`<a>` to the page slug, e.g. `CDI_Map`) when
+  the page is built: pointer cursor + hover lift/accent border. Unbuilt pages render
+  muted (`opacity .45`) with a "Coming soon" badge and do not navigate.
 - **Inspector panel — reason-string pattern** (the product's explainability in
   one line), middot `·` separated:
   `CDI 78: 22,000 residents · activity 240 · ×1.24 equity · nearest charger 4.1 km · 3 stations within 5 km`

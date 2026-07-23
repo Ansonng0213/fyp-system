@@ -90,20 +90,62 @@ _CSS_BODY = """
 .page-sub{color:var(--muted);font-size:.95rem;margin:.3rem 0 0;}
 hr{border:none;border-top:1px solid var(--border);margin:1rem 0 1.4rem;}
 
-/* KPI card: value + label + context (DESIGN.md §5) */
+/* equal-height card rows (DESIGN.md §5): one flex container per row, cards
+   stretch to the tallest, context/badge pinned to the bottom */
+.card-row{display:flex;gap:16px;align-items:stretch;flex-wrap:wrap;margin:2px 0;}
+.card-row > *{flex:1 1 0;min-width:190px;align-self:stretch;}
+
+/* KPI card: value + label + context */
 .kpi-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:18px 20px;min-height:140px;}
+  padding:18px 20px;min-height:140px;display:flex;flex-direction:column;
+  box-sizing:border-box;}
 .kpi-label{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.08em;
   text-transform:uppercase;margin-bottom:10px;}
 .kpi-value{color:var(--text);font-size:clamp(1.3rem,1.7vw,1.7rem);font-weight:700;line-height:1.15;}
-.kpi-context{color:var(--muted);font-size:.82rem;margin-top:10px;line-height:1.45;}
+.kpi-context{color:var(--muted);font-size:.82rem;margin-top:auto;padding-top:10px;line-height:1.45;}
 
-/* navigation card */
+/* navigation card (whole card clickable when a page is built) */
 .nav-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-  padding:15px 17px;min-height:118px;}
+  padding:15px 17px;min-height:118px;display:flex;flex-direction:column;
+  box-sizing:border-box;text-decoration:none;}
+a.nav-card.nav-link,a.nav-card.nav-link:hover,a.nav-card.nav-link:visited{
+  text-decoration:none!important;color:inherit;}
+a.nav-card.nav-link{cursor:pointer;
+  transition:transform .12s ease, border-color .12s ease, background .12s ease;}
+a.nav-card.nav-link:hover{border-color:var(--accent);background:var(--surface-2);
+  transform:translateY(-2px);}
+.nav-card.nav-disabled{opacity:.45;}
 .nav-idx{color:var(--accent);font-size:.7rem;font-weight:700;letter-spacing:.09em;}
 .nav-title{color:var(--text);font-size:1.0rem;font-weight:600;margin:3px 0 5px;}
 .nav-desc{color:var(--muted);font-size:.83rem;line-height:1.45;}
+.nav-badge{margin-top:auto;padding-top:8px;font-size:.66rem;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;color:var(--faint);}
+
+/* solution callout band */
+.solution-band{background:linear-gradient(90deg,rgba(62,123,250,.12),rgba(62,123,250,.02));
+  border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:12px;
+  padding:20px 24px;margin:4px 0;}
+.solution-lead{color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:7px;}
+.solution-body{color:var(--text);font-size:1.15rem;line-height:1.5;}
+.solution-body b{font-weight:700;}
+
+/* how-it-works step card */
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:14px 16px;display:flex;flex-direction:column;box-sizing:border-box;}
+.step-n{color:var(--accent);font-size:.82rem;font-weight:700;margin-bottom:6px;}
+.step-t{color:var(--text);font-size:.92rem;font-weight:600;margin-bottom:3px;}
+.step-d{color:var(--muted);font-size:.8rem;line-height:1.4;}
+
+/* validation trust strip */
+.trust-strip{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+  padding:12px 16px;color:var(--muted);font-size:.86rem;line-height:1.5;}
+.trust-strip b{color:var(--text);font-weight:600;}
+.trust-strip .tick{color:var(--accent);font-weight:700;}
+
+/* footer */
+.site-footer{color:var(--faint);font-size:.78rem;line-height:1.5;
+  border-top:1px solid var(--border);padding-top:14px;margin-top:10px;}
 
 /* section header + narrative */
 .section-h{color:var(--text);font-size:1.15rem;font-weight:600;margin:6px 0 4px;}
