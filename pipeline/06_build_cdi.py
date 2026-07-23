@@ -194,6 +194,7 @@ try:
                            geometry=[cell_polygon(c) for c in hexes["h3_index"]],
                            crs="EPSG:4326")
     kv = gpd.read_file(os.path.join(OUT_DIR, "kv_districts_dosm.geojson"))
+    TXT = "#E6E9EF"                       # near-white text, legible on dark canvas
     fig, ax = plt.subplots(figsize=(11, 10))
     gdf[gdf["cdi"] > 0].plot(column="cdi", cmap="inferno", ax=ax, legend=True,
                              vmin=0, vmax=100,
@@ -202,9 +203,16 @@ try:
     kv.boundary.plot(ax=ax, color="white", linewidth=1.0)
     ax.scatter(supply_st["longitude"], supply_st["latitude"],
                s=6, c="#00e5ff", alpha=0.8, linewidths=0, label="Public stations")
-    ax.legend(loc="lower left", frameon=False, labelcolor="white")
-    ax.set_title("Charging Desert Index — Greater Klang Valley (H3 res 8)")
+    ax.legend(loc="lower left", frameon=False, labelcolor=TXT)
+    ax.set_title("Charging Desert Index — Greater Klang Valley (H3 res 8)",
+                 color=TXT, fontsize=14, pad=12)
     ax.set_axis_off()
+    # near-white colorbar label + tick labels (legend=True adds the colorbar axis)
+    cax = fig.axes[-1]
+    cax.yaxis.label.set_color(TXT)
+    cax.tick_params(colors=TXT)
+    for spine in cax.spines.values():
+        spine.set_edgecolor(TXT)
     fig.tight_layout()
     fig.savefig(os.path.join(OUT_DIR, "cdi_map.png"), dpi=150, facecolor="#1a1a2e")
     print("  Map saved -> cdi_map.png")
