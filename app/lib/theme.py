@@ -18,6 +18,7 @@ TEXT = "#E6E9EF"
 TEXT_MUTED = "#9AA1AD"
 TEXT_FAINT = "#6B7280"
 ACCENT = "#3E7BFA"          # UI affordances only — deliberately outside the map palette
+ACCENT_RGB = [62, 123, 250]  # same, for pydeck get_*_color
 
 # --- Map data semantics (reserved; never reused) ----------------------------
 MAP_CANVAS = "#1A1A2E"                 # matches cdi_map.png facecolor

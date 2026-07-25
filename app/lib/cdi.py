@@ -7,6 +7,15 @@ from __future__ import annotations
 import pandas as pd
 
 
+def demand_pressure(df: pd.DataFrame, w_pop: float = 0.5, equity_on: bool = True) -> pd.Series:
+    """The demand side only: (w_pop*pop_n + w_act*act_n) * equity. Supply-independent,
+    so the What-If page can apply it to both the stored gap (before) and a new gap
+    (after) and normalize both against the same peak — an honest before/after."""
+    w_act = 1.0 - w_pop
+    equity = df["equity_mult"] if equity_on else 1.0
+    return (w_pop * df["pop_n"] + w_act * df["act_n"]) * equity
+
+
 def recompute_cdi(df: pd.DataFrame, w_pop: float = 0.5, equity_on: bool = True) -> pd.Series:
     """Re-mix CDI (0-100) from the stored components, exactly like
     pipeline/06_build_cdi.py:

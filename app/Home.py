@@ -209,7 +209,7 @@ ui.nav_row([
      "desc": "20 optimal new sites by maximal coverage — scorecards, desert zones and a coverage-gain curve."},
     {"index": "PAGE 3", "title": "Demand Forecast", "href": "Forecast",
      "desc": "EV demand to 2030 (Prophet vs ARIMA) and the district-level public-port gap."},
-    {"index": "PAGE 4", "title": "What-If Simulator", "href": None,
+    {"index": "PAGE 4", "title": "What-If Simulator", "href": "WhatIf",
      "desc": "Drop a hypothetical station and watch coverage, gaps and CDI update live."},
     {"index": "PAGE 5", "title": "Validation & Data", "href": None,
      "desc": "Holdout recall, coverage curves, capacity adequacy and full data provenance."},
