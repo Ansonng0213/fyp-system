@@ -211,7 +211,7 @@ ui.nav_row([
      "desc": "EV demand to 2030 (Prophet vs ARIMA) and the district-level public-port gap."},
     {"index": "PAGE 4", "title": "What-If Simulator", "href": "WhatIf",
      "desc": "Drop a hypothetical station and watch coverage, gaps and CDI update live."},
-    {"index": "PAGE 5", "title": "Validation & Data", "href": None,
+    {"index": "PAGE 5", "title": "Validation & Data", "href": "Trust",
      "desc": "Holdout recall, coverage curves, capacity adequacy and full data provenance."},
 ])
 
