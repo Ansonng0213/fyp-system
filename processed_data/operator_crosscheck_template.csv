@@ -1,9 +1,9 @@
-h3_index,district,lat,lon,zone_type,our_public_stations_2km,jomcharge_count,gentari_count,chargev_count,other_count,notes,maps_link
-88650509b5fffff,WP Kuala Lumpur,3.151143649607716,101.62964934514186,served_KL,12,,,,,,"https://www.google.com/maps/@3.15114,101.62965,14z"
-88650509b7fffff,WP Kuala Lumpur,3.151860227006103,101.62070213957236,served_KL,16,,,,,,"https://www.google.com/maps/@3.15186,101.6207,14z"
-88650544d1fffff,WP Kuala Lumpur,3.2122292741190006,101.64427828681777,served_KL,3,,,,,,"https://www.google.com/maps/@3.21223,101.64428,14z"
-88650509b1fffff,WP Kuala Lumpur,3.143777477924369,101.62446594897672,served_KL,10,,,,,,"https://www.google.com/maps/@3.14378,101.62447,14z"
-8865050cd3fffff,Klang,3.0116773954762235,101.42758116957847,desert,0,,,,,,"https://www.google.com/maps/@3.01168,101.42758,14z"
-8865053b63fffff,Klang,2.9888661209324585,101.42099067348354,desert,1,,,,,,"https://www.google.com/maps/@2.98887,101.42099,14z"
-8865053b3dfffff,Klang,2.998369247854728,101.39932155440042,desert,0,,,,,,"https://www.google.com/maps/@2.99837,101.39932,14z"
-8865050cd7fffff,Klang,3.0190439118985197,101.4327613991441,desert,0,,,,,,"https://www.google.com/maps/@3.01904,101.43276,14z"
+h3_index,district,lat,lon,zone_type,our_public_stations_2km,jomcharge_count,gentari_count,chargev_count,other_count,notes,maps_link,plugshare_public_count,plugshare_confidence,plugshare_notes
+88650509b5fffff,WP Kuala Lumpur,3.151143649607716,101.62964934514186,served_KL,12,,,,,,"https://www.google.com/maps/@3.15114,101.62965,14z",,,
+88650509b7fffff,WP Kuala Lumpur,3.151860227006103,101.62070213957236,served_KL,16,,,,,,"https://www.google.com/maps/@3.15186,101.6207,14z",,,
+88650544d1fffff,WP Kuala Lumpur,3.2122292741190006,101.64427828681777,served_KL,3,,,,,,"https://www.google.com/maps/@3.21223,101.64428,14z",,,
+88650509b1fffff,WP Kuala Lumpur,3.143777477924369,101.62446594897672,served_KL,10,,,,,,"https://www.google.com/maps/@3.14378,101.62447,14z",,,
+8865050cd3fffff,Klang,3.0116773954762235,101.42758116957847,desert,0,,,,,,"https://www.google.com/maps/@3.01168,101.42758,14z",5,medium,"PlugShare live, public+operational filter (Hide Restricted Access + Hide Coming Soon ON). ~5 within 2km, ALL at Bandar Bukit Tinggi commercial cluster (Premiere Hotel/Klang Jaya SA23, Samy & Min, Aeon Mall Bukit Tinggi); nearest ~0.86km. Residential target core itself empty. NOTE: SkyVolt @ Bukit Tinggi Medical Centre (~0.4km) EXCLUDED = Coming Soon (not operational). Centered within ~106m of target."
+8865053b63fffff,Klang,2.9888661209324585,101.42099067348354,desert,1,,,,,,"https://www.google.com/maps/@2.98887,101.42099,14z",5,medium-low,"~5 within 2km. One CLOSE at ~0.44km (green pin @ Klang Sports Centre) - likely = our 1 station. Remainder = shared Bukit Tinggi cluster ~1.5-1.8km NE (near the 2km edge, so count sensitive). Centered within ~26m of target."
+8865053b3dfffff,Klang,2.998369247854728,101.39932155440042,desert,0,,,,,,"https://www.google.com/maps/@2.99837,101.39932,14z",0,medium,"~0 within 2km. Port Klang / target core has NO charging teardrops nearby; nearest is Klang Sports Centre ~2.0-2.2km SE (borderline, likely just OUTSIDE 2km). Bukit Tinggi cluster ~3km E (outside). Genuinely sparse - matches our 0. Centered within ~73m of target."
+8865050cd7fffff,Klang,3.0190439118985197,101.4327613991441,desert,0,,,,,,"https://www.google.com/maps/@3.01904,101.43276,14z",5,low-medium,"~5-6 within 2km; NOT empty. Flanked by Klang-town stations ~1.7km N (green+orange near Klang) and Bukit Tinggi cluster ~0.9km S (Premiere Hotel etc.); nearest ~0.88km. Least desert-like of the 4 (adjacent to Klang town). Lower confidence: busy map, several pins near 2km/screen edge. Centered within ~71m of target."
