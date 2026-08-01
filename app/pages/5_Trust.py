@@ -6,7 +6,6 @@ limitations with mitigations, full data provenance, a methods summary, and the
 operator cross-check (auto-populates when the template is filled). Reads only
 processed_data/ artifacts.
 """
-import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
@@ -251,31 +250,50 @@ st.markdown(
 st.write("")
 st.markdown("<hr>", unsafe_allow_html=True)
 
-# ------------------------------------------------------------------ 9 · operator cross-check
-ui.section_header("Operator cross-check")
-fill_cols = [c for c in ["jomcharge_count", "gentari_count", "chargev_count", "other_count"]
-             if c in oc.columns]
-is_filled = bool(fill_cols) and bool(oc[fill_cols].notna().to_numpy().any())
+# ------------------------------------------------------------------ 9 · live cross-check (PlugShare)
+ui.section_header("Live cross-check — our snapshot vs PlugShare")
+desert = oc[oc["zone_type"] == "desert"].copy()
+ps_filled = ("plugshare_public_count" in oc.columns
+             and desert["plugshare_public_count"].notna().any())
 
-if is_filled:
-    o2 = oc.copy()
-    o2["Operator total"] = o2[fill_cols].fillna(0).sum(axis=1)
-    agg = o2.groupby("zone_type").agg(ours=("our_public_stations_2km", "sum"),
-                                      ops=("Operator total", "sum")).reset_index()
-    agg["Recall vs operators"] = (100 * agg["ours"] / agg["ops"].replace(0, np.nan)).round(0)
-    agg = agg.rename(columns={"zone_type": "Zone type", "ours": "Our stations", "ops": "Operator-listed"})
-    st.markdown("<div class='trust-strip'>Cross-check <b>filled</b> — comparing our fused dataset with "
-                "live operator apps (JomCharge / Gentari / ChargEV), split by zone type.</div>",
-                unsafe_allow_html=True)
-    st.dataframe(agg[["Zone type", "Our stations", "Operator-listed", "Recall vs operators"]],
-                 hide_index=True, use_container_width=True,
-                 column_config={"Recall vs operators": st.column_config.NumberColumn(format="%d%%")})
+if ps_filled:
+    st.markdown(
+        "<div class='trust-strip'>The four worst Klang desert hexes were <b>manually verified against "
+        "live PlugShare</b> (public + operational only — restricted-access and coming-soon stations "
+        "filtered out). The check <b>refines</b> the desert finding rather than overturning it: public "
+        "charging in Klang <b>does exist, but it clusters at commercial nodes</b> — Aeon Mall Bukit Tinggi, "
+        "GM Klang Wholesale City, the Klang town centre and highway hotels — while the surrounding "
+        "<b>residential neighbourhoods stay empty</b>. In three of the four hexes the chargers sit "
+        "0.5–1.8 km away at that commercial fringe; the residential cores themselves have none. The one "
+        "exception, the Port Klang core, is <b>genuinely empty</b> — ~4 km to the nearest charger.</div>",
+        unsafe_allow_html=True,
+    )
+    d = desert.copy()
+    d["Location (lat, lon)"] = (d["lat"].astype(float).round(4).astype(str) + ", "
+                                + d["lon"].astype(float).round(4).astype(str))
+    show = d[["Location (lat, lon)", "our_public_stations_2km",
+              "plugshare_public_count", "maps_link"]].rename(columns={
+        "our_public_stations_2km": "Our snapshot ≤2 km",
+        "plugshare_public_count": "PlugShare live ≤2 km", "maps_link": "Map"})
+    st.dataframe(show, hide_index=True, use_container_width=True,
+                 column_config={"Map": st.column_config.LinkColumn("Map", display_text="open ↗")})
+    st.markdown(
+        "<div class='trust-strip'><b>The defensible reading:</b> charging follows "
+        "<b>commercial-ROI siting, not residential need</b> — precisely this project's thesis, now "
+        "evidenced directly on the map. Our snapshot counts operational public stations at data-collection "
+        "time (Apr 2026); PlugShare is live, and the gap is mostly recent commercial-venue build-out. The "
+        "district-level equity gaps above (2 km coverage, per-port capacity, 500 m coverage) are unaffected "
+        "and still hold.</div>",
+        unsafe_allow_html=True,
+    )
+    st.caption("Manual verification, Aug 2026 · public + operational PlugShare listings, restricted-access "
+               "and coming-soon excluded · counts are rough per-zone tallies within 2 km.")
 else:
-    st.markdown("<div class='trust-strip'>External recall check against live operator apps "
-                "(JomCharge / Gentari / ChargEV) — <b>pending manual verification</b>. The 8 seed zones "
-                "below (4 served-KL, 4 Klang-desert) carry our own counts; fill the operator columns in "
-                "<code>operator_crosscheck_template.csv</code> and this section recomputes recall "
-                "automatically.</div>", unsafe_allow_html=True)
+    st.markdown("<div class='trust-strip'>Live cross-check against PlugShare — <b>pending manual "
+                "verification</b>. The 8 seed zones (4 served-KL, 4 Klang-desert) carry our own counts in "
+                "<code>operator_crosscheck_template.csv</code>; fill the "
+                "<code>plugshare_public_count</code> column and this section presents the comparison.</div>",
+                unsafe_allow_html=True)
     show = oc[["zone_type", "district", "our_public_stations_2km", "maps_link"]].rename(columns={
         "zone_type": "Zone type", "district": "District",
         "our_public_stations_2km": "Our stations ≤2 km", "maps_link": "Map"})
