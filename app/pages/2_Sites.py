@@ -291,8 +291,7 @@ with curve_col:
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color=theme.TEXT_MUTED, size=12),
         title=dict(text="Cumulative people newly covered", font=dict(color=theme.TEXT, size=13.5), x=0),
-        xaxis=dict(title="Number of sites", showgrid=True, gridcolor="rgba(255,255,255,0.06)",
-                   zeroline=False, dtick=5),
+        xaxis=dict(title="Number of sites", showgrid=False, zeroline=False, dtick=5),
         yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.06)", zeroline=False,
                    tickformat=",", rangemode="tozero"),
     )
@@ -331,11 +330,17 @@ with st.expander(f"{len(zones)} contiguous desert zones — two distinct types",
     st.caption("Two desert types are visible: **Petaling's** zones are largest by population (moderate "
                "severity), while **Klang's** zones are the most severe (highest mean CDI).")
     zt = zones[["zone", "district", "hexes", "population", "mean_cdi"]].copy()
+    # two desert types: high mean-CDI zones are severity-driven; the rest are
+    # scale-driven (large population, moderate CDI). Threshold per POLISH.md.
+    zt["zone_type"] = np.where(zt["mean_cdi"] >= 60,
+                               "severity (high CDI)", "scale (large population)")
+    zt = zt[["zone", "district", "zone_type", "hexes", "population", "mean_cdi"]]
     st.dataframe(
         zt, hide_index=True, use_container_width=True,
         column_config={
             "zone": st.column_config.NumberColumn("Zone", width="small"),
             "district": st.column_config.TextColumn("District"),
+            "zone_type": st.column_config.TextColumn("Zone type"),
             "hexes": st.column_config.NumberColumn("Hexes", width="small"),
             "population": st.column_config.NumberColumn("Population", format="%d"),
             "mean_cdi": st.column_config.NumberColumn("Mean CDI", format="%.1f"),
