@@ -9,8 +9,9 @@ decisions recorded there without the user's explicit approval.
 ## What this project is
 Final Year Project (Ng Cheng Xin, TP071136, APU): an equity-weighted
 geospatial decision-intelligence system for EV charging placement in the
-Greater Klang Valley. The ANALYTICS ENGINE IS COMPLETE AND VALIDATED.
-The remaining work is the STREAMLIT DASHBOARD described in `PLAN.md`.
+Greater Klang Valley. The ANALYTICS ENGINE IS COMPLETE AND VALIDATED, and the
+STREAMLIT DASHBOARD (Home + Pages 1-5, per `PLAN.md`) IS BUILT AND RUNNING.
+Remaining work is finishing polish and the optional Page 6 (see `PLAN.md`).
 
 ## Architecture rules (do not violate)
 1. **Artifact pattern.** Heavy computation lives in `pipeline/` scripts that
@@ -42,8 +43,14 @@ The remaining work is the STREAMLIT DASHBOARD described in `PLAN.md`.
 - Pipeline stages 02-09: built, validated, reproduced on the user's machine.
 - Key headline results are in FYP_PROJECT_MEMORY.md (CDI, 20 recommended
   sites, +1.05M coverage, 24k-port 2030 gap, 17.6% backtest MAPE).
-- Dashboard: NOT built. `app/Home.py` is a minimal working stub.
-  Build order and full page specs: `PLAN.md`.
+- Dashboard: BUILT & running (`streamlit run app/Home.py`) — Home + Pages 1-5
+  (CDI Explorer, Recommendations, Forecast, What-If, Validation & Data), sharing
+  `app/lib/` helpers. Full page specs in `PLAN.md`.
+- Validation: live cross-checks done — Google Places coverage + manual PlugShare
+  per-zone verification of the Klang desert hexes (recorded in
+  `operator_crosscheck_template.csv` + FYP_PROJECT_MEMORY.md).
+- Remaining: optional Page 6 (Investment Scenario Calculator), ongoing visual
+  polish (`POLISH.md`), and the user's OCM/Google API-key revocation.
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.
