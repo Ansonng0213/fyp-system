@@ -222,6 +222,21 @@ a.nav-card.nav-link:hover{border-color:var(--accent);background:var(--surface-2)
 .stack{display:flex;flex-direction:column;gap:16px;}
 .stack-cap{color:var(--faint);font-size:.8rem;line-height:1.5;}
 
+/* ---- indicative-scenario banner (Investment page): amber caution so the
+   "not a prediction" framing is unmistakable ---- */
+.indic-band{background:linear-gradient(90deg,rgba(232,131,58,.12),rgba(232,131,58,.02));
+  border:1px solid var(--border);border-left:3px solid #E8833A;border-radius:12px;
+  padding:16px 20px;margin:4px 0;}
+.indic-lead{color:#E8833A;font-size:.76rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:6px;}
+.indic-body{color:var(--text);font-size:.96rem;line-height:1.55;}
+.indic-body b{font-weight:700;}
+.indic-tag{display:inline-block;background:rgba(232,131,58,.16);color:#E8833A;
+  font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 8px;border-radius:5px;vertical-align:middle;margin-left:8px;}
+.ctl-sub{color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;margin:12px 0 2px;}
+
 /* ---- cover / landing screen (entry point) ---- */
 .cover{max-width:1060px;margin:0 auto;text-align:center;padding:3vh 12px 2vh;}
 .cover-eyebrow{color:var(--accent);font-size:.82rem;font-weight:700;letter-spacing:.24em;

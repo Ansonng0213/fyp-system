@@ -98,10 +98,15 @@ if present), audit_* files
   date, rows, limitation, mitigation per dataset).
 - If operator_crosscheck has filled columns, compute and show recall.
 
-## Optional Page 6 — Investment Scenario Calculator (only if time)
-Inputs (sliders): sessions/day, kWh/session, margin RM/kWh, CapEx RM.
-Output: indicative monthly revenue, breakeven year. Big "INDICATIVE —
-user assumptions, not predictions" banner. No model claims.
+## ✅ Page 6 — Investment Scenario Calculator  (app/pages/7_Investment.py) — BUILT
+Operator/commercial lens. Sidebar: optional site anchor (one of the 20 recommended
+sites → shows catchment pop + CDI), then assumptions — ports, sessions/port/day,
+kWh/session, tariff & energy cost RM/kWh, CapEx/port, monthly opex.
+Output (all labelled "indicative"): monthly energy & gross margin, net after opex,
+simple payback, break-even sessions/day, and a payback-vs-utilization sensitivity
+chart (the 15%–35% utilization cliff). Amber "INDICATIVE — user assumptions, not a
+revenue prediction" banner + honest caveat panel (data-availability paradox). No
+model/revenue claims. Ties back to the CDI equity lens.
 
 ---
 

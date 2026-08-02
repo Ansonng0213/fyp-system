@@ -213,6 +213,8 @@ ui.nav_row([
      "desc": "Drop a hypothetical station and watch coverage, gaps and CDI update live."},
     {"index": "PAGE 5", "title": "Validation & Data", "href": "Trust",
      "desc": "Holdout recall, coverage curves, capacity adequacy and full data provenance."},
+    {"index": "PAGE 6", "title": "Investment Scenario", "href": "Investment",
+     "desc": "Operator lens — stress-test the indicative commercial case for a candidate site."},
 ])
 
 st.write("")
