@@ -185,6 +185,42 @@ a.nav-card.nav-link:hover{border-color:var(--accent);background:var(--surface-2)
   font-size:.85rem;text-decoration:none;}
 .insp-warn{color:var(--muted);font-size:.78rem;line-height:1.45;margin-top:12px;
   padding:8px 10px;background:var(--surface-2);border-radius:6px;}
+
+/* ---- uniform side-by-side alignment (shared rule, all pages) ----
+   paired Streamlit columns top-align so headings/titles start on one line */
+[data-testid="stHorizontalBlock"]{align-items:flex-start;}
+
+/* ---- HTML data table: visible row dividers. st.dataframe renders on a
+   canvas whose grid lines cannot be themed via CSS, so display tables are
+   rendered as HTML with clearly-lifted separators against the dark bg. ---- */
+.data-table-wrap{overflow-x:auto;}
+.data-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.data-table thead th{color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.05em;
+  text-transform:uppercase;text-align:left;padding:9px 12px;white-space:nowrap;
+  border-bottom:1px solid rgba(255,255,255,.30);}
+.data-table tbody td{color:var(--text);padding:9px 12px;line-height:1.45;vertical-align:top;
+  border-top:1px solid rgba(255,255,255,.16);}
+.data-table td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.data-table a{color:var(--accent);text-decoration:none;}
+.data-table a:hover{text-decoration:underline;}
+
+/* ---- equal-height paired panels: header on top, explanation pinned to the
+   bottom (margin-top:auto) so paired panels' bottoms line up. Drop inside a
+   .card-row, which stretches its children to equal height. ---- */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:16px 18px;display:flex;flex-direction:column;box-sizing:border-box;}
+.panel-h{color:var(--text);font-size:.92rem;font-weight:600;margin-bottom:12px;line-height:1.35;}
+/* explanation starts right under the (equal-height) table, so paired panels'
+   explanations begin on the same line; equal card height puts any slack at the
+   bottom, not above the text */
+.panel-foot{padding-top:14px;color:var(--muted);font-size:.84rem;line-height:1.55;}
+.panel-foot b{color:var(--text);font-weight:600;}
+.panel-foot .tick{color:var(--accent);font-weight:700;}
+
+/* ---- uniform vertical rhythm: stack HTML blocks in a section with one gap so
+   boxes/tables/captions never sit flush. Shared across pages. ---- */
+.stack{display:flex;flex-direction:column;gap:16px;}
+.stack-cap{color:var(--faint);font-size:.8rem;line-height:1.5;}
 """
 
 

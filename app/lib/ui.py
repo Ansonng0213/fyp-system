@@ -56,3 +56,39 @@ def steps_row(steps: list[tuple]) -> None:
 
 def section_header(text: str) -> None:
     st.markdown(f"<div class='section-h'>{text}</div>", unsafe_allow_html=True)
+
+
+def _esc(v) -> str:
+    return (str(v).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+
+
+def html_table(df, num_cols: list[str] | None = None,
+               link_cols: list[str] | None = None, link_text: str = "open ↗") -> str:
+    """Static styled HTML table string with clearly-visible row dividers.
+
+    st.dataframe renders on a canvas whose grid lines can't be themed via CSS, so
+    display (non-interactive) tables use this for uniform, legible separators.
+    `num_cols` are right-aligned (tabular); `link_cols` render their cell value as
+    an external link. Values are HTML-escaped."""
+    num_cols, link_cols = set(num_cols or []), set(link_cols or [])
+    heads = "".join(f"<th>{_esc(c)}</th>" for c in df.columns)
+    rows = []
+    for _, r in df.iterrows():
+        cells = []
+        for c in df.columns:
+            if c in link_cols:
+                cells.append(f"<td><a href='{_esc(r[c])}' target='_blank'>{link_text}</a></td>")
+            else:
+                cls = " class='num'" if c in num_cols else ""
+                cells.append(f"<td{cls}>{_esc(r[c])}</td>")
+        rows.append("<tr>" + "".join(cells) + "</tr>")
+    return (f"<div class='data-table-wrap'><table class='data-table'>"
+            f"<thead><tr>{heads}</tr></thead><tbody>{''.join(rows)}</tbody></table></div>")
+
+
+def panel(header: str, body_html: str, foot_html: str = "") -> str:
+    """One equal-height panel: header, body, and an optional footer pinned to the
+    bottom. Place two+ in a `.card-row` so their bottoms align (DESIGN.md §5)."""
+    foot = f"<div class='panel-foot'>{foot_html}</div>" if foot_html else ""
+    return (f"<div class='panel'><div class='panel-h'>{header}</div>"
+            f"<div class='panel-body'>{body_html}</div>{foot}</div>")
