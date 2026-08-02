@@ -221,6 +221,42 @@ a.nav-card.nav-link:hover{border-color:var(--accent);background:var(--surface-2)
    boxes/tables/captions never sit flush. Shared across pages. ---- */
 .stack{display:flex;flex-direction:column;gap:16px;}
 .stack-cap{color:var(--faint);font-size:.8rem;line-height:1.5;}
+
+/* ---- cover / landing screen (entry point) ---- */
+.cover{max-width:1060px;margin:0 auto;text-align:center;padding:3vh 12px 2vh;}
+.cover-eyebrow{color:var(--accent);font-size:.82rem;font-weight:700;letter-spacing:.24em;
+  text-transform:uppercase;margin-bottom:26px;}
+.cover-title{color:var(--text);font-weight:800;letter-spacing:-.02em;
+  font-size:clamp(1.95rem,3.5vw,3rem);line-height:1.14;margin:0 auto;max-width:22ch;}
+.cover-author{color:var(--muted);font-size:.95rem;letter-spacing:.02em;margin:24px 0 0;}
+.cover-hook{color:var(--text);font-size:clamp(1.05rem,1.45vw,1.28rem);line-height:1.6;
+  margin:30px auto 0;max-width:58ch;opacity:.9;}
+.cover-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;
+  margin:40px auto 0;max-width:920px;}
+.cover-stat{flex:1 1 230px;max-width:290px;background:var(--surface);
+  border:1px solid var(--border);border-radius:12px;padding:18px 16px;}
+.cover-stat-v{color:var(--text);font-size:1.55rem;font-weight:800;line-height:1.1;}
+.cover-stat-l{color:var(--muted);font-size:.8rem;line-height:1.45;margin-top:9px;}
+/* Enter CTA — st.page_link (reliable cross-page routing) styled as a prominent
+   centered button. Raw <a href> links don't route: Streamlit intercepts them. */
+/* Streamlit sizes the page_link's container to the button (fit-content); widen
+   that container and centre the inline-block button inside it */
+[data-testid="stElementContainer"]:has(> [data-testid="stPageLink"]){
+  width:100% !important;text-align:center;margin:42px 0 4px;}
+[data-testid="stPageLink"]{display:inline-block !important;width:auto !important;}
+[data-testid="stPageLink"] a{display:inline-flex !important;align-items:center;
+  background:var(--accent);border-radius:10px;padding:13px 34px;
+  text-decoration:none !important;box-shadow:0 8px 26px rgba(62,123,250,.30);
+  transition:transform .12s ease, filter .12s ease;}
+[data-testid="stPageLink"] a:hover{filter:brightness(1.09);transform:translateY(-2px);}
+[data-testid="stPageLink"] a p{color:#fff !important;font-size:1.04rem !important;
+  font-weight:700 !important;margin:0 !important;}
+.cover-hero{margin:54px auto 0;max-width:920px;}
+.cover-hero img{width:100%;display:block;border-radius:14px;opacity:.4;
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.15));
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.15));}
+.cover-foot{color:var(--faint);font-size:.78rem;line-height:1.65;margin:46px auto 0;
+  max-width:860px;border-top:1px solid var(--border);padding-top:16px;}
 """
 
 
