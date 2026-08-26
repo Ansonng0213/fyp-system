@@ -1,0 +1,3 @@
+check,target,n,equity_mult_coef,effect_ratio,effect_label,ci_low,ci_high,p_value,pr_auc_oof,random_baseline
+(a) Poisson on total_ports (non-imputed only),measured public ports per hex,4003,-0.21630236197381805,0.8054917149847923,incidence-rate ratio,-0.31571043253346887,-0.11689429141416725,2.0010757601162065e-05,,
+(b) H3 res-7 rerun (coarser grid),has_station at res 7,645,0.024071067275976462,1.0243631140000031,odds ratio,,,,0.7765457570629867,0.17829457364341086

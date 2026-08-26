@@ -13,6 +13,17 @@ statsmodels>=0.14
 matplotlib>=3.8
 requests>=2.31
 python-dotenv>=1.0
+# stage 11 (operator siting model) — supervised ML + explainability.
+# Versions are the exact ones the stage was built and validated against
+# on 2026-08-25; scikit-learn and statsmodels are already required above,
+# their tested versions are recorded here as comments rather than
+# duplicated as constraints.
+#   scikit-learn tested at 1.9.0
+#   statsmodels  tested at 0.14.6
+scipy>=1.18.1
+xgboost>=3.4.1
+lightgbm>=4.7.0
+shap>=0.52.0
 # dashboard libs (also here so a full local install can run the app too)
 streamlit>=1.36
 pydeck>=0.9
