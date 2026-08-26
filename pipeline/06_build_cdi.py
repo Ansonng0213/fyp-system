@@ -27,6 +27,9 @@
 # ============================================================
 
 import os
+import json
+from datetime import datetime, timezone
+
 import numpy as np
 import pandas as pd
 import h3
@@ -124,13 +127,65 @@ print(f"\n{'=' * 60}")
 print("STEP 4 — CDI + sensitivity check")
 print("=" * 60)
 
-def compute_cdi(df, w_pop, w_act, equity_on=True):
+def compute_raw(df, w_pop, w_act, equity_on=True):
+    """Unnormalized CDI = DemandPressure * SupplyGap."""
     eq = df["equity_mult"] if equity_on else 1.0
     dp = (w_pop * df["pop_n"] + w_act * df["act_n"]) * eq
-    raw = dp * df["supply_gap"]
-    return 100 * raw / raw.max()
+    return dp * df["supply_gap"]
+
+# ---- THE CANONICAL DENOMINATOR ------------------------------------
+# CDI is normalized against ONE frozen number: the raw maximum under the
+# validated baseline (Government lens, equity ON, 0.50/0.50). It is NOT
+# recomputed per lens or per slider position.
+#
+# Why this matters: raw.max() is itself a function of the settings. Under
+# the Operator lens the equity multiplier is dropped, which lowers the
+# maximum (1.1371 -> 0.9162), so a per-lens denominator inflates every
+# score by ~24% and the app reported MORE severe deserts with the equity
+# lens switched OFF -- an artefact of the scale, not a change in anyone's
+# access. Freezing the denominator makes every lens and weight setting
+# commensurable: a CDI of 60 means the same absolute thing everywhere.
+#
+# The baseline column is unaffected by definition (it is divided by its
+# own max, exactly as before), so hex_cdi_v1.csv does not change.
+CDI_SCALE = float(compute_raw(hexes, W_POP, W_ACT, True).max())
+
+
+def compute_cdi(df, w_pop, w_act, equity_on=True, denom=None):
+    raw = compute_raw(df, w_pop, w_act, equity_on)
+    d = CDI_SCALE if denom is None else float(denom)
+    return 100 * raw / d if d > 0 else raw * 0.0
 
 hexes["cdi"] = compute_cdi(hexes, W_POP, W_ACT, True)
+
+_scale_meta = {
+    "cdi_scale": CDI_SCALE,
+    "description": ("Frozen denominator for CDI normalization. CDI = 100 * "
+                    "(demand_pressure * supply_gap) / cdi_scale. Every lens "
+                    "and weight setting divides by THIS value so scores stay "
+                    "comparable across settings."),
+    "baseline_settings": {"lens": "Government", "equity_on": True,
+                          "w_pop": W_POP, "w_act": W_ACT,
+                          "decay_km": DECAY_KM, "winsorize_q": P99},
+    "baseline_checks": {
+        "hexes_at_100": int((hexes["cdi"].round(6) == 100.0).sum()),
+        "hexes_ge_50": int((hexes["cdi"] >= 50).sum()),
+        "pop_in_severe": int(round(hexes.loc[hexes["cdi"] >= 50, "pop_est"].sum())),
+        "n_hexes": int(len(hexes)),
+    },
+    "source_script": "pipeline/06_build_cdi.py",
+    "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+}
+with open(os.path.join(OUT_DIR, "cdi_scale.json"), "w", encoding="utf-8") as fh:
+    json.dump(_scale_meta, fh, indent=2)
+print(f"  CDI scale (frozen denominator) = {CDI_SCALE:.6f}")
+print(f"    baseline: {_scale_meta['baseline_checks']['hexes_at_100']} hex at 100.0, "
+      f"{_scale_meta['baseline_checks']['hexes_ge_50']} hexes >= 50, "
+      f"{_scale_meta['baseline_checks']['pop_in_severe']:,} people in severe zones")
+print(f"    operator-lens raw max would have been "
+      f"{float(compute_raw(hexes, W_POP, W_ACT, False).max()):.6f} "
+      f"-- no longer used as a denominator")
+print("    Saved -> cdi_scale.json")
 
 base_top50 = set(hexes.nlargest(50, "cdi")["h3_index"])
 scenarios = {"pop-heavy (0.7/0.3)": (0.7, 0.3, True),

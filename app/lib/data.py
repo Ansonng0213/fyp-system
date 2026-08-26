@@ -36,6 +36,44 @@ def load_cdi() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
+def load_operator_scores() -> pd.DataFrame:
+    """Per-hex out-of-fold probability that a hex holds a public charger, from
+    pipeline/11_operator_model.py (DIAGNOSTIC — a model of where the market
+    builds, never a recommendation).
+
+    Note for callers: operator_market_forecast.csv is a DISTRICT-level summary
+    and carries no coordinates, so it cannot yield individual sites. This
+    per-hex file is the only artifact that can. Returns an empty frame if
+    stage 11 has not been run, so the app degrades instead of crashing.
+    """
+    path = DATA_DIR / "operator_model_scores.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    return pd.read_csv(path)
+
+
+@st.cache_data(show_spinner=False)
+def load_cdi_scale() -> float:
+    """The frozen CDI denominator written by pipeline/06_build_cdi.py.
+
+    CDI = 100 * (demand_pressure * supply_gap) / cdi_scale. Every lens and
+    weight setting divides by this ONE number, so a CDI of 60 means the same
+    absolute thing in the Government lens, the Operator lens and at any slider
+    position. Normalizing each configuration against its own maximum (what the
+    app used to do) made the Operator lens look like it had twice as many
+    deserts, purely because dropping the equity multiplier shrinks the maximum.
+
+    Falls back to the baseline value if the artifact is missing, so an old
+    checkout still renders rather than crashing.
+    """
+    path = DATA_DIR / "cdi_scale.json"
+    if not path.exists():
+        return 1.1370670015477882
+    with open(path, "r", encoding="utf-8") as fh:
+        return float(json.load(fh)["cdi_scale"])
+
+
+@st.cache_data(show_spinner=False)
 def load_stations() -> pd.DataFrame:
     """Fused EV stations (v2, official-boundary corrected). Coerces the flag
     columns to real booleans so `is_public_facing & is_operational` is safe."""

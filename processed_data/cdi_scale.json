@@ -1,0 +1,20 @@
+{
+  "cdi_scale": 1.13706690794078,
+  "description": "Frozen denominator for CDI normalization. CDI = 100 * (demand_pressure * supply_gap) / cdi_scale. Every lens and weight setting divides by THIS value so scores stay comparable across settings.",
+  "baseline_settings": {
+    "lens": "Government",
+    "equity_on": true,
+    "w_pop": 0.5,
+    "w_act": 0.5,
+    "decay_km": 1.5,
+    "winsorize_q": 0.99
+  },
+  "baseline_checks": {
+    "hexes_at_100": 1,
+    "hexes_ge_50": 38,
+    "pop_in_severe": 756330,
+    "n_hexes": 4003
+  },
+  "source_script": "pipeline/06_build_cdi.py",
+  "generated_utc": "2026-08-26T08:49:35+00:00"
+}

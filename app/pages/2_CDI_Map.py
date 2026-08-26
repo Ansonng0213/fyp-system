@@ -53,6 +53,12 @@ def clicked_hex() -> str | None:
 
 clicked = clicked_hex()
 
+def _reset_defaults() -> None:
+    """Restore the validated baseline configuration the headline figures use."""
+    st.session_state["persona"] = "Government"
+    st.session_state["w_pop"] = 0.5
+
+
 # ------------------------------------------------------------------ sidebar controls
 with st.sidebar:
     st.markdown("<div class='ctl-title'>View</div>", unsafe_allow_html=True)
@@ -64,9 +70,15 @@ with st.sidebar:
                "**Operator** ranks pure market demand.")
     st.divider()
 
-    w_pop = st.slider("Population weight", 0.0, 1.0, 0.5, 0.05,
+    w_pop = st.slider("Population weight", 0.0, 1.0, 0.5, 0.05, key="w_pop",
                       help="Activity weight = 1 − population weight")
     st.caption(f"Demand blend: population {w_pop:.2f} · activity {1 - w_pop:.2f}")
+    st.button("Reset to validated defaults", on_click=_reset_defaults,
+              use_container_width=True,
+              help="Government lens, population 0.50 / activity 0.50")
+    st.caption("Headline figures use the Government lens with population 0.50 / "
+               "activity 0.50. CDI is scaled against the validated baseline, so "
+               "values remain comparable across settings.")
     st.divider()
 
     st.markdown("<div class='ctl-title'>Map layers</div>", unsafe_allow_html=True)
