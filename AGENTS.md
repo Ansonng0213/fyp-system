@@ -1,0 +1,1 @@
+See `CLAUDE.md` — it is the single project briefing for every agent (Claude Code, Codex, or otherwise). This file exists only so agents that look for `AGENTS.md` find their way there. Do not duplicate the briefing here; the copy that used to live in this file drifted out of sync and ended up instructing agents to reintroduce a bug that had already been fixed.
