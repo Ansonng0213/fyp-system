@@ -63,15 +63,16 @@ optional polish and the user's outstanding tasks (API-key revocation).
 
 ## Commands
 - Full pipeline refresh: `python run_pipeline.py`   (globs `[0-9][0-9]_*.py`,
-  so it now runs 02-09 **and 11** — see the traps section before running it)
+  so it now runs 02-09 **and 11 and 12** — see the traps section first)
 - Single stage:          `python pipeline/06_build_cdi.py`
 - Operator model:        `python pipeline/11_operator_model.py`  (~20 min)
+- Forecast benchmark:    `python pipeline/12_forecast_comparison.py` (~6 min)
 - Coefficient read-out:  `python pipeline/11b_operator_coefficients.py` (read-only)
 - Dashboard:             `streamlit run app/Home.py`
 - Environment:           venv at C:\Users\anson\fyp_env (outside OneDrive)
 
 ## Current state
-- Pipeline stages 02-11: built, validated, reproduced on the user's machine.
+- Pipeline stages 02-12: built, validated, reproduced on the user's machine.
 - **Stage 11 — operator siting model (DIAGNOSTIC ONLY).** A supervised model of
   where commercial operators actually built (target: has_station per hex, 222
   of 4,003). It learns the market's revealed preference *including its bias*;
@@ -83,6 +84,11 @@ optional polish and the user's outstanding tasks (API-key revocation).
 - **Stage 11 outputs are PAIRED to the committed `hex_cdi_v1.csv`** (commit
   a1da38f ships both). Regenerating stage 06 in isolation silently breaks that
   pairing — see the traps section.
+- **Stage 12 — forecasting benchmark (parallel to 09, does not replace it).**
+  Six models x base/tuned, rolling-origin backtest (980 folds, 0 failures),
+  MASE-led, plus a 2030 plausibility check that catches BOTH runaway
+  extrapolation and models that "pass" by not growing. 09 and its outputs are
+  untouched; the dashboard still reads forecast_kv_monthly.csv. See trap 12.
 - The income effect from stage 11 is SUGGESTIVE, NOT SIGNIFICANT: the
   spatial-block bootstrap CI crosses zero. `poi_residential` is the finding
   that survives (CI [-0.843, -0.265], 99.3% of draws negative). Lead with
@@ -115,16 +121,32 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    byte-identical, and 3,968 of 4,003 rows change. **Do not regenerate stage 06
    just to "refresh" it** — restore from git instead. The committed CSV is the
    reference the stage-11 artifacts were computed against.
-3. **`run_pipeline.py` now sweeps in stage 11.** It globs `[0-9][0-9]_*.py`, so
-   a "full refresh" runs 02-09 *plus* `11_operator_model.py` (~20 min) *and*
-   regenerates stage 06, hitting trap 2. `11b_operator_coefficients.py` is not
-   matched (third char is `b`, not `_`). Run stages individually unless a full
-   rebuild is genuinely wanted.
-4. **`fyp_env` does not satisfy `requirements-pipeline.txt`.** As of 2026-08-26
-   `prophet` and `python-dotenv` are MISSING, so stage 09 (forecast) and the
-   `00_collectors/` scripts will fail on import. scikit-learn, scipy, xgboost,
-   lightgbm, shap and statsmodels were installed during the stage-11 build.
-   Run `pip install -r requirements-pipeline.txt` before assuming a stage runs.
+3. **`run_pipeline.py` sweeps in stages 11 AND 12.** It globs `[0-9][0-9]_*.py`,
+   so a "full refresh" runs 02-09 *plus* `11_operator_model.py` (~20 min) *plus*
+   `12_forecast_comparison.py` (~6 min) *and* regenerates stage 06, hitting
+   trap 2. `11b_operator_coefficients.py` is not matched (third char is `b`,
+   not `_`). Run stages individually unless a full rebuild is genuinely wanted.
+4. **Check `fyp_env` against `requirements-pipeline.txt` before running a stage.**
+   It has repeatedly been missing packages the file already lists. `prophet` and
+   `python-dotenv` were missing until 2026-08-30 (stage 09 and `00_collectors/`
+   failed on import); scikit-learn, scipy, xgboost, lightgbm, shap and
+   statsmodels were installed during the stage-11 build. Run
+   `pip install -r requirements-pipeline.txt` rather than assuming.
+11. **`KV_SHARE` is 0.629, and the derivation JSON says 0.6286.** They were
+    desynchronised for the whole project. Stage 09 now READS the JSON and rounds
+    to 3 dp, which reproduces 0.629 bit-exactly, and aborts if the JSON ever
+    stops rounding to it. Using the raw 0.6286 moves the policy cap 6,290 ->
+    6,286/month and shifts the 2030 forecast, port requirement and district
+    gaps -- i.e. published numbers. Change it only as a deliberate regeneration.
+12. **Stage 12 says the forecast headline is defensible for a different reason
+    than the report gives.** "Prophet 17.6% vs ARIMA 37.5%" reproduces exactly,
+    and MASE ranks the same order on that split -- but under rolling origin
+    (980 folds) Prophet base falls to rank 5 of 10 at h=6 and ETS wins. The
+    single 2025 split flattered it. Prophet remains the right choice for the
+    2030 projection because its logistic trend is the only one that saturates
+    (6,230/mo against the 6,290 ceiling); SARIMA has the best AIC in the study
+    and extrapolates to 57-81x the ceiling. Claim bounded extrapolation, not
+    short-horizon accuracy.
 5. **`processed_data/operator_*.csv` is now an ambiguous glob.** It matches both
    the seven stage-11 outputs and the pre-existing, unrelated
    `operator_crosscheck_template.csv` (the manual PlugShare validation). Use

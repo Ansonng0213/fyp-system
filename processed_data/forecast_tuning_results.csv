@@ -1,0 +1,7 @@
+model,tuned,criterion,best_params,score,n_candidates
+SeasonalNaive,False,n/a,none -- this model has NO hyperparameters,,0
+NaiveDrift,False,n/a,none -- this model has NO hyperparameters,,0
+ETS,True,AIC,"{""trend"": ""add"", ""seasonal"": ""mul"", ""damped"": true}",881.728233752289,9
+ARIMA,True,AIC,"{""order"": [2, 1, 3], ""log"": true}",161.18483214768577,48
+SARIMA,True,AIC,"{""order"": [2, 1, 2], ""seasonal_order"": [0, 1, 1, 12], ""log"": true}",78.59999701259491,144
+ProphetLogistic,True,"Prophet cross_validation RMSE (initial 1095d, period 90d, horizon 365d)","{""changepoint_prior_scale"": 0.01, ""seasonality_prior_scale"": 0.1, ""seasonality_mode"": ""additive""}",932.5033037459634,24
