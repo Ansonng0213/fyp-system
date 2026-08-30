@@ -63,16 +63,17 @@ optional polish and the user's outstanding tasks (API-key revocation).
 
 ## Commands
 - Full pipeline refresh: `python run_pipeline.py`   (globs `[0-9][0-9]_*.py`,
-  so it now runs 02-09 **and 11 and 12** — see the traps section first)
+  so it now runs 02-09 **and 11, 12, 13** — see the traps section first)
 - Single stage:          `python pipeline/06_build_cdi.py`
 - Operator model:        `python pipeline/11_operator_model.py`  (~20 min)
 - Forecast benchmark:    `python pipeline/12_forecast_comparison.py` (~6 min)
+- Equity metrics:        `python pipeline/13_equity_metrics.py`  (seconds)
 - Coefficient read-out:  `python pipeline/11b_operator_coefficients.py` (read-only)
 - Dashboard:             `streamlit run app/Home.py`
 - Environment:           venv at C:\Users\anson\fyp_env (outside OneDrive)
 
 ## Current state
-- Pipeline stages 02-12: built, validated, reproduced on the user's machine.
+- Pipeline stages 02-13: built, validated, reproduced on the user's machine.
 - **Stage 11 — operator siting model (DIAGNOSTIC ONLY).** A supervised model of
   where commercial operators actually built (target: has_station per hex, 222
   of 4,003). It learns the market's revealed preference *including its bias*;
@@ -84,6 +85,15 @@ optional polish and the user's outstanding tasks (API-key revocation).
 - **Stage 11 outputs are PAIRED to the committed `hex_cdi_v1.csv`** (commit
   a1da38f ships both). Regenerating stage 06 in isolation silently breaks that
   pairing — see the traps section.
+- **Stage 13 — equity metrics (standard inequality measures).**
+  Population-weighted Gini / Atkinson / Theil on charger accessibility
+  (= supply_raw, READ from stage 06, not recomputed, so it is consistent with
+  the CDI by construction). Restates the equity finding in measures comparable
+  to published work rather than the bespoke CDI. Headline: KV Gini
+  **0.4969 -> 0.4753** under the 20 recommended sites, but **-> 0.5053** under
+  the market's own predicted next 20 — the market raises TOTAL accessibility
+  (mean 5.58 -> 6.03) while making its distribution MORE unequal. All four
+  measures agree on direction, and the ranking survives decay 1.0 / 1.5 / 2.0.
 - **Stage 12 — forecasting benchmark (parallel to 09, does not replace it).**
   Six models x base/tuned, rolling-origin backtest (980 folds, 0 failures),
   MASE-led, plus a 2030 plausibility check that catches BOTH runaway
@@ -124,7 +134,7 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    byte-identical, and 3,968 of 4,003 rows change. **Do not regenerate stage 06
    just to "refresh" it** — restore from git instead. The committed CSV is the
    reference the stage-11 artifacts were computed against.
-3. **`run_pipeline.py` sweeps in stages 11 AND 12.** It globs `[0-9][0-9]_*.py`,
+3. **`run_pipeline.py` sweeps in stages 11, 12 AND 13.** It globs `[0-9][0-9]_*.py`,
    so a "full refresh" runs 02-09 *plus* `11_operator_model.py` (~20 min) *plus*
    `12_forecast_comparison.py` (~6 min) *and* regenerates stage 06, hitting
    trap 2. `11b_operator_coefficients.py` is not matched (third char is `b`,
