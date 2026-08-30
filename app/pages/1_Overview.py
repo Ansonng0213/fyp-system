@@ -202,18 +202,26 @@ st.write("")
 
 # ----------------------------------------------------------------- navigation
 ui.section_header("Explore the system")
+# Seven cards in a 4 + 3 grid. A single row of seven would wrap to
+# five-plus-orphan (.card-row is flex with a 190px min-width), which is the
+# imbalance recorded as item D3 in docs/DASHBOARD_REVIEW_2026-08-24.md.
 ui.nav_row([
     {"index": "PAGE 1", "title": "CDI Explorer", "href": "CDI_Map",
      "desc": "Interactive desert map with a Government / Operator lens, weight sliders and per-hex reason strings."},
     {"index": "PAGE 2", "title": "Recommendations", "href": "Sites",
      "desc": "20 optimal new sites by maximal coverage — scorecards, desert zones and a coverage-gain curve."},
-    {"index": "PAGE 3", "title": "Demand Forecast", "href": "Forecast",
+    {"index": "PAGE 3", "title": "Market Logic", "href": "Market_Logic",
+     "desc": "Diagnostic — what actually drives commercial siting, and where the market builds next. Not a recommendation."},
+    {"index": "PAGE 4", "title": "Demand Forecast", "href": "Forecast",
      "desc": "EV demand to 2030 (Prophet vs ARIMA) and the district-level public-port gap."},
-    {"index": "PAGE 4", "title": "What-If Simulator", "href": "WhatIf",
+])
+st.write("")
+ui.nav_row([
+    {"index": "PAGE 5", "title": "What-If Simulator", "href": "WhatIf",
      "desc": "Drop a hypothetical station and watch coverage, gaps and CDI update live."},
-    {"index": "PAGE 5", "title": "Validation & Data", "href": "Trust",
+    {"index": "PAGE 6", "title": "Validation & Data", "href": "Trust",
      "desc": "Holdout recall, coverage curves, capacity adequacy and full data provenance."},
-    {"index": "PAGE 6", "title": "Investment Scenario", "href": "Investment",
+    {"index": "PAGE 7", "title": "Investment Scenario", "href": "Investment",
      "desc": "Operator lens — stress-test the indicative commercial case for a candidate site."},
 ])
 

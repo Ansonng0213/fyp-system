@@ -6,6 +6,9 @@ band + accelerated comparison, with the two TIV cap lines), a year/scenario/rati
 explorer that turns projected EV stock into required ports, the district-level
 2030 gap, an honest backtest strip and an assumptions expander.
 """
+import os
+
+import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
@@ -238,6 +241,109 @@ with st.expander("Key modelling assumptions & caveats", expanded=False):
         "not underlying trend.\n"
         "- **2026 data is partial** — actual registrations run only through March 2026."
     )
+
+st.write("")
+
+# ------------------------------------------------------------------ model selection
+ui.section_header("Model selection")
+with st.expander("Model selection — how Prophet was chosen", expanded=False):
+    try:
+        fcomp = data.load_forecast_comparison()
+        f2030 = data.load_forecast_2030_scenarios()
+    except Exception:
+        fcomp = f2030 = None
+
+    if fcomp is None or not len(fcomp):
+        st.info("Benchmark artifacts not found — run "
+                "`python pipeline/12_forecast_comparison.py`.")
+    else:
+        full = fcomp[fcomp["series"] == "full_2020_2026"]
+
+        st.markdown("**Rolling-origin backtest** — expanding window, minimum 36 "
+                    "months of training, one-month steps, every model refit at "
+                    "every origin. MASE leads because the series roughly doubles "
+                    "year on year, which makes MAPE reward whichever model fits "
+                    "the high-volume months.")
+        for h in sorted(full["h"].unique()):
+            sub = full[full["h"] == h].sort_values("MASE_mean").reset_index(drop=True)
+            tbl = pd.DataFrame({
+                "Model": sub["model"], "Variant": sub["variant"],
+                "Folds": sub["folds"],
+                "MASE (mean ± std)": [f"{a:.3f} ± {b:.3f}" for a, b in
+                                      zip(sub["MASE_mean"], sub["MASE_std"])],
+                "MAE": sub["MAE_mean"].map("{:,.0f}".format),
+                "RMSE": sub["RMSE_mean"].map("{:,.0f}".format),
+                "MAPE %": sub["MAPE_mean"].map("{:.1f}".format),
+            })
+            st.markdown(f"*Horizon h = {int(h)} months*")
+            st.markdown(ui.html_table(tbl, num_cols=list(tbl.columns[2:])),
+                        unsafe_allow_html=True)
+            sn = sub[sub["model"] == "SeasonalNaive"]
+            if len(sn):
+                st.caption(f"Seasonal-naive baseline: MASE "
+                           f"{float(sn['MASE_mean'].iloc[0]):.3f}. MASE is scaled by "
+                           "each fold's in-sample seasonal-naive error, so values "
+                           "above 1 are expected on a series growing this fast — "
+                           "the ordering is what is interpretable.")
+            st.write("")
+
+        st.markdown("**2030 plausibility** — the error table alone cannot choose "
+                    "a model for a five-year projection. Two failure modes are "
+                    "checked: running away above the policy ceiling, and "
+                    "satisfying the ceiling by projecting almost no growth.")
+        ceiling = float(f2030["policy_ceiling_monthly"].iloc[0])
+        p = f2030.copy()
+        ptbl = pd.DataFrame({
+            "Model": p["model"], "Variant": p["variant"],
+            "Dec-2030 / month": p["dec_2030_monthly"].map("{:,.0f}".format),
+            "× ceiling": p["peak_over_ceiling_ratio"].map("{:.2f}×".format),
+            "Growth vs last 12m": p["growth_vs_last12"].map("{:.2f}×".format),
+            "2030 stock": p["cumulative_stock_2030"].map("{:,.0f}".format),
+            "Verdict": p["plausible"],
+        })
+        st.markdown(ui.html_table(ptbl, num_cols=list(ptbl.columns[2:6])),
+                    unsafe_allow_html=True)
+        st.caption(f"Policy ceiling {ceiling:,.0f} registrations/month "
+                   "(800,000 TIV × 15% × 62.9% KV share ÷ 12).")
+
+        st.write("")
+        fig_dir = os.path.join(str(data.DATA_DIR), "figures")
+        c1, c2 = st.columns(2, gap="medium")
+        for col, fn, cap in (
+            (c1, "forecast_fold_errors.png", "Fold-level MASE distribution by model."),
+            (c2, "forecast_2030_fan.png", "Every model projected to Dec 2030 "
+                                          "against the policy ceiling."),
+        ):
+            path = os.path.join(fig_dir, fn)
+            if os.path.exists(path):
+                col.image(path, use_container_width=True, caption=cap)
+
+        # --- summary, worded from the CSVs
+        _h6 = full[full["h"] == 6].sort_values("MASE_mean").iloc[0]
+        _h12 = full[full["h"] == 12].sort_values("MASE_mean").iloc[0]
+        _sar = p[(p["model"] == "SARIMA")].sort_values("peak_over_ceiling_ratio").iloc[-1]
+        _sar_mase = full[(full["model"] == "SARIMA") & (full["h"] == 12)]["MASE_mean"].max()
+        _proph = p[(p["model"] == "ProphetLogistic") & (p["variant"] == "base")].iloc[0]
+        _trend = float(_proph["trend_dec_2030"]) if pd.notna(_proph["trend_dec_2030"]) else float("nan")
+
+        st.markdown(
+            f"**Accuracy winner:** {_h6['model']} {_h6['variant']} "
+            f"(MASE {_h6['MASE_mean']:.3f} at h=6, {_h12['MASE_mean']:.3f} at h=12).\n\n"
+            f"**Retained model:** Prophet logistic — the only specification whose "
+            f"trend saturates by construction "
+            f"({_trend:,.0f}/month against a {ceiling:,.0f} ceiling). Models with "
+            "better short-horizon error either exceed the ceiling or satisfy it "
+            "by projecting near-zero growth.\n\n"
+            f"**In-sample fit is not a forecasting criterion.** SARIMA had the "
+            f"best AIC in the study (78.6) and the worst forecasts — MASE "
+            f"{_sar_mase:.2f} at h=12 and a 2030 projection "
+            f"{_sar['peak_over_ceiling_ratio']:.0f}× the ceiling.\n\n"
+            "**The ranking is not robust.** Excluding COVID (series from 2021-01) "
+            "changes the winner at both horizons, so no model here is reliably "
+            "best on 74 observations with one structural break."
+        )
+
+st.write("")
 
 st.markdown(
     "<div class='site-footer'>Ng Cheng Xin · TP071136 · Asia Pacific University · FYP 2026 · "

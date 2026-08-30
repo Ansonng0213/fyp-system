@@ -96,10 +96,13 @@ optional polish and the user's outstanding tasks (API-key revocation).
 - Key headline results are in FYP_PROJECT_MEMORY.md (CDI, 20 recommended
   sites, +1.05M coverage, 24k-port 2030 gap, 17.6% backtest MAPE).
 - Dashboard: BUILT & running (`streamlit run app/Home.py`). Entry is a
-  cover/landing screen (`app/Home.py`); `app/pages/` holds Overview (1) + six
-  tools — CDI Explorer (2), Recommendations (3), Forecast (4), What-If (5),
-  Validation & Data (6_Trust), Investment Scenario (7). All share `app/lib/`
-  helpers. Full page specs in `PLAN.md`.
+  cover/landing screen (`app/Home.py`); `app/pages/` holds Overview (1) + SEVEN
+  tools — CDI Explorer (2_CDI_Map), Recommendations (3_Sites), Market Logic (4),
+  Forecast (5), What-If (6), Validation & Data (7_Trust), Investment Scenario
+  (8). Pages 5-8 were renumbered when Market Logic was inserted at 4; Streamlit
+  strips the numeric prefix, so the URLs (/Forecast, /WhatIf, /Trust,
+  /Investment) did NOT change. All share `app/lib/` helpers; `data.py` is still
+  the only module that touches the filesystem. Full page specs in `PLAN.md`.
 - Validation: live cross-checks done — Google Places coverage + manual PlugShare
   per-zone verification of the Klang desert hexes (recorded in
   `operator_crosscheck_template.csv` + FYP_PROJECT_MEMORY.md).
@@ -165,9 +168,17 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    is tagged "large population". Item 1 (dark-on-dark sweep) and item 3
    (WorldPop raster) remain open. Full page-by-page findings, including the
    dead "Inspect a hex" dropdown and the number-formatting inconsistencies, are
-   in `docs/DASHBOARD_REVIEW_2026-08-24.md`.
+   in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED so far: A3 and
+   D3; the rest of that document is still outstanding.
 10. **Sidebar page labels are raw filenames** ("WhatIf" with no space) and
     disagree with the Overview cards and page titles. Cosmetic, still open.
+13. **Stage 12's figures can be redrawn without re-running the benchmark:**
+    `python pipeline/12_forecast_comparison.py --figures-only`. It reloads the
+    fold CSV and the tuned parameters, refits only the ten full-series
+    projections the fan chart needs (those paths are not persisted, only their
+    endpoints), and writes the two PNGs. No CSV is touched. Use this for any
+    figure restyling -- a full re-run costs ~6 minutes and would rewrite every
+    stage-12 CSV.
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.

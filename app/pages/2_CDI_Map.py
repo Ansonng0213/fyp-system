@@ -85,6 +85,11 @@ with st.sidebar:
     show_public = st.checkbox("Public stations", value=True)
     show_private = st.checkbox("Private / restricted", value=False)
     show_borders = st.checkbox("District borders", value=True)
+    show_market = st.checkbox(
+        "Market interest (predicted)", value=False,
+        help="Replaces the CDI colouring with the operator model's predicted "
+             "probability that a hex holds a public charger. Diagnostic: this is "
+             "commercial INTEREST, not need.")
     st.markdown(
         "<div class='lyr-legend'>"
         "<div class='lyr-item'><span class='dot' style='background:#00E5FF'></span>Public stations</div>"
@@ -120,8 +125,38 @@ def reason_of(r, eq_on: bool) -> str:
 
 
 view["reason"] = [reason_of(r, equity_on) for r in view.itertuples()]
-view["fill_color"] = [theme.cdi_to_rgb(v) for v in view["cdi_live"]]
-view["tip"] = [f"{d}\n{rs}" for d, rs in zip(view["district"], view["reason"])]
+
+# --- optional market-interest layer (stage 11, DIAGNOSTIC) -------------------
+# Predicted probability that a hex holds a public charger, i.e. commercial
+# INTEREST. Deliberately a different colour ramp from the CDI so the two are
+# never read as the same quantity: need is the inferno ramp, interest is amber.
+MARKET_MAX = 0.0
+if show_market:
+    _sc = data.load_operator_scores()
+    if len(_sc):
+        view = view.merge(_sc[["h3_index", "oof_proba_randomCV"]],
+                          on="h3_index", how="left")
+        view["market_p"] = view["oof_proba_randomCV"].fillna(0.0)
+        MARKET_MAX = float(view["market_p"].max())
+    else:
+        show_market = False
+
+
+def market_rgb(p: float, pmax: float) -> list:
+    if pmax <= 0:
+        return [40, 46, 60, 60]
+    t = min(1.0, max(0.0, p / pmax)) ** 0.6
+    lo, hi = (28, 32, 44), (255, 176, 46)          # slate -> amber
+    return [int(lo[i] + (hi[i] - lo[i]) * t) for i in range(3)] + [int(45 + 195 * t)]
+
+
+if show_market:
+    view["fill_color"] = [market_rgb(p, MARKET_MAX) for p in view["market_p"]]
+    view["tip"] = [f"{d}\nPredicted market interest {p:.1%}\n(CDI {c:.0f} — need, for contrast)"
+                   for d, p, c in zip(view["district"], view["market_p"], view["cdi_live"])]
+else:
+    view["fill_color"] = [theme.cdi_to_rgb(v) for v in view["cdi_live"]]
+    view["tip"] = [f"{d}\n{rs}" for d, rs in zip(view["district"], view["reason"])]
 
 # inspector options: inhabited hexes in view, ranked by the live CDI
 inhabited = view[view["pop_est"] > 0].sort_values("cdi_live", ascending=False)
@@ -140,11 +175,29 @@ st.markdown(
     "recomputed live from stored components</div>",
     unsafe_allow_html=True,
 )
-st.markdown(
-    "<div class='leg-wrap' style='max-width:360px'><div class='leg-label'>Charging Desert Index</div>"
-    "<div class='leg-bar'></div><div class='leg-scale'><span>0</span><span>50</span><span>100</span></div></div>",
-    unsafe_allow_html=True,
-)
+if show_market:
+    st.markdown(
+        "<div class='leg-wrap' style='max-width:420px'>"
+        "<div class='leg-label'>Predicted market interest — NOT need</div>"
+        "<div class='leg-bar' style='background:linear-gradient(90deg,#1C202C,#FFB02E)'></div>"
+        f"<div class='leg-scale'><span>0%</span><span>{MARKET_MAX / 2:.0%}</span>"
+        f"<span>{MARKET_MAX:.0%}</span></div></div>",
+        unsafe_allow_html=True,
+    )
+    st.warning(
+        "**Diagnostic layer.** This is the operator model's predicted probability "
+        "that a hex holds a public charger — where the commercial market is "
+        "drawn, not where charging is needed. It is shown for contrast with the "
+        "Charging Desert Index, and must not be used to select sites. "
+        "See the Market Logic page.",
+        icon="⚠️",
+    )
+else:
+    st.markdown(
+        "<div class='leg-wrap' style='max-width:360px'><div class='leg-label'>Charging Desert Index</div>"
+        "<div class='leg-bar'></div><div class='leg-scale'><span>0</span><span>50</span><span>100</span></div></div>",
+        unsafe_allow_html=True,
+    )
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------------ KPI row (reactive)

@@ -53,6 +53,56 @@ def load_operator_scores() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
+def load_operator_coefficients() -> pd.DataFrame:
+    """Full standardised logistic coefficients + SHAP ranks + spatial-block
+    bootstrap CIs, from pipeline/11b_operator_coefficients.py."""
+    return _csv("operator_coefficients_full.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_operator_model_comparison() -> pd.DataFrame:
+    """Ten model builds (5 algorithms x base/tuned) under both CV schemes."""
+    return _csv("operator_model_comparison.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_operator_ablation() -> pd.DataFrame:
+    """Feature-group ablation A-H, all rows including the engineered sets."""
+    return _csv("operator_feature_ablation.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_operator_market_forecast() -> pd.DataFrame:
+    """District breakdown of the predicted next-20 build-out, 10-seed
+    mean/std. DIAGNOSTIC -- a forecast of commercial behaviour."""
+    return _csv("operator_market_forecast.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_operator_income_specs() -> pd.DataFrame:
+    """The three income specifications and their bootstrap CIs (stage 11)."""
+    return _csv("operator_income_specifications.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_operator_robustness() -> pd.DataFrame:
+    """Poisson port-count model and the H3 res-7 rerun (stage 11)."""
+    return _csv("operator_robustness.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_forecast_comparison() -> pd.DataFrame:
+    """Rolling-origin model comparison from pipeline/12_forecast_comparison.py."""
+    return _csv("forecast_model_comparison.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_forecast_2030_scenarios() -> pd.DataFrame:
+    """Per-model 2030 endpoint and plausibility verdict (stage 12)."""
+    return _csv("forecast_2030_scenarios.csv")
+
+
+@st.cache_data(show_spinner=False)
 def load_cdi_scale() -> float:
     """The frozen CDI denominator written by pipeline/06_build_cdi.py.
 
