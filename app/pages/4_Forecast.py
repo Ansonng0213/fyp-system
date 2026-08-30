@@ -22,10 +22,9 @@ f = data.load_forecast()
 gap = data.load_charger_gap()
 LAST_ACTUAL = f.loc[f["actual"].notna(), "ds"].max()      # 2026-03-01
 
-# fixed headline (policy scenario, 15 EVs/port) — the quotable stat
-REQ_2030 = int(gap["required_ports_2030"].sum())          # 24,819
 CUR_PORTS = int(gap["current_ports"].sum())               # 867
-GAP_2030 = int(gap["port_gap"].sum())                     # 23,952
+# REQ_2030 / GAP_2030 are computed below via required_ports(), the single
+# port computation this page uses for both the callout and the KPI cards.
 
 
 @st.cache_data(show_spinner=False)
@@ -56,8 +55,36 @@ ev_col = "ev_2030_accel" if is_accel else "ev_2030_policy"
 
 ss = stock_series()
 stock_y = float(ss.loc[ss["ds"] == f"{year}-12-01", stock_col].iloc[0])
-req_y = stock_y / ratio
-gap_y = max(0.0, req_y - CUR_PORTS)
+
+
+def required_ports(year_stock: float, evs_per_port: int,
+                   ev_column: str, stock_column: str) -> int:
+    """THE single port computation for this page -- callout and KPIs both use it.
+
+    Ports are counted per district and then summed, exactly as
+    pipeline/09_forecast.py builds charger_gap_2030.csv. That matters: a port is
+    an integer object in a specific district, so the total is the sum of rounded
+    district figures, not the rounded KV total. The two differ by one
+    (sum-of-rounded 24,819 vs round-of-sum 24,818), which is why the callout and
+    the KPI cards used to disagree on the same figure.
+
+    Non-2030 years scale the district split by that year's share of 2030 stock;
+    at year = 2030 the scale factor is 1.0 and this returns the published
+    24,819 exactly.
+    """
+    stock_2030 = float(ss.loc[ss["ds"] == "2030-12-01", stock_column].iloc[0])
+    scale = (year_stock / stock_2030) if stock_2030 > 0 else 0.0
+    return int((gap[ev_column] * scale / evs_per_port).round().sum())
+
+
+# fixed headline (2030, policy scenario, 15 EVs/port) -- the quotable stat
+STOCK_2030_POLICY = float(ss.loc[ss["ds"] == "2030-12-01", "stock_policy"].iloc[0])
+REQ_2030 = required_ports(STOCK_2030_POLICY, 15, "ev_2030_policy", "stock_policy")
+GAP_2030 = max(0, REQ_2030 - CUR_PORTS)
+
+# reactive to the sidebar, same function
+req_y = required_ports(stock_y, ratio, ev_col, stock_col)
+gap_y = max(0, req_y - CUR_PORTS)
 
 # ------------------------------------------------------------------ header + headline
 st.markdown(

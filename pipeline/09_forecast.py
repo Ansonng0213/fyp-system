@@ -29,6 +29,7 @@
 # ============================================================
 
 import os
+import json
 import logging
 import numpy as np
 import pandas as pd
@@ -38,7 +39,27 @@ logging.getLogger("cmdstanpy").setLevel(logging.ERROR)
 
 OUT_DIR = "processed_data"
 TIV_NATIONAL = 800_000          # ~annual national vehicle market
-KV_SHARE = 0.629                # data-driven (P3)
+
+# KV_SHARE is READ from the stage-03 derivation, never hardcoded, so a fresh
+# data pull cannot silently desynchronise this constant from the audit trail.
+#
+# It is rounded to 3 dp, which is what this figure has always been: the
+# derivation records 0.6286 and every published result was produced with 0.629.
+# Using the unrounded value would move CAP_POLICY from 6,290.0 to 6,286.0/month
+# and shift the 2030 forecast, the port requirement and the district gaps --
+# i.e. it would change numbers already in the report. If you ever WANT the
+# unrounded value, drop the round() deliberately and regenerate the downstream
+# figures, don't let it happen as a side effect of this refactor.
+_KV_SHARE_ROUND_DP = 3
+with open(os.path.join(OUT_DIR, "kv_share_derivation.json"), encoding="utf-8") as _fh:
+    _KV_SHARE_RAW = float(json.load(_fh)["kv_share_central_data_driven"])
+KV_SHARE = round(_KV_SHARE_RAW, _KV_SHARE_ROUND_DP)     # data-driven (P3)
+if abs(_KV_SHARE_RAW - KV_SHARE) > 0.5 * 10 ** -_KV_SHARE_ROUND_DP:
+    raise SystemExit(
+        f"KV share in kv_share_derivation.json ({_KV_SHARE_RAW}) no longer rounds "
+        f"to the published {KV_SHARE}. Regenerate the forecast deliberately.")
+print(f"KV share: {_KV_SHARE_RAW} from kv_share_derivation.json "
+      f"-> {KV_SHARE} used (published value)")
 CAP_POLICY = TIV_NATIONAL * 0.15 * KV_SHARE / 12     # 15% xEV target
 CAP_ACCEL  = TIV_NATIONAL * 0.30 * KV_SHARE / 12     # accelerated scenario
 HORIZON_END = "2030-12-01"
