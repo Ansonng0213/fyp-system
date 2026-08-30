@@ -3,8 +3,13 @@
 The first screen a visitor sees before the dashboard: project title, author,
 a one-line hook, three headline stats (computed live from processed_data/ so they
 never drift), and a single call to action. Minimal and striking (DESIGN.md dark
-style). The Executive Overview and the five tool pages live in app/pages/ and are
+style). The Executive Overview and the seven tool pages live in app/pages/ and are
 reached via the "Enter Dashboard" button (and the sidebar).
+
+Layout rule: everything down to and including the Enter button must fit ABOVE
+THE FOLD on a ~640px viewport; the hero map sits below it as the scroll reward.
+The spacing that enforces this lives in theme.py under .cover* — if you enlarge
+anything up here, re-measure.
 """
 import base64
 import os
@@ -61,8 +66,12 @@ except Exception:  # artifacts missing → cover still renders, just without the
     stats_html = ""
 
 hero = _hero_data_uri()
-hero_html = (f"<div class='cover-hero'><img src='{hero}' alt='Charging Desert Index map'/></div>"
-             if hero else "")
+hero_html = (
+    f"<div class='cover-hero'><img src='{hero}' alt='Charging Desert Index map'/>"
+    "<div class='cover-hero-cap'>Charging Desert Index across the Greater Klang "
+    "Valley (H3 res-8). Brighter = higher desert severity; cyan dots = public "
+    "stations.</div></div>"
+) if hero else ""
 
 st.markdown(
     "<div class='cover'>"

@@ -144,13 +144,15 @@ fig.add_vline(x=LAST_ACTUAL, line=dict(color=theme.TEXT_FAINT, width=1, dash="da
 fig.add_annotation(x=LAST_ACTUAL, y=1.0, yref="paper", text="  actuals end · forecast →",
                    showarrow=False, xanchor="left", font=dict(color=theme.TEXT_MUTED, size=11))
 fig.update_layout(
-    height=430, margin=dict(l=6, r=14, t=10, b=6),
+    # l=6 clipped the rotated y-axis title to "egistrations / month" (review
+    # item A6). automargin lets plotly reserve what the title actually needs.
+    height=430, margin=dict(l=12, r=14, t=10, b=6),
     paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
     font=dict(color=theme.TEXT_MUTED, size=12),
     legend=dict(orientation="h", y=1.08, x=1, xanchor="right", font=dict(size=11)),
     hovermode="x unified",
     xaxis=dict(showgrid=False, zeroline=False),
-    yaxis=dict(title="EV registrations / month", showgrid=True,
+    yaxis=dict(title="EV registrations / month", showgrid=True, automargin=True,
                gridcolor="rgba(255,255,255,0.06)", zeroline=False, rangemode="tozero"),
 )
 st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
@@ -191,10 +193,10 @@ with tbl_col:
         hide_index=True, use_container_width=True, height=300,
         column_config={
             "district": st.column_config.TextColumn("District"),
-            "ev_2030": st.column_config.NumberColumn("EVs 2030", format="%d"),
-            "required": st.column_config.NumberColumn("Required ports", format="%d"),
-            "current_ports": st.column_config.NumberColumn("Current", format="%d", width="small"),
-            "gap": st.column_config.NumberColumn("Gap", format="%d"),
+            "ev_2030": ui.int_col("EVs 2030"),
+            "required": ui.int_col("Required ports"),
+            "current_ports": ui.int_col("Current", width="small"),
+            "gap": ui.int_col("Gap"),
         },
     )
 with bar_col:

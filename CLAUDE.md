@@ -168,17 +168,31 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    is tagged "large population". Item 1 (dark-on-dark sweep) and item 3
    (WorldPop raster) remain open. Full page-by-page findings, including the
    dead "Inspect a hex" dropdown and the number-formatting inconsistencies, are
-   in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED so far: A3 and
-   D3; the rest of that document is still outstanding.
+   in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED: A1-A6 and
+   D1-D4. The only one left open is the sidebar naming (trap 10), deliberately
+   deferred. POLISH.md item 1 (dark-on-dark sweep) is effectively done for the
+   pages touched; item 3 (WorldPop) is untouched.
 10. **Sidebar page labels are raw filenames** ("WhatIf" with no space) and
     disagree with the Overview cards and page titles. Cosmetic, still open.
-13. **Stage 12's figures can be redrawn without re-running the benchmark:**
-    `python pipeline/12_forecast_comparison.py --figures-only`. It reloads the
-    fold CSV and the tuned parameters, refits only the ten full-series
-    projections the fan chart needs (those paths are not persisted, only their
-    endpoints), and writes the two PNGs. No CSV is touched. Use this for any
-    figure restyling -- a full re-run costs ~6 minutes and would rewrite every
-    stage-12 CSV.
+13. **Both figure-producing stages have a `--figures-only` mode. USE IT.**
+    `python pipeline/06_build_cdi.py --figures-only`   -> redraws cdi_map.png
+    `python pipeline/12_forecast_comparison.py --figures-only` -> redraws both
+    forecast PNGs. Each reloads the committed CSVs, recomputes nothing that
+    lands in a CSV, and writes only PNGs. A normal re-run of stage 06 hits
+    trap 2 (float drift across 3,968 rows of hex_cdi_v1.csv) and a normal
+    re-run of stage 12 costs ~6 minutes and rewrites five CSVs -- for a figure
+    change, both are pure damage. Hash processed_data/ before and after to
+    confirm only the PNG moved.
+14. **CDI colour is FIXED over 0-100 and extends, not adapts, above it.**
+    `theme.cdi_to_rgb(v, over_max=...)` keeps the inferno ramp anchored to
+    0-100 so a value has the same colour at every lens and weight, and fades
+    from the inferno ceiling toward white above 100 (weight 1.00 peaks at
+    108.8). Do NOT make the whole ramp adaptive -- that would undo the frozen
+    denominator's comparability. `ui.cdi_legend(max_cdi)` draws the matching
+    bar and states the true range.
+15. **One number format for every table:** `ui.int_col()` / `ui.num_col()`.
+    Declaring `format="%d"` ad hoc is what produced 129556 in a table beside
+    129,556 on the card next to it (review item A4).
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.

@@ -39,13 +39,34 @@ _INFERNO = [
 ]
 
 
-def cdi_to_rgb(cdi: float, alpha: int = 180) -> list[int]:
-    """CDI value (0-100) -> inferno [r, g, b, a]. CDI == 0 is transparent
-    (undrawn); faint low values render faint, which is honest and preserves real
-    intensity differences. Matches the pipeline inferno palette. Shared by all
-    live maps (Pages 1/2/4)."""
+OVER_TOP = (255, 255, 255)      # the "off the top of the scale" colour
+
+
+def cdi_to_rgb(cdi: float, alpha: int = 180, over_max: float | None = None) -> list[int]:
+    """CDI value -> inferno [r, g, b, a]. CDI == 0 is transparent (undrawn);
+    faint low values render faint, which is honest and preserves real intensity
+    differences. Matches the pipeline inferno palette. Shared by all live maps.
+
+    0-100 IS A FIXED SCALE and must stay fixed: since the frozen denominator
+    (cdi_scale.json) made CDI comparable across lenses and weights, a given
+    value has to keep the same colour at every setting. Making the whole ramp
+    adaptive would undo that.
+
+    Above 100 the ramp EXTENDS rather than clamps. The baseline peaks at exactly
+    100, but demand-raising settings legitimately exceed it (population weight
+    1.00 peaks at 108.8) and clamping made every such hex look identical. Pass
+    over_max = the largest value on screen and anything above 100 fades from the
+    inferno ceiling toward white, in proportion. Omit over_max to clamp (correct
+    when nothing exceeds 100).
+    """
     if cdi <= 0:
         return [0, 0, 0, 0]
+    if cdi > 100 and over_max and over_max > 100:
+        f = min(1.0, (cdi - 100.0) / (over_max - 100.0))
+        r0, g0, b0 = _INFERNO[-1][1:]
+        return [round(r0 + (OVER_TOP[0] - r0) * f),
+                round(g0 + (OVER_TOP[1] - g0) * f),
+                round(b0 + (OVER_TOP[2] - b0) * f), alpha]
     t = min(1.0, cdi / 100.0)
     for i in range(len(_INFERNO) - 1):
         t0, r0, g0, b0 = _INFERNO[i]
@@ -238,20 +259,25 @@ a.nav-card.nav-link:hover{border-color:var(--accent);background:var(--surface-2)
   text-transform:uppercase;margin:12px 0 2px;}
 
 /* ---- cover / landing screen (entry point) ---- */
-.cover{max-width:1060px;margin:0 auto;text-align:center;padding:3vh 12px 2vh;}
-.cover-eyebrow{color:var(--accent);font-size:.82rem;font-weight:700;letter-spacing:.24em;
-  text-transform:uppercase;margin-bottom:26px;}
+/* Cover: the title block, the stat row and the Enter button must all sit
+   ABOVE THE FOLD. The hero map is the scroll reward, not the first screen.
+   Every margin here was roughly halved and the title allowed to run wider
+   (22ch -> 30ch, so it wraps to fewer lines) to buy that -- review item D1,
+   where "Enter Dashboard" used to sit ~1.5 screens down. */
+.cover{max-width:1100px;margin:0 auto;text-align:center;padding:1.6vh 12px 0;}
+.cover-eyebrow{color:var(--accent);font-size:.78rem;font-weight:700;letter-spacing:.24em;
+  text-transform:uppercase;margin-bottom:13px;}
 .cover-title{color:var(--text);font-weight:800;letter-spacing:-.02em;
-  font-size:clamp(1.95rem,3.5vw,3rem);line-height:1.14;margin:0 auto;max-width:22ch;}
-.cover-author{color:var(--muted);font-size:.95rem;letter-spacing:.02em;margin:24px 0 0;}
-.cover-hook{color:var(--text);font-size:clamp(1.05rem,1.45vw,1.28rem);line-height:1.6;
-  margin:30px auto 0;max-width:58ch;opacity:.9;}
-.cover-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;
-  margin:40px auto 0;max-width:920px;}
+  font-size:clamp(1.5rem,2.6vw,2.1rem);line-height:1.16;margin:0 auto;max-width:30ch;}
+.cover-author{color:var(--muted);font-size:.9rem;letter-spacing:.02em;margin:14px 0 0;}
+.cover-hook{color:var(--text);font-size:clamp(.98rem,1.15vw,1.12rem);line-height:1.55;
+  margin:15px auto 0;max-width:64ch;opacity:.9;}
+.cover-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;
+  margin:22px auto 0;max-width:940px;}
 .cover-stat{flex:1 1 230px;max-width:290px;background:var(--surface);
-  border:1px solid var(--border);border-radius:12px;padding:18px 16px;}
-.cover-stat-v{color:var(--text);font-size:1.55rem;font-weight:800;line-height:1.1;}
-.cover-stat-l{color:var(--muted);font-size:.8rem;line-height:1.45;margin-top:9px;}
+  border:1px solid var(--border);border-radius:12px;padding:13px 15px;}
+.cover-stat-v{color:var(--text);font-size:1.4rem;font-weight:800;line-height:1.1;}
+.cover-stat-l{color:var(--muted);font-size:.78rem;line-height:1.4;margin-top:6px;}
 /* Enter CTA — st.page_link (reliable cross-page routing) styled as a prominent
    centered button. Raw <a href> links don't route: Streamlit intercepts them. */
 /* Streamlit sizes the page_link's container to the button (fit-content); widen
@@ -266,11 +292,17 @@ a.nav-card.nav-link:hover{border-color:var(--accent);background:var(--surface-2)
 [data-testid="stPageLink"] a:hover{filter:brightness(1.09);transform:translateY(-2px);}
 [data-testid="stPageLink"] a p{color:#fff !important;font-size:1.04rem !important;
   font-weight:700 !important;margin:0 !important;}
-.cover-hero{margin:54px auto 0;max-width:920px;}
-.cover-hero img{width:100%;display:block;border-radius:14px;opacity:.4;
-  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.15));
-  mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.15));}
-.cover-foot{color:var(--faint);font-size:.78rem;line-height:1.65;margin:46px auto 0;
+/* Hero: shown at FULL opacity. It used to be opacity .4 under a fade mask,
+   which left the colorbar, its tick labels and the station legend illegible
+   (review item D2) -- the same PNG renders crisp on the Overview page. Now
+   that it sits below the fold it is a readable figure with a caption, not a
+   decorative smear behind the title. */
+.cover-hero{margin:34px auto 0;max-width:980px;}
+.cover-hero img{width:100%;display:block;border-radius:14px;
+  border:1px solid var(--border);}
+.cover-hero-cap{color:var(--muted);font-size:.8rem;line-height:1.5;margin:10px auto 0;
+  max-width:820px;}
+.cover-foot{color:var(--faint);font-size:.78rem;line-height:1.65;margin:34px auto 0;
   max-width:860px;border-top:1px solid var(--border);padding-top:16px;}
 """
 

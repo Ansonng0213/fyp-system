@@ -231,9 +231,9 @@ with tbl_col:
         column_config={
             "rank": st.column_config.NumberColumn("Rank", width="small"),
             "district": st.column_config.TextColumn("District"),
-            "cdi": st.column_config.NumberColumn("CDI", format="%.0f", width="small"),
-            "pop_newly_covered": st.column_config.NumberColumn("People newly covered", format="%d"),
-            "nearest_existing_km": st.column_config.NumberColumn("Nearest existing (km)", format="%.1f"),
+            "cdi": ui.num_col("CDI", 0, width="small"),
+            "pop_newly_covered": ui.int_col("People newly covered"),
+            "nearest_existing_km": ui.num_col("Nearest existing (km)", 1),
         },
     )
     st.caption("Click a row to open its scorecard and highlight it on the map. Click a column header to sort.")
@@ -326,26 +326,55 @@ st.write("")
 
 # ------------------------------------------------------------------ desert zones
 ui.section_header("Desert zones (DBSCAN)")
-with st.expander(f"{len(zones)} contiguous desert zones — two distinct types", expanded=False):
-    st.caption("Two desert types are visible: **Petaling's** zones are largest by population (moderate "
-               "severity), while **Klang's** zones are the most severe (highest mean CDI).")
+with st.expander(f"{len(zones)} contiguous desert zones — by type", expanded=False):
+    st.caption("**Petaling's** zones are the largest by population at moderate severity, while "
+               "**Klang's** worst two are the most severe (highest mean CDI). Zones that are "
+               "neither the largest nor the most severe are labelled *moderate* rather than "
+               "forced into one of the two extremes.")
     zt = zones[["zone", "district", "hexes", "population", "mean_cdi"]].copy()
-    # two desert types: high mean-CDI zones are severity-driven; the rest are
-    # scale-driven (large population, moderate CDI). Threshold per POLISH.md.
-    zt["zone_type"] = np.where(zt["mean_cdi"] >= 60,
-                               "severity (high CDI)", "scale (large population)")
-    zt = zt[["zone", "district", "zone_type", "hexes", "population", "mean_cdi"]]
+    zt["population"] = zt["population"].round().astype(int)   # people are whole
+
+    # Zone type needs BOTH tests. Grading on mean CDI alone labelled zone 4 --
+    # 32,857 people, the smallest of the eight -- "scale (large population)"
+    # (review item A2). A zone is severity-driven if its mean CDI is high, and
+    # scale-driven only if it is genuinely large; anything that is neither gets
+    # a neutral label rather than a wrong one.
+    SEVERITY_CDI = 60.0
+    LARGE_POP = float(zt["population"].median())
+    zt["zone_type"] = np.select(
+        [zt["mean_cdi"] >= SEVERITY_CDI,
+         zt["population"] >= LARGE_POP],
+        ["severity (high CDI)", "scale (large population)"],
+        default="moderate (neither extreme)",
+    )
+
+    # Displayed IDs run 1..n in the shown rank order (zones arrive sorted by
+    # population). The raw DBSCAN cluster ids -- 0, 6, 2, 5, ... -- are an
+    # internal label, kept unchanged in desert_zones_v1.csv and shown here as
+    # a secondary column so the table still reconciles with the file.
+    zt = zt.reset_index(drop=True)
+    zt.insert(0, "zone_id", np.arange(1, len(zt) + 1))
+    zt = zt.rename(columns={"zone": "cluster_id"})
+    zt = zt[["zone_id", "district", "zone_type", "hexes", "population",
+             "mean_cdi", "cluster_id"]]
     st.dataframe(
         zt, hide_index=True, use_container_width=True,
         column_config={
-            "zone": st.column_config.NumberColumn("Zone", width="small"),
+            "zone_id": st.column_config.NumberColumn("Zone", width="small"),
             "district": st.column_config.TextColumn("District"),
             "zone_type": st.column_config.TextColumn("Zone type"),
-            "hexes": st.column_config.NumberColumn("Hexes", width="small"),
-            "population": st.column_config.NumberColumn("Population", format="%d"),
-            "mean_cdi": st.column_config.NumberColumn("Mean CDI", format="%.1f"),
+            "hexes": ui.int_col("Hexes", width="small"),
+            "population": ui.int_col("Population"),
+            "mean_cdi": ui.num_col("Mean CDI", 1),
+            "cluster_id": st.column_config.NumberColumn(
+                "DBSCAN id", width="small",
+                help="Raw cluster label from the pipeline, kept so this table "
+                     "reconciles with desert_zones_v1.csv."),
         },
     )
+    st.caption(f"Zone type: **severity** = mean CDI ≥ {SEVERITY_CDI:.0f}; "
+               f"**scale** = population at or above the zone median "
+               f"({LARGE_POP:,.0f}); otherwise **moderate**. Ranked by population.")
 
 st.markdown(
     "<div class='site-footer'>Ng Cheng Xin · TP071136 · Asia Pacific University · FYP 2026 · "

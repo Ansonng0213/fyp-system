@@ -10,6 +10,61 @@ from __future__ import annotations
 import streamlit as st
 
 
+# --- number formatting -------------------------------------------------------
+# ONE helper for every integer column in every st.dataframe on the site. Before
+# this, columns were declared ad hoc with format="%d", which renders 129556
+# where the scorecard beside it said 129,556 (review item A4). "localized" is
+# Streamlit's thousand-separator format and matches theme.fmt_int, which is what
+# the KPI cards and the HTML tables use.
+INT_FORMAT = "localized"
+
+
+def int_col(label: str, **kw):
+    """Integer dataframe column with thousand separators. Use for EVERY
+    whole-number column so tables and the cards beside them agree."""
+    return st.column_config.NumberColumn(label, format=INT_FORMAT, **kw)
+
+
+def num_col(label: str, decimals: int = 1, **kw):
+    """Fixed-decimal dataframe column. Counterpart to int_col for real numbers."""
+    return st.column_config.NumberColumn(label, format=f"%.{decimals}f", **kw)
+
+
+_INFERNO_CSS = "#000004,#420a68,#932667,#dd513a,#fca50a,#fcffa4"
+
+
+def cdi_legend(max_cdi: float | None = None, width_px: int = 400) -> None:
+    """The CDI colour bar. 0-100 is a FIXED inferno ramp so a value keeps its
+    colour at every lens and weight setting; when the view exceeds 100 an
+    over-range segment is appended in proportion and the true range is stated.
+    Pass max_cdi = the largest value currently on screen."""
+    over = max_cdi is not None and max_cdi > 100.0
+    if not over:
+        st.markdown(
+            f"<div class='leg-wrap' style='max-width:{width_px}px'>"
+            "<div class='leg-label'>Charging Desert Index</div>"
+            "<div class='leg-bar'></div>"
+            "<div class='leg-scale'><span>0</span><span>50</span><span>100</span></div></div>",
+            unsafe_allow_html=True)
+        return
+    main_pct = 100.0 / max_cdi * 100.0          # share of the bar that is 0-100
+    st.markdown(
+        f"<div class='leg-wrap' style='max-width:{width_px}px'>"
+        "<div class='leg-label'>Charging Desert Index</div>"
+        "<div style='display:flex;height:10px;border:1px solid var(--border);"
+        "border-radius:5px;overflow:hidden'>"
+        f"<div style='flex:0 0 {main_pct:.2f}%;background:linear-gradient(90deg,{_INFERNO_CSS})'></div>"
+        f"<div style='flex:1 1 auto;background:linear-gradient(90deg,#fcffa4,#ffffff)'></div>"
+        "</div>"
+        "<div class='leg-scale'><span>0</span>"
+        f"<span style='margin-left:auto'>100 · baseline peak</span>"
+        f"<span style='margin-left:8px'>{max_cdi:.1f}</span></div>"
+        f"<div class='leg-scale'><span>0 – {max_cdi:.1f} at this setting. "
+        "0–100 is fixed, so a value keeps its colour everywhere; the pale "
+        "segment is above the baseline peak.</span></div></div>",
+        unsafe_allow_html=True)
+
+
 def _kpi_card_html(label: str, value: str, context: str) -> str:
     return (f"<div class='kpi-card'>"
             f"<div class='kpi-label'>{label}</div>"

@@ -143,13 +143,27 @@ for col, name, color in [("lumpur_pct", "Kuala Lumpur", "#8B93A7"),
                                  line=dict(color=color, width=2.5),
                                  hovertemplate="%{x} km: %{y:.1f}%<extra>" + name + "</extra>"))
 fig_cov.add_vline(x=radius, line=dict(color=theme.TEXT_FAINT, width=1, dash="dash"))
+# Direct end-of-line labels. This chart carries the equity argument and had
+# three unlabelled lines (review item A5): the legend was configured but the
+# 10px top margin left it nowhere to render. Labelling each line at its end
+# removes the lookup entirely; the legend is kept, with room, as a fallback.
+_x_end = float(cov["radius_km"].max())
+for col, name, color in [("lumpur_pct", "Kuala Lumpur", "#8B93A7"),
+                         ("kv_pct", "KV overall", theme.ACCENT),
+                         ("klang_pct", "Klang", "#E8833A")]:
+    fig_cov.add_annotation(
+        x=_x_end, y=float(cov[cov["radius_km"] == _x_end][col].iloc[0]),
+        text=f" {name}", showarrow=False, xanchor="left", yanchor="middle",
+        font=dict(color=color, size=11.5),
+    )
 fig_cov.update_layout(
-    height=340, margin=dict(l=6, r=14, t=10, b=6), hovermode="x unified",
+    height=340, margin=dict(l=12, r=110, t=44, b=6), hovermode="x unified",
     paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
     font=dict(color=theme.TEXT_MUTED, size=12),
-    legend=dict(orientation="h", y=1.1, x=1, xanchor="right", font=dict(size=11)),
-    xaxis=dict(title="Distance to nearest public station (km)", showgrid=False, zeroline=False),
-    yaxis=dict(title="Population covered", ticksuffix="%", showgrid=True,
+    legend=dict(orientation="h", y=1.16, x=1, xanchor="right", font=dict(size=11)),
+    xaxis=dict(title="Distance to nearest public station (km)", showgrid=False,
+               zeroline=False, automargin=True),
+    yaxis=dict(title="Population covered", ticksuffix="%", showgrid=True, automargin=True,
                gridcolor="rgba(255,255,255,0.06)", zeroline=False, range=[0, 105]),
 )
 st.plotly_chart(fig_cov, use_container_width=True, config={"displayModeBar": False})

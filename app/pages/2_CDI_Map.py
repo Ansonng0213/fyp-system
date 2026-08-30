@@ -6,9 +6,9 @@ persona toggle and weight slider recompute CDI live from stored components
 (app/lib/cdi.py) — pure arithmetic, no pipeline. Reason strings are the product's
 explainability: available on hover (guaranteed) and in the inspector.
 
-Selection: the "Inspect a hex" rank/search selector (above the map, always
-reachable) is the reliable way to focus a hex; native map-click is wired as a
-bonus and falls back gracefully if the runtime doesn't surface it.
+Selection: clicking a hex on the map focuses it and opens the inspector panel.
+(An "Inspect a hex" selectbox used to sit above the map; it never populated and
+never synced with the map, so it was removed -- review item A1.)
 """
 import pandas as pd
 import pydeck as pdk
@@ -21,7 +21,6 @@ st.set_page_config(page_title="CDI Explorer", layout="wide")
 theme.inject_base_css()
 
 MAP_KEY = "cdi_map"
-NONE = "__none__"
 
 # ------------------------------------------------------------------ load (cached)
 base = data.load_cdi()
@@ -155,18 +154,9 @@ if show_market:
     view["tip"] = [f"{d}\nPredicted market interest {p:.1%}\n(CDI {c:.0f} — need, for contrast)"
                    for d, p, c in zip(view["district"], view["market_p"], view["cdi_live"])]
 else:
-    view["fill_color"] = [theme.cdi_to_rgb(v) for v in view["cdi_live"]]
+    CDI_MAX = float(view["cdi_live"].max())
+    view["fill_color"] = [theme.cdi_to_rgb(v, over_max=CDI_MAX) for v in view["cdi_live"]]
     view["tip"] = [f"{d}\n{rs}" for d, rs in zip(view["district"], view["reason"])]
-
-# inspector options: inhabited hexes in view, ranked by the live CDI
-inhabited = view[view["pop_est"] > 0].sort_values("cdi_live", ascending=False)
-opts = [NONE] + inhabited["h3_index"].tolist()
-labels = {
-    r.h3_index: f"#{i} · {r.district} · CDI {r.cdi_live:.0f} · {r.lat:.4f},{r.lon:.4f}"
-    for i, r in enumerate(inhabited.itertuples(), 1)
-}
-if st.session_state.get("hex_select") not in opts:      # stay valid across filter changes
-    st.session_state["hex_select"] = NONE
 
 # ------------------------------------------------------------------ header + legend
 st.markdown(
@@ -193,11 +183,7 @@ if show_market:
         icon="⚠️",
     )
 else:
-    st.markdown(
-        "<div class='leg-wrap' style='max-width:360px'><div class='leg-label'>Charging Desert Index</div>"
-        "<div class='leg-bar'></div><div class='leg-scale'><span>0</span><span>50</span><span>100</span></div></div>",
-        unsafe_allow_html=True,
-    )
+    ui.cdi_legend(float(view["cdi_live"].max()))
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------------ KPI row (reactive)
@@ -215,24 +201,16 @@ ui.kpi_row([
 
 st.write("")
 
-# ------------------------------------------------------------ inspect-a-hex selector
-sel_col, _ = st.columns([0.5, 0.5])
-with sel_col:
-    st.selectbox(
-        "Inspect a hex", opts, key="hex_select",
-        format_func=lambda h: "— none (hover the map, or pick a hex) —" if h == NONE else labels.get(h, h),
-        help="Hover any hex for its reason string. Pick one here — or click it on the map — to inspect.",
-    )
-
-sb = st.session_state.get("hex_select", NONE)
+# ------------------------------------------------------------ hex selection
+# The map click IS the selection. There used to be an "Inspect a hex"
+# selectbox here; it shipped with only its placeholder option, returned
+# nothing when typed into, and never synced with a map click, so it was a
+# dead control (review item A1). Removed rather than repaired -- clicking the
+# hex is the better interaction and it already worked.
 view_ids = set(view["h3_index"])
-if sb != NONE:
-    selected_h3 = sb
-elif clicked in view_ids:
-    selected_h3 = clicked
-else:
-    selected_h3 = None
+selected_h3 = clicked if clicked in view_ids else None
 selected_row = view.loc[view["h3_index"] == selected_h3].iloc[0] if selected_h3 else None
+st.caption("Click any hex on the map to inspect it. Hover for its reason string.")
 
 # ------------------------------------------------------------------ build map layers
 # mask first (dims everything outside KV), then hexes, borders, highlight, stations
