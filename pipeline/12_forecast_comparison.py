@@ -123,6 +123,103 @@ def to_md(df, floatfmt="{:.3f}"):
 
 
 # ------------------------------------------------------------
+# FIGURE STYLE -- dark, matching cdi_map.png (stage 06) and the dashboard
+# these figures are embedded in. Same canvas and text colours.
+# ------------------------------------------------------------
+FIG_BG = "#1A1A2E"          # == theme.MAP_CANVAS / cdi_map.png facecolor
+FIG_TXT = "#E6E9EF"
+FIG_GRID = "#3A4050"
+FIG_MUTED = "#9AA1AD"
+FIG_ACCENT = "#3E7BFA"
+FIG_WARN = "#FF6B5A"
+SERIES_COLORS = ["#00E5FF", "#00FF88", "#FFB02E", "#C792EA", "#FF6B9D",
+                 "#7CD4FD", "#FFD166", "#8AE68A", "#FF9F7A", "#B388FF"]
+
+
+def _style_axes(ax, title=None, ylabel=None):
+    ax.set_facecolor(FIG_BG)
+    for s in ax.spines.values():
+        s.set_color(FIG_GRID)
+    ax.tick_params(colors=FIG_MUTED, which="both")
+    ax.grid(True, color=FIG_GRID, lw=0.6, alpha=0.5)
+    ax.set_axisbelow(True)
+    if title:
+        ax.set_title(title, color=FIG_TXT, fontsize=13, pad=10)
+    if ylabel:
+        ax.set_ylabel(ylabel, color=FIG_TXT)
+
+
+def _style_legend(ax, **kw):
+    leg = ax.legend(facecolor=FIG_BG, edgecolor=FIG_GRID, labelcolor=FIG_TXT, **kw)
+    if leg:
+        leg.get_frame().set_alpha(0.9)
+    return leg
+
+
+def draw_figures(folds_df, model_paths, ds, y, fut_ds, cap):
+    """Both stage-12 PNGs, dark-themed.
+
+    Split out so they can be redrawn from the persisted CSVs without
+    re-running the 980-fold benchmark -- see --figures-only at the foot of
+    this file. Writes only PNGs; touches no CSV.
+    """
+    # --- fold MASE distribution
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5.5), facecolor=FIG_BG)
+    for ax, h in zip(axes, HORIZONS):
+        sub = folds_df[(folds_df["series"] == "full_2020_2026") &
+                       (folds_df["h"] == h) & folds_df["converged"]].copy()
+        sub["label"] = sub["model"] + "\n" + sub["variant"]
+        order = sub.groupby("label")["MASE"].mean().sort_values().index.tolist()
+        bp = ax.boxplot([sub.loc[sub["label"] == L, "MASE"].dropna() for L in order],
+                        tick_labels=[L.replace("\n", " ") for L in order],
+                        patch_artist=True)
+        for patch in bp["boxes"]:
+            patch.set_facecolor("#2A3040")
+            patch.set_edgecolor(FIG_MUTED)
+        for part in ("whiskers", "caps"):
+            for ln in bp[part]:
+                ln.set_color(FIG_MUTED)
+        for med in bp["medians"]:
+            med.set_color(FIG_ACCENT)
+            med.set_linewidth(1.8)
+        for fl in bp["fliers"]:
+            fl.set(markeredgecolor=FIG_MUTED, markersize=3, alpha=0.7)
+        ax.axhline(1.0, ls="--", c=FIG_WARN, lw=1.2,
+                   label="seasonal naive (MASE = 1)")
+        _style_axes(ax, f"Fold MASE distribution, h = {h}", "MASE")
+        ax.tick_params(axis="x", rotation=60, labelsize=7, colors=FIG_MUTED)
+        _style_legend(ax, fontsize=8)
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG_DIR, "forecast_fold_errors.png"),
+                dpi=150, facecolor=FIG_BG)
+    plt.close(fig)
+
+    # --- 2030 fan chart
+    fig, ax = plt.subplots(figsize=(12, 6), facecolor=FIG_BG)
+    ax.plot(ds, y, color=FIG_TXT, lw=2.0, label="actual", zorder=5)
+    for i, (label, pred) in enumerate(model_paths.items()):
+        ax.plot(fut_ds, pred, lw=1.4, alpha=0.9,
+                color=SERIES_COLORS[i % len(SERIES_COLORS)], label=label)
+    ax.axhline(cap, ls="--", c=FIG_WARN, lw=1.6,
+               label=f"policy ceiling {cap:,.0f}/mo")
+    ax.axvline(ds.iloc[-1], color=FIG_MUTED, lw=1.0, ls=":")
+    top = max(3 * cap,
+              float(np.nanmax([p.max() for p in model_paths.values()])) * 1.05)
+    ax.set_ylim(0, min(60_000, top))
+    ax.annotate("actuals end", (ds.iloc[-1], ax.get_ylim()[1]),
+                color=FIG_MUTED, fontsize=9, ha="right", va="top",
+                xytext=(-6, -8), textcoords="offset points")
+    _style_axes(ax, "Projection to Dec 2030 -- every model, against the policy ceiling",
+                "registrations / month")
+    _style_legend(ax, fontsize=7, ncol=2, loc="upper left")
+    fig.tight_layout()
+    fig.savefig(os.path.join(FIG_DIR, "forecast_2030_fan.png"),
+                dpi=150, facecolor=FIG_BG)
+    plt.close(fig)
+    print("  forecast_fold_errors.png, forecast_2030_fan.png  (dark theme)")
+
+
+# ------------------------------------------------------------
 print("=" * 66)
 print("FYP2 -- FORECASTING BENCHMARK (six models, rolling origin)")
 print("=" * 66)
@@ -271,6 +368,55 @@ def forecast(name, params, y, h, ds=None):
         FAIL_LOG.append({"model": name, "h": h, "n_train": len(y),
                          "error": f"{type(e).__name__}: {e}"[:160]})
         return None
+
+
+# ------------------------------------------------------------
+# --figures-only : redraw both PNGs from artifacts already on disk.
+#
+# Reloads forecast_backtest_folds.csv for the fold chart, and the tuned
+# parameters from forecast_tuning_results.csv so the ten builds can be refit
+# on the FULL series to recover the 2030 projection paths -- those paths are
+# not persisted, only their endpoints are. It does NOT re-run the
+# rolling-origin benchmark (980 folds) and writes no CSV.
+# ------------------------------------------------------------
+if "--figures-only" in sys.argv:
+    banner("F", "FIGURES ONLY -- redraw from artifacts, no benchmark re-run")
+    folds_csv = pd.read_csv(os.path.join(OUT_DIR, "forecast_backtest_folds.csv"))
+    tune_csv = pd.read_csv(os.path.join(OUT_DIR, "forecast_tuning_results.csv"))
+    print(f"  forecast_backtest_folds.csv    {len(folds_csv):,} folds")
+    print(f"  forecast_tuning_results.csv    {len(tune_csv)} models")
+
+    tuned_from_csv = {}
+    for _, r in tune_csv.iterrows():
+        if not bool(r["tuned"]):
+            tuned_from_csv[r["model"]] = {}
+            continue
+        p = json.loads(r["best_params"])
+        for k in ("order", "seasonal_order"):
+            if k in p:
+                p[k] = tuple(p[k])
+        tuned_from_csv[r["model"]] = p
+
+    h_fig = (pd.Timestamp(FORECAST_END).to_period("M") - DS.iloc[-1].to_period("M")).n
+    fut_fig = pd.date_range(DS.iloc[-1] + pd.offsets.MonthBegin(1),
+                            FORECAST_END, freq="MS")
+    print(f"  refitting {h_fig}-month projections for the fan chart "
+          f"(ceiling {CAP_MONTHLY:,.0f}/mo) ...")
+    paths_fig = {}
+    for nm in MODELS:
+        for vr, pr in (("base", BASE_PARAMS[nm]), ("tuned", tuned_from_csv.get(nm, {}))):
+            if nm in NO_TUNE and vr == "tuned":
+                continue
+            pv = forecast(nm, pr, Y, h_fig, ds=DS)
+            if pv is not None:
+                paths_fig[f"{nm} ({vr})"] = pv
+    print(f"  {len(paths_fig)} projection paths recovered")
+    draw_figures(folds_csv, paths_fig, DS, Y, fut_fig, CAP_MONTHLY)
+    print()
+    print("=" * 66)
+    print("PNGs only. No CSV written, benchmark not re-run.")
+    print("=" * 66)
+    sys.exit(0)
 
 
 # ------------------------------------------------------------
@@ -691,36 +837,7 @@ if len(pt):
 # ------------------------------------------------------------
 banner(6, "FIGURES")
 # ------------------------------------------------------------
-fig, axes = plt.subplots(1, 2, figsize=(14, 5.5), sharey=False)
-for ax, h in zip(axes, HORIZONS):
-    sub = all_folds[(all_folds["series"] == "full_2020_2026") &
-                    (all_folds["h"] == h) & all_folds["converged"]].copy()
-    sub["label"] = sub["model"] + "\n" + sub["variant"]
-    order = sub.groupby("label")["MASE"].mean().sort_values().index.tolist()
-    ax.boxplot([sub.loc[sub["label"] == L, "MASE"].dropna() for L in order],
-               tick_labels=[L.replace("\n", " ") for L in order], vert=True)
-    ax.axhline(1.0, ls="--", c="crimson", lw=1, label="seasonal naive (MASE=1)")
-    ax.set_title(f"Fold MASE distribution, h = {h}")
-    ax.set_ylabel("MASE"); ax.tick_params(axis="x", rotation=60, labelsize=7)
-    ax.legend(fontsize=8)
-fig.tight_layout()
-fig.savefig(os.path.join(FIG_DIR, "forecast_fold_errors.png"), dpi=150)
-plt.close(fig)
-
-fig, ax = plt.subplots(figsize=(12, 6))
-ax.plot(DS, Y, color="black", lw=1.6, label="actual")
-for label, pred in paths.items():
-    ax.plot(future_ds, pred, lw=1.2, alpha=0.85, label=label)
-ax.axhline(CAP_MONTHLY, ls="--", c="crimson", lw=1.4,
-           label=f"policy ceiling {CAP_MONTHLY:,.0f}/mo")
-ax.set_ylim(0, min(60_000, max(3 * CAP_MONTHLY, np.nanmax([p.max() for p in paths.values()]) * 1.05)))
-ax.set_title("Projection to Dec 2030 -- every model, against the policy ceiling")
-ax.set_ylabel("registrations / month")
-ax.legend(fontsize=7, ncol=2)
-fig.tight_layout()
-fig.savefig(os.path.join(FIG_DIR, "forecast_2030_fan.png"), dpi=150)
-plt.close(fig)
-print("  forecast_fold_errors.png, forecast_2030_fan.png")
+draw_figures(all_folds, paths, DS, Y, future_ds, CAP_MONTHLY)
 
 
 # ------------------------------------------------------------
