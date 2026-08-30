@@ -27,6 +27,7 @@
 # ============================================================
 
 import os
+import sys
 import json
 from datetime import datetime, timezone
 
@@ -43,6 +44,113 @@ P99 = 0.99                       # winsorize level for normalization
 def norm01(s, q=P99):
     cap = s.quantile(q)
     return (s.clip(upper=cap) / cap).fillna(0) if cap > 0 else s * 0
+
+
+# ------------------------------------------------------------
+# THE REPORT MAP. Split into a function so it can be redrawn from the
+# committed hex_cdi_v1.csv without recomputing the grid -- see --figures-only
+# at the foot of this file. That matters: re-running the whole stage under
+# current library versions shifts the last float digits of supply_raw /
+# supply_n / cdi (and even lat/lon, straight out of h3), so the CSV stops
+# being byte-identical for no analytical gain.
+# ------------------------------------------------------------
+MAP_TXT = "#E6E9EF"          # near-white, legible on the dark canvas
+MAP_BG = "#1a1a2e"
+
+
+def draw_cdi_map(hex_df, station_df):
+    """cdi_map.png -- the figure the report and the cover screen both use."""
+    try:
+        import geopandas as gpd
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        from shapely.geometry import Polygon
+    except ImportError:
+        print("  (geopandas/matplotlib missing - map skipped)")
+        return
+
+    def cell_polygon(cell):
+        b = h3.cell_to_boundary(cell)
+        return Polygon([(lng, lat) for lat, lng in b])
+
+    gdf = gpd.GeoDataFrame(hex_df[["h3_index", "cdi"]],
+                           geometry=[cell_polygon(c) for c in hex_df["h3_index"]],
+                           crs="EPSG:4326")
+    kv = gpd.read_file(os.path.join(OUT_DIR, "kv_districts_dosm.geojson"))
+
+    # Crop to the data. The figure used to be a fixed 11x10 with whatever
+    # letterboxing that produced; sizing it to the actual bounding box removes
+    # the dead margins the dashboard review flagged.
+    minx, miny, maxx, maxy = kv.total_bounds
+    padx, pady = (maxx - minx) * 0.02, (maxy - miny) * 0.02
+    minx, maxx = minx - padx, maxx + padx
+    miny, maxy = miny - pady, maxy + pady
+    aspect = (maxy - miny) / (maxx - minx)
+    fig_w = 11.0
+    fig, ax = plt.subplots(figsize=(fig_w, fig_w * aspect * 0.92), facecolor=MAP_BG)
+
+    gdf[gdf["cdi"] > 0].plot(column="cdi", cmap="inferno", ax=ax, legend=True,
+                             vmin=0, vmax=100,
+                             legend_kwds={"label": "Charging Desert Index (0-100)",
+                                          "shrink": 0.6})
+    kv.boundary.plot(ax=ax, color="white", linewidth=1.0)
+    ax.scatter(station_df["longitude"], station_df["latitude"],
+               s=6, c="#00e5ff", alpha=0.8, linewidths=0, label="Public stations")
+
+    # DISTRICT NAMES. "Klang is the desert capital" is the headline finding and
+    # a reader could not previously tell which shape was Klang. Placed at each
+    # polygon's representative point (guaranteed inside the polygon), with a
+    # dark halo so the label survives over both bright and dark hexes.
+    import matplotlib.patheffects as pe
+    halo = [pe.withStroke(linewidth=2.6, foreground=MAP_BG)]
+    for _, row in kv.iterrows():
+        pt = row.geometry.representative_point()
+        name = str(row["district_canon"])
+        emphasised = name == "Klang"
+        ax.annotate(
+            name.upper(), (pt.x, pt.y), ha="center", va="center",
+            fontsize=10.5 if emphasised else 8.5,
+            fontweight="bold" if emphasised else "normal",
+            color="#FFFFFF" if emphasised else MAP_TXT,
+            alpha=1.0 if emphasised else 0.78,
+            path_effects=halo, zorder=6,
+        )
+
+    ax.set_xlim(minx, maxx)
+    ax.set_ylim(miny, maxy)
+    ax.legend(loc="lower left", frameon=False, labelcolor=MAP_TXT)
+    ax.set_title("Charging Desert Index — Greater Klang Valley (H3 res 8)",
+                 color=MAP_TXT, fontsize=14, pad=10)
+    ax.set_axis_off()
+    # near-white colorbar label + tick labels (legend=True adds the colorbar axis)
+    cax = fig.axes[-1]
+    cax.yaxis.label.set_color(MAP_TXT)
+    cax.tick_params(colors=MAP_TXT)
+    for spine in cax.spines.values():
+        spine.set_edgecolor(MAP_TXT)
+    fig.tight_layout()
+    fig.savefig(os.path.join(OUT_DIR, "cdi_map.png"), dpi=150, facecolor=MAP_BG)
+    plt.close(fig)
+    print("  Map saved -> cdi_map.png (district labels, cropped to bounds)")
+
+
+# --figures-only : redraw cdi_map.png from the committed artifacts. Writes
+# the PNG and nothing else -- no CSV, no cdi_scale.json, no recomputation.
+if "--figures-only" in sys.argv:
+    print("=" * 60)
+    print("FIGURES ONLY - redrawing cdi_map.png, no recomputation")
+    print("=" * 60)
+    _hx = pd.read_csv(os.path.join(OUT_DIR, "hex_cdi_v1.csv"))
+    _st = pd.read_csv(os.path.join(OUT_DIR, "ev_stations_kv_clean_v2.csv"))
+    _st = _st[_st["is_public_facing"] & _st["is_operational"]].reset_index(drop=True)
+    print(f"  hex_cdi_v1.csv           {len(_hx):,} hexes")
+    print(f"  public+operational       {len(_st)} stations")
+    draw_cdi_map(_hx, _st)
+    print("=" * 60)
+    print("PNG only. No CSV written, nothing recomputed.")
+    print("=" * 60)
+    sys.exit(0)
 
 # ------------------------------------------------------------
 # STEP 1 — Load hex layers + stations
@@ -234,44 +342,6 @@ cols = ["h3_index", "district", "lat", "lon", "pop_est", "activity_score",
         "nearest_station_km", "stations_2km", "stations_5km", "cdi"]
 hexes[cols].to_csv(os.path.join(OUT_DIR, "hex_cdi_v1.csv"), index=False)
 
-try:
-    import geopandas as gpd
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    from shapely.geometry import Polygon
-
-    def cell_polygon(cell):
-        b = h3.cell_to_boundary(cell)
-        return Polygon([(lng, lat) for lat, lng in b])
-
-    gdf = gpd.GeoDataFrame(hexes[["h3_index", "cdi"]],
-                           geometry=[cell_polygon(c) for c in hexes["h3_index"]],
-                           crs="EPSG:4326")
-    kv = gpd.read_file(os.path.join(OUT_DIR, "kv_districts_dosm.geojson"))
-    TXT = "#E6E9EF"                       # near-white text, legible on dark canvas
-    fig, ax = plt.subplots(figsize=(11, 10))
-    gdf[gdf["cdi"] > 0].plot(column="cdi", cmap="inferno", ax=ax, legend=True,
-                             vmin=0, vmax=100,
-                             legend_kwds={"label": "Charging Desert Index (0-100)",
-                                          "shrink": 0.6})
-    kv.boundary.plot(ax=ax, color="white", linewidth=1.0)
-    ax.scatter(supply_st["longitude"], supply_st["latitude"],
-               s=6, c="#00e5ff", alpha=0.8, linewidths=0, label="Public stations")
-    ax.legend(loc="lower left", frameon=False, labelcolor=TXT)
-    ax.set_title("Charging Desert Index — Greater Klang Valley (H3 res 8)",
-                 color=TXT, fontsize=14, pad=12)
-    ax.set_axis_off()
-    # near-white colorbar label + tick labels (legend=True adds the colorbar axis)
-    cax = fig.axes[-1]
-    cax.yaxis.label.set_color(TXT)
-    cax.tick_params(colors=TXT)
-    for spine in cax.spines.values():
-        spine.set_edgecolor(TXT)
-    fig.tight_layout()
-    fig.savefig(os.path.join(OUT_DIR, "cdi_map.png"), dpi=150, facecolor="#1a1a2e")
-    print("  Map saved -> cdi_map.png")
-except ImportError:
-    print("  (geopandas/matplotlib missing — map skipped)")
+draw_cdi_map(hexes, supply_st)
 
 print(f"  Saved -> hex_cdi_v1.csv")
