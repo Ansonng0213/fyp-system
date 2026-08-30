@@ -191,6 +191,7 @@ Key preprocessing decisions already made:
 **Optimization:** clustering (K-Means CDI-weighted, DBSCAN) PLUS coverage framing (greedy maximal-coverage on top-CDI hexes) → ranked recommended sites with per-site scorecard (demand, equity, nearest existing station, coverage gain).
 
 **Validation (novel for FYP):** hold out 20% of existing stations → does high-CDI recover them (recall@k)? Cross-check recommendations vs announced Gentari/TNB/ChargEV expansion sites.
+> ⚠ **As-built correction — see §3.5 (HOLDOUT RECALL) above.** The test was run on THREE predictors, not on the CDI alone. The headline **5.3× belongs to `demand_blend`** (pop_n + act_n, no supply gap, no equity), not to the CDI. `pop_only` = 4.5×; the full `operator_cdi` = **2.7×, deliberately lower** by design. Never write "the CDI recovers stations at 5.3×".
 
 **System:** Streamlit dashboard (upgrade from static Folium HTML): layers = CDI heatmap, desert zones, existing stations, recommended sites, forecast slider 2026→2030, district drill-down, site scorecards. Export static Folium HTML as backup deliverable.
 

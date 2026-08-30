@@ -135,21 +135,6 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    failed on import); scikit-learn, scipy, xgboost, lightgbm, shap and
    statsmodels were installed during the stage-11 build. Run
    `pip install -r requirements-pipeline.txt` rather than assuming.
-11. **`KV_SHARE` is 0.629, and the derivation JSON says 0.6286.** They were
-    desynchronised for the whole project. Stage 09 now READS the JSON and rounds
-    to 3 dp, which reproduces 0.629 bit-exactly, and aborts if the JSON ever
-    stops rounding to it. Using the raw 0.6286 moves the policy cap 6,290 ->
-    6,286/month and shifts the 2030 forecast, port requirement and district
-    gaps -- i.e. published numbers. Change it only as a deliberate regeneration.
-12. **Stage 12 says the forecast headline is defensible for a different reason
-    than the report gives.** "Prophet 17.6% vs ARIMA 37.5%" reproduces exactly,
-    and MASE ranks the same order on that split -- but under rolling origin
-    (980 folds) Prophet base falls to rank 5 of 10 at h=6 and ETS wins. The
-    single 2025 split flattered it. Prophet remains the right choice for the
-    2030 projection because its logistic trend is the only one that saturates
-    (6,230/mo against the 6,290 ceiling); SARIMA has the best AIC in the study
-    and extrapolates to 57-81x the ceiling. Claim bounded extrapolation, not
-    short-horizon accuracy.
 5. **`processed_data/operator_*.csv` is now an ambiguous glob.** It matches both
    the seven stage-11 outputs and the pre-existing, unrelated
    `operator_crosscheck_template.csv` (the manual PlugShare validation). Use
@@ -174,6 +159,21 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    pages touched; item 3 (WorldPop) is untouched.
 10. **Sidebar page labels are raw filenames** ("WhatIf" with no space) and
     disagree with the Overview cards and page titles. Cosmetic, still open.
+11. **`KV_SHARE` is 0.629, and the derivation JSON says 0.6286.** They were
+    desynchronised for the whole project. Stage 09 now READS the JSON and rounds
+    to 3 dp, which reproduces 0.629 bit-exactly, and aborts if the JSON ever
+    stops rounding to it. Using the raw 0.6286 moves the policy cap 6,290 ->
+    6,286/month and shifts the 2030 forecast, port requirement and district
+    gaps -- i.e. published numbers. Change it only as a deliberate regeneration.
+12. **Stage 12 says the forecast headline is defensible for a different reason
+    than the report gives.** "Prophet 17.6% vs ARIMA 37.5%" reproduces exactly,
+    and MASE ranks the same order on that split -- but under rolling origin
+    (980 folds) Prophet base falls to rank 5 of 10 at h=6 and ETS wins. The
+    single 2025 split flattered it. Prophet remains the right choice for the
+    2030 projection because its logistic trend is the only one that saturates
+    (6,230/mo against the 6,290 ceiling); SARIMA has the best AIC in the study
+    and extrapolates to 57-81x the ceiling. Claim bounded extrapolation, not
+    short-horizon accuracy.
 13. **Both figure-producing stages have a `--figures-only` mode. USE IT.**
     `python pipeline/06_build_cdi.py --figures-only`   -> redraws cdi_map.png
     `python pipeline/12_forecast_comparison.py --figures-only` -> redraws both
@@ -193,6 +193,25 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
 15. **One number format for every table:** `ui.int_col()` / `ui.num_col()`.
     Declaring `format="%d"` ad hoc is what produced 129556 in a table beside
     129,556 on the card next to it (review item A4).
+16. **The 5.3x holdout figure is the DEMAND LAYER's, not the CDI's.**
+    `08_validate.py` tests three predictors: `demand_blend` (pop_n + act_n, no
+    supply gap, no equity) = **5.3x** chance at top-10%; `pop_only` = 4.5x;
+    `operator_cdi` (demand x gap) = **2.7x, deliberately lower** because the
+    gap term demotes already-served areas while the test rewards predicting
+    where operators DID build. Never write "the CDI recovers held-out stations
+    at 5.3x" -- wrong predictor, and it is not the CDI. Corrected on the Trust
+    page and flagged in FYP_PROJECT_MEMORY.md; the memory file's line 136-137
+    has always been right, its line 193 is a pre-results plan.
+17. **KNOWN, DELIBERATELY UNFIXED: `pop_newly_covered` is 12 people low.**
+    `07_recommender.py:90` writes `int(pop[newly].sum())` -- truncation, not
+    `round()` -- so each of the 20 sites loses a fractional part (0.19, 0.83,
+    0.33, ...) totalling **12.2949**. Hence the published **1,052,353** in the
+    CSV vs **1,052,365.2949** recomputed live on the What-If page. Both
+    describe the identical 252 hexes; the baseline (`nearest_station_km <=
+    2.0`) and the haversine are the same in both, and the sum of FLOAT
+    marginals equals the union exactly, so truncation is the ONLY cause.
+    Change `int(` -> `round(` ONLY at a final full regeneration -- it moves a
+    figure already published in the report.
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.

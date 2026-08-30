@@ -48,7 +48,7 @@ st.markdown(
 st.write("")
 
 # ------------------------------------------------------------------ 2 · holdout + backtest
-ui.section_header("Does the index predict reality?")
+ui.section_header("Does the demand layer predict where stations went?")
 g = val.groupby(["predictor", "top_k_pct"])["recall"].mean().unstack()
 lbl = {"demand_blend": "Demand blend (CDI demand)", "pop_only": "Population only",
        "operator_cdi": "Operator CDI (with gap term)"}
@@ -62,13 +62,18 @@ bt = pd.DataFrame([{"Model": m, "2025 MAPE": f"{v:.1f}%", "Chosen": "✓" if bes
 
 # two equal-height panels (bottoms aligned): header, HTML table, footer explanation
 _left = ui.panel(
-    "Hold-out recall — hide 20% of real stations, can the index find them?",
+    "Hold-out recall — hide 20% of real stations, can the demand layer find them?",
     ui.html_table(ho, num_cols=["Top 5%", "Top 10%", "Top 20%", "Lift @10%"]),
-    "The demand layer recovers held-out real stations at <span class='tick'>5.3× chance</span> "
-    "(top 10%) — the CDI predicts where infrastructure actually goes, and the activity layer adds "
-    "real signal over population alone (4.5×). The full <b>Operator CDI recall is deliberately "
-    "lower</b> (2.7×): its gap term points <i>away</i> from already-served areas — a desert index "
-    "that just re-found existing stations would be useless.")
+    # ATTRIBUTION: 5.3x belongs to the DEMAND LAYER (population + activity, no
+    # supply gap, no equity), NOT to the CDI. The full Operator CDI scores 2.7x.
+    # Do not reintroduce any clause crediting the 5.3x to the CDI.
+    "The <b>demand layer</b> — population and activity only, with no supply-gap term and no "
+    "equity weighting — puts held-out real stations in its top 10% of hexes at "
+    "<span class='tick'>5.3× chance</span>. Population alone reaches only 4.5×, so the activity "
+    "layer adds real signal. The full <b>Operator CDI scores 2.7×, deliberately lower</b>: its "
+    "supply-gap term demotes areas that already have chargers, and this test rewards predicting "
+    "where operators <i>did</i> build. A desert index that simply re-found existing stations "
+    "would be useless.")
 _right = ui.panel(
     "Forecast backtest — train ≤ 2024, test on 2025 (the year demand doubled)",
     ui.html_table(bt, num_cols=["2025 MAPE"]),
