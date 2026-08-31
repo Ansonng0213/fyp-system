@@ -131,9 +131,15 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    digits: `lat`/`lon` by ~3e-15 (straight from h3, untouched by our code),
    `supply_raw` ~5e-12, `cdi` ~2e-11. Headline numbers are unaffected (still 1
    hex at 100.0, 38 >= 50, 756,330 people) but the file is no longer
-   byte-identical, and 3,968 of 4,003 rows change. **Do not regenerate stage 06
-   just to "refresh" it** — restore from git instead. The committed CSV is the
-   reference the stage-11 artifacts were computed against.
+   byte-identical. **Do not regenerate stage 06 just to "refresh" it** —
+   restore from git instead. The committed CSV is the reference the stage-11
+   artifacts were computed against.
+   CAUTION when measuring this: the rows also come back in a DIFFERENT ORDER
+   (trap 19), so a positional row-by-row diff wildly overstates it — it reports
+   ~3,968 of 4,003 rows changed and `lat` differing by 0.39 degrees. Align on
+   `h3_index` first. Aligned, the real drift is: `pop_est`, `activity_score`
+   and `nearest_station_km` EXACT; `lat` 3.1e-15 (272 rows), `supply_raw`
+   4.8e-12 (357 rows), `cdi` 2.4e-11 (1,467 rows).
 3. **`run_pipeline.py` sweeps in stages 11, 12 AND 13.** It globs `[0-9][0-9]_*.py`,
    so a "full refresh" runs 02-09 *plus* `11_operator_model.py` (~20 min) *plus*
    `12_forecast_comparison.py` (~6 min) *and* regenerates stage 06, hitting
@@ -230,6 +236,69 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
     fieldwork on every full run, silently. Every run now prints
     "MANUAL VALUES PRESERVED: n of m" and warns if a manual row no longer
     matches a selected zone.
+19. **The hex grid ROW ORDER is not deterministic between runs.**
+    `04_hex_population.py:50` accumulates cells into a Python `set()` and
+    line 69 iterates it. Set iteration order for strings depends on
+    `PYTHONHASHSEED`, which Python randomises per process. The grid is the same
+    4,003 cells every time, in a different order. Consequences, all measured on
+    a full scratch run: **1 of the 20 recommended sites changes**
+    (`8865050b3dfffff` -> `8865050959fffff`; same district split, identical
+    1,052,353 total coverage — the greedy hit a tie and `np.argmax` broke it by
+    first index); DBSCAN zone labels shuffle; stage 11's KMeans spatial blocks
+    and CV folds shift, moving ablation PR-AUC by up to 0.043 and champion
+    PR-AUC 0.5128 -> 0.5159 (champion stays XGBoost tuned).
+    **It can also orphan the PlugShare fieldwork:** stage 08 picks zones with
+    `nlargest` on `activity_score` / `cdi`, so a tie broken differently selects
+    different hexes, and the manual rows no longer match. Stage 08 now WARNS
+    and names the orphaned row (trap 18) rather than dropping it silently.
+    One `sorted()` at line 69 fixes all of this — but it changes the one
+    recommended site and every stage-11 number, so do it at a deliberate
+    regeneration, not casually.
+20. **Prophet's uncertainty band is not seeded.** In `09_forecast.py`, the
+    point forecast `policy_cap` / `accel_cap` is stable to 8e-5 across runs,
+    but `policy_lo` / `policy_hi` move by up to **73 registrations/month
+    (19%)** — Prophet samples the interval. The Forecast page plots that band,
+    so it visibly shifts between regenerations. Everything derived from the
+    point forecast (2030 stock, port requirement, district gaps) is stable.
+21. **Petaling's dasymetric population is ~4.2x too concentrated. Know the
+    direction of this bias before a marker asks.**
+    The POI-evidence gate at `04_hex_population.py:110-112` is
+    `(res_poi >= 1) | (total_poi >= 3)`; hexes that fail it get weight 0 and
+    therefore `pop_est` exactly 0. The documented `res_poi + 1` weight is
+    applied ONLY to hexes that already passed — it never rescues one.
+    Petaling has the thinnest OSM coverage in KV: **4.7 POIs per 1,000 people
+    against KL's 20.6** (Klang has half Petaling's population and twice its
+    POIs). So the gate discards **76% of Petaling's area — only 24% kept** —
+    packing 2.33M people into 102 km2 at an implied **22,945/km2 against a true
+    district density of ~5,422, a 4.2x overstatement**. All 446 excluded hexes
+    have zero residential POIs and <=2 POIs of any kind; 436 have none at all.
+    **USJ Taipan and Puchong Bandar are absent entirely** — zero POIs across
+    ~14 km2 each, both dense townships. Subang airport and the Bukit Cherakah
+    reserve are correctly empty. KL is the control: 98.9% of area kept,
+    implied density within 1% of actual.
+    SENSITIVITY (measured, two counterfactuals — `laplace` = no gate, weight
+    `res_poi+1` everywhere; `uniform` = weight 1 everywhere, which over-corrects
+    by populating the airport and the forest, so it is an upper bound):
+      - **The Klang-vs-KL headline is INSULATED.** Klang 2 km coverage 47.2%
+        and its 8 of 20 recommended sites are identical under BOTH variants;
+        439,123 in deserts is identical under `laplace` and moves 4.2% under
+        `uniform`. Stage 04 preserves district totals per district, so
+        re-weighting Petaling cannot move a Klang `pop_est`. The only coupling
+        is stage 06's global p99 cap on `pop_n` (24,010 -> 21,234 under
+        `uniform` only), which lifts Klang `pop_n` ~10% and pushes 2 more hexes
+        over CDI 50.
+      - **KV-wide aggregates DO move:** overall 2 km coverage
+        **79.3% -> 74.9% (`laplace`) / 62.1% (`uniform`)**; people in severe
+        deserts 756,330 -> 702k / 614k; **Gini 0.497 -> 0.527 / 0.610**.
+        Recommended sites: 20/20 unchanged under `laplace`, 15/20 under
+        `uniform` (Klang's 8 identical in both).
+      - **The bias runs AGAINST the thesis.** Under-tagging packs people into
+        the well-served hexes, so coverage is OVERSTATED and inequality
+        UNDERSTATED. Correcting it raises the Gini. The published figures are
+        therefore CONSERVATIVE — say so if the OSM limitation is raised.
+    Quote the district-level Klang-vs-KL comparison as the headline; treat
+    "KV overall 79.3%" as the figure most sensitive to this. POLISH.md item 3
+    (WorldPop 100 m raster) is the real fix and would remove the gate entirely.
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.
