@@ -26,9 +26,38 @@ EV_STOCK = float(fc.loc[fc["actual"].notna(), "actual"].sum())      # ≈ 61,568
 PORTS = int(cap["public_ports"].sum())                              # 867
 EVS_PER_PORT = EV_STOCK / PORTS                                     # ≈ 71
 
-# documented-only figures (from the backtest / sensitivity analysis, not a CSV)
-BACKTEST = [("Prophet logistic + policy cap", 17.6, True),
-            ("Prophet linear", 28.5, False), ("ARIMA(1,1,1)", 37.5, False)]
+# --- stage 12, the rolling-origin benchmark -------------------------------
+# This panel used to hold three hardcoded single-split MAPE figures and claim
+# Prophet "cut ARIMA's error by more than half". Stage 12 superseded that: on
+# 980 rolling-origin folds ARIMA tuned beats Prophet base at h=6 and ETS base
+# wins both horizons. The panel now reads the benchmark instead of asserting a
+# result. The legacy single-split figures live on the Forecast page, which is
+# also where the log1p-vs-log discrepancy on the ARIMA row is documented.
+try:
+    fcomp = data.load_forecast_comparison()
+    f2030 = data.load_forecast_2030_scenarios()
+    HAVE_S12 = len(fcomp) > 0
+except Exception:
+    fcomp = f2030 = pd.DataFrame()
+    HAVE_S12 = False
+
+if HAVE_S12:
+    _full = fcomp[fcomp["series"] == "full_2020_2026"]
+    S12_FAMILIES = int(_full["model"].nunique())
+    S12_FOLDS = int(fcomp["folds"].sum())
+    S12_H = sorted(int(h) for h in _full["h"].unique())
+    S12_BEST = {h: _full[_full["h"] == h].sort_values("MASE_mean").iloc[0] for h in S12_H}
+    S12_RANK = {}
+    for _h in S12_H:
+        _o = _full[_full["h"] == _h].sort_values("MASE_mean").reset_index(drop=True)
+        _i = _o.index[(_o["model"] == "ProphetLogistic") & (_o["variant"] == "base")]
+        S12_RANK[_h] = (int(_i[0]) + 1, len(_o)) if len(_i) else (None, len(_o))
+    S12_CEIL = float(f2030["policy_ceiling_monthly"].iloc[0])
+    _prow = f2030[(f2030["model"] == "ProphetLogistic") & (f2030["variant"] == "base")].iloc[0]
+    S12_TREND = float(_prow["trend_dec_2030"])
+    _sarr = f2030[f2030["model"] == "SARIMA"]["peak_over_ceiling_ratio"]
+    S12_SAR_LO, S12_SAR_HI = float(_sarr.min()), float(_sarr.max())
+
 ENTROPY = (0.47, 0.53)
 OVERLAP = [("Pop-heavy · 0.7 / 0.3", 70), ("Activity-heavy · 0.3 / 0.7", 70),
            ("Entropy weights", 96), ("Equity off (Operator)", 82)]
@@ -57,8 +86,22 @@ ho = pd.DataFrame([{
     "Top 10%": f"{g.loc[k, 10] * 100:.1f}%", "Top 20%": f"{g.loc[k, 20] * 100:.1f}%",
     "Lift @10%": f"{g.loc[k, 10] / 0.10:.1f}×",
 } for k in ["demand_blend", "pop_only", "operator_cdi"]])
-bt = pd.DataFrame([{"Model": m, "2025 MAPE": f"{v:.1f}%", "Chosen": "✓" if best else ""}
-                   for m, v, best in BACKTEST])
+# Rolling-origin leaderboard at the shorter horizon. Deliberately shows the top
+# five INCLUDING the retained model wherever it falls -- Prophet base sits fifth,
+# and a panel that hid that would be making the same mistake this rewrite fixes.
+if HAVE_S12:
+    _h0 = S12_H[0]
+    _lead = (_full[_full["h"] == _h0].sort_values("MASE_mean")
+             .head(5).reset_index(drop=True))
+    bt = pd.DataFrame([{
+        "Model": f"{r['model']} ({r['variant']})",
+        "MASE": f"{r['MASE_mean']:.3f}",
+        "MAPE %": f"{r['MAPE_mean']:.1f}",
+        "Retained": "✓" if (r["model"] == "ProphetLogistic"
+                                 and r["variant"] == "base") else "",
+    } for _, r in _lead.iterrows()])
+else:
+    bt = pd.DataFrame()
 
 # two equal-height panels (bottoms aligned): header, HTML table, footer explanation
 _left = ui.panel(
@@ -74,12 +117,32 @@ _left = ui.panel(
     "supply-gap term demotes areas that already have chargers, and this test rewards predicting "
     "where operators <i>did</i> build. A desert index that simply re-found existing stations "
     "would be useless.")
-_right = ui.panel(
-    "Forecast backtest — train ≤ 2024, test on 2025 (the year demand doubled)",
-    ui.html_table(bt, num_cols=["2025 MAPE"]),
-    "The logistic curve with a <b>policy-derived ceiling</b> was chosen <i>a priori</i> — EV "
-    "adoption follows an S-curve bounded by the national penetration target — and it cut ARIMA's "
-    "error by more than half (<span class='tick'>17.6%</span> vs 37.5%).")
+# WAS: "it cut ARIMA's error by more than half (17.6% vs 37.5%)" off a single
+# 2025 split. Superseded -- see the note at the top of this file.
+if HAVE_S12:
+    _b = S12_BEST[S12_H[0]]
+    _rk = " · ".join(f"h={h}: <b>{S12_RANK[h][0]} of {S12_RANK[h][1]}</b>"
+                     for h in S12_H if S12_RANK[h][0])
+    _right = ui.panel(
+        f"Forecast model selection — {S12_FAMILIES} families, "
+        f"{S12_FOLDS:,} rolling-origin folds (top {len(bt)} at h={S12_H[0]})",
+        ui.html_table(bt, num_cols=["MASE", "MAPE %"]),
+        f"Prophet logistic is <b>not</b> the accuracy winner — {_b['model']} "
+        f"{_b['variant']} has the lowest MASE at both horizons ("
+        + ", ".join(f"{S12_BEST[h]['MASE_mean']:.3f} at h={h}" for h in S12_H)
+        + f"), and Prophet base ranks {_rk}. It is retained because its trend is "
+        "the only one that <b>saturates by construction</b> — "
+        f"<span class='tick'>{S12_TREND:,.0f}/month</span> by Dec 2030 against the "
+        f"<b>{S12_CEIL:,.0f}</b> policy ceiling, where SARIMA extrapolates to "
+        f"<b>{S12_SAR_LO:.0f}–{S12_SAR_HI:.0f}×</b> it. A five-year policy "
+        "projection needs a bounded functional form, not the lowest six-month "
+        "error. The superseded single-split MAPE figures are kept on the "
+        "Forecast page as a legacy comparison.")
+else:
+    _right = ui.panel(
+        "Forecast model selection",
+        "<div class='trust-strip'>Benchmark artifacts not found — run "
+        "<code>python pipeline/12_forecast_comparison.py</code>.</div>", "")
 st.markdown(f"<div class='card-row'>{_left}{_right}</div>", unsafe_allow_html=True)
 
 st.write("")
@@ -210,8 +273,26 @@ st.markdown("<hr>", unsafe_allow_html=True)
 ui.section_header("Known limitations — stated honestly")
 st.markdown(
     "<div class='trust-strip'>"
-    "<b>OSM POI under-tagging</b> — some populated hexes read low (e.g. parts of Puchong). "
-    "<i>Mitigation:</i> dasymetric allocation preserves official DOSM district population totals exactly.<br><br>"
+    # MEASURED, not hedged. This used to read "some populated hexes read low
+    # (e.g. parts of Puchong)", which understated a bias big enough for a marker
+    # to find independently. The figures are from the sensitivity analysis
+    # recorded in CLAUDE.md trap 21; the direction is the part that matters.
+    "<b>OSM POI under-tagging — the largest data limitation in this study.</b> "
+    "The dasymetric step at <code>04_hex_population.py:110-112</code> gives a hex weight 0 "
+    "unless it holds at least one residential POI or three POIs of any kind, so an unmapped "
+    "hex is assigned <i>exactly zero</i> people. Petaling is worst affected: it carries "
+    "<b>4.7 POIs per 1,000 residents against Kuala Lumpur's 20.6</b>, so the gate discards "
+    "<b>76% of its land area</b> — only 24% retained — and packs 2.33M people into 102 km² at "
+    "roughly <b>4.2× the district's true density</b>. <b>USJ and Puchong carry zero mapped POIs "
+    "across about 14 km² each</b> and are absent from the population surface entirely. "
+    "<i>Mitigation:</i> allocation preserves official DOSM district totals <b>exactly</b>, so "
+    "re-weighting one district cannot move another's population. <b>Klang's headline figures are "
+    "invariant</b> — its 47.2% 2 km coverage and its 8 of the 20 recommended sites are identical "
+    "under both counterfactuals tested (no gate with POI weighting, and uniform weighting). "
+    "Most importantly the bias runs <b>against</b> the thesis: under-tagging packs people into "
+    "the well-served hexes, so correcting it would <i>raise</i> measured inequality — "
+    "<b>Gini 0.497 → 0.53–0.61</b> and KV-wide 2 km coverage <b>79.3% → 62–75%</b>. "
+    "The published figures are therefore <b>conservative</b>, not flattering.<br><br>"
     "<b>Station / port undercount</b> — a snapshot may miss stations, especially port counts. "
     "<i>Mitigation:</i> conclusions hold under a 2× undercount; the bias makes deserts look "
     "<i>conservative</i>, not exaggerated.<br><br>"
@@ -241,7 +322,9 @@ prov = pd.DataFrame([
     ["District boundaries", "DOSM (administrative_2)", "official", "7 polygons",
      "Bounding-box misassignment (v1)", "Polygon spatial-join reassignment (v2)"],
     ["Points of interest", "OpenStreetMap (OSMnx)", "Apr 2026 pull", "108,785",
-     "Tag completeness varies", "Dwell-time weighted; 538 double-tags de-duplicated"],
+     "Tag completeness varies sharply by district — Petaling 4.7 POIs/1k residents vs KL 20.6",
+     "Dwell-time weighted; 538 double-tags de-duplicated; direction of the bias measured "
+     "(see limitations) and it runs against the thesis"],
     ["Charging stations", "OpenChargeMap + OSM + Google Places", "Apr 2026", "535 (376 public+op)",
      "Snapshot; possible undercount", "Multi-source fusion, 0 residual duplicates"],
 ], columns=["Dataset", "Source", "Date / coverage", "Rows", "Known limitation", "Mitigation"])
