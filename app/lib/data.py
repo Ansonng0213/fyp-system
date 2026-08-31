@@ -103,6 +103,23 @@ def load_forecast_2030_scenarios() -> pd.DataFrame:
 
 
 @st.cache_data(show_spinner=False)
+def load_forecast_singlesplit_legacy() -> pd.DataFrame:
+    """Stage 12's re-run of the OLD protocol: one split, train to Dec 2024, test
+    on 2025, ranked by MAPE. This is where the reported 17.6% comes from. Kept
+    as a legacy comparison, not as the selection criterion -- the rolling-origin
+    table in load_forecast_comparison() is that."""
+    return _csv("forecast_singlesplit_legacy.csv")
+
+
+@st.cache_data(show_spinner=False)
+def load_forecast_tuning() -> pd.DataFrame:
+    """Hyperparameter search per model: criterion, winning params, score.
+    `score` is an AIC for ETS/ARIMA/SARIMA and a CV RMSE for Prophet, so the
+    column is NOT comparable across rows -- read it per model."""
+    return _csv("forecast_tuning_results.csv")
+
+
+@st.cache_data(show_spinner=False)
 def load_cdi_scale() -> float:
     """The frozen CDI denominator written by pipeline/06_build_cdi.py.
 

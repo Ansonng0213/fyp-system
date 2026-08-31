@@ -118,7 +118,8 @@ optional polish and the user's outstanding tasks (API-key revocation).
   that survives (CI [-0.843, -0.265], 99.3% of draws negative). Lead with
   "charging follows commercial siting, not residential need", not with income.
 - Key headline results are in FYP_PROJECT_MEMORY.md (CDI, 20 recommended
-  sites, +1.05M coverage, 24k-port 2030 gap, 17.6% backtest MAPE).
+  sites, +1.05M coverage, 24k-port 2030 gap; for the forecast quote the
+  MODEL-SELECTION claim, not 17.6% MAPE -- see trap 12).
 - Dashboard: BUILT & running (`streamlit run app/Home.py`). Entry is a
   cover/landing screen (`app/Home.py`); `app/pages/` holds Overview (1) + SEVEN
   tools — CDI Explorer (2_CDI_Map), Recommendations (3_Sites), Market Logic (4),
@@ -203,14 +204,24 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
     6,286/month and shifts the 2030 forecast, port requirement and district
     gaps -- i.e. published numbers. Change it only as a deliberate regeneration.
 12. **Stage 12 says the forecast headline is defensible for a different reason
-    than the report gives.** "Prophet 17.6% vs ARIMA 37.5%" reproduces exactly,
-    and MASE ranks the same order on that split -- but under rolling origin
-    (980 folds) Prophet base falls to rank 5 of 10 at h=6 and ETS wins. The
-    single 2025 split flattered it. Prophet remains the right choice for the
-    2030 projection because its logistic trend is the only one that saturates
-    (6,230/mo against the 6,290 ceiling); SARIMA has the best AIC in the study
-    and extrapolates to 57-81x the ceiling. Claim bounded extrapolation, not
-    short-horizon accuracy.
+    than the report gives.** Under rolling origin (980 folds, 0 failures)
+    Prophet base falls to **rank 5 of 10 at h=6 and 8 of 10 at h=12**, and ETS
+    base wins BOTH horizons (MASE 1.701 / 2.261). The single 2025 split
+    flattered it. Prophet remains the right choice for the 2030 projection
+    because its logistic trend is the only one that saturates (6,230/mo against
+    the 6,290 ceiling); SARIMA has the best AIC in the study (78.6) and
+    extrapolates to 57-81x the ceiling. Claim bounded extrapolation, not
+    short-horizon accuracy. The Forecast page now leads with this; the
+    single-split figures are kept below it as a LEGACY comparison only.
+    **Correction to what this trap used to say:** "Prophet 17.6% vs ARIMA 37.5%"
+    does NOT reproduce exactly. The two Prophet figures do -- logistic 17.6%,
+    linear 28.5% -- but stage 12 returns **ARIMA(1,1,1) at 38.5%, not 37.5%**,
+    because `09_forecast.py:117` fits it on `log1p(y)` while
+    `12_forecast_comparison.py:303` fits on `log(y)`. Both are legitimate; they
+    are not the same transform. The direction of the conclusion on that split is
+    unchanged (Prophet is still less than half ARIMA's error), and the page
+    states the discrepancy rather than reconciling it silently. Do not "fix"
+    either script to match the other without regenerating the published figure.
 13. **Both figure-producing stages have a `--figures-only` mode. USE IT.**
     `python pipeline/06_build_cdi.py --figures-only`   -> redraws cdi_map.png
     `python pipeline/12_forecast_comparison.py --figures-only` -> redraws both
