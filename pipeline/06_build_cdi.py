@@ -56,6 +56,12 @@ def norm01(s, q=P99):
 # ------------------------------------------------------------
 MAP_TXT = "#E6E9EF"          # near-white, legible on the dark canvas
 MAP_BG = "#1a1a2e"
+# "no measurable demand" slate -- must match app/lib/theme.NO_DEMAND_* so the
+# static figure and the live CDI Explorer say the same thing with the same
+# colour. Deliberately OFF the inferno ramp: these hexes are an absence of
+# measurement, not a low score.
+NO_DEMAND_FACE = "#586070"
+NO_DEMAND_EDGE = "#7E8796"
 
 
 def draw_cdi_map(hex_df, station_df):
@@ -74,7 +80,7 @@ def draw_cdi_map(hex_df, station_df):
         b = h3.cell_to_boundary(cell)
         return Polygon([(lng, lat) for lat, lng in b])
 
-    gdf = gpd.GeoDataFrame(hex_df[["h3_index", "cdi"]],
+    gdf = gpd.GeoDataFrame(hex_df[["h3_index", "cdi", "pop_est", "activity_score"]],
                            geometry=[cell_polygon(c) for c in hex_df["h3_index"]],
                            crs="EPSG:4326")
     kv = gpd.read_file(os.path.join(OUT_DIR, "kv_districts_dosm.geojson"))
@@ -90,13 +96,31 @@ def draw_cdi_map(hex_df, station_df):
     fig_w = 11.0
     fig, ax = plt.subplots(figsize=(fig_w, fig_w * aspect * 0.92), facecolor=MAP_BG)
 
-    gdf[gdf["cdi"] > 0].plot(column="cdi", cmap="inferno", ax=ax, legend=True,
-                             vmin=0, vmax=100,
-                             legend_kwds={"label": "Charging Desert Index (0-100)",
-                                          "shrink": 0.6})
-    kv.boundary.plot(ax=ax, color="white", linewidth=1.0)
+    # NO MEASURABLE DEMAND, drawn first and off the ramp. 2,175 of 4,003 hexes
+    # have pop_est == 0 AND activity_score == 0, so their CDI is 0 by
+    # construction. The figure used to filter them out with `cdi > 0`, which
+    # left them as bare canvas -- indistinguishable from the 41 best-served
+    # hexes in Kuala Lumpur, whose supply_gap is exactly 0 (supply_raw at or
+    # above the p99 cap) and which therefore render at the black end of
+    # inferno. Two opposite readings, one appearance: "nobody lives here"
+    # (an OSM tagging gap in Petaling -- see the trap note in CLAUDE.md) and
+    # "everybody here already has a charger" (a result). Slate separates them
+    # by hue rather than by lightness, and it also draws the study area's true
+    # extent instead of implying the empty parts are outside it.
+    no_demand = (gdf["pop_est"] == 0) & (gdf["activity_score"] == 0)
+    if no_demand.any():
+        gdf[no_demand].plot(ax=ax, facecolor=NO_DEMAND_FACE, edgecolor=NO_DEMAND_EDGE,
+                            linewidth=0.12, alpha=0.30, zorder=1)
+    # every demand-bearing hex is drawn now, INCLUDING at CDI 0 (the well-served
+    # 41), which the old `cdi > 0` filter dropped
+    gdf[~no_demand].plot(column="cdi", cmap="inferno", ax=ax, legend=True,
+                         vmin=0, vmax=100, zorder=2,
+                         legend_kwds={"label": "Charging Desert Index (0-100)",
+                                      "shrink": 0.6})
+    kv.boundary.plot(ax=ax, color="white", linewidth=1.0, zorder=3)
     ax.scatter(station_df["longitude"], station_df["latitude"],
-               s=6, c="#00e5ff", alpha=0.8, linewidths=0, label="Public stations")
+               s=6, c="#00e5ff", alpha=0.8, linewidths=0, zorder=4,
+               label="Public stations")
 
     # DISTRICT NAMES. "Klang is the desert capital" is the headline finding and
     # a reader could not previously tell which shape was Klang. Placed at each
@@ -119,7 +143,15 @@ def draw_cdi_map(hex_df, station_df):
 
     ax.set_xlim(minx, maxx)
     ax.set_ylim(miny, maxy)
-    ax.legend(loc="lower left", frameon=False, labelcolor=MAP_TXT)
+    # legend: the station scatter's own handle plus a proxy patch for the slate,
+    # so the grey field is keyed rather than left to be guessed at
+    from matplotlib.patches import Patch
+    handles, _ = ax.get_legend_handles_labels()
+    if no_demand.any():
+        handles.append(Patch(facecolor=NO_DEMAND_FACE, edgecolor=NO_DEMAND_EDGE,
+                             alpha=0.30, linewidth=0.6,
+                             label=f"No measurable demand ({int(no_demand.sum()):,} hexes)"))
+    ax.legend(handles=handles, loc="lower left", frameon=False, labelcolor=MAP_TXT)
     ax.set_title("Charging Desert Index — Greater Klang Valley (H3 res 8)",
                  color=MAP_TXT, fontsize=14, pad=10)
     ax.set_axis_off()
@@ -132,6 +164,8 @@ def draw_cdi_map(hex_df, station_df):
     fig.tight_layout()
     fig.savefig(os.path.join(OUT_DIR, "cdi_map.png"), dpi=150, facecolor=MAP_BG)
     plt.close(fig)
+    print(f"  No-measurable-demand hexes drawn in slate: {int(no_demand.sum()):,} "
+          f"of {len(gdf):,}")
     print("  Map saved -> cdi_map.png (district labels, cropped to bounds)")
 
 

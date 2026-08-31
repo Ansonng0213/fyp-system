@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import streamlit as st
 
+from lib import theme
+
 
 # --- number formatting -------------------------------------------------------
 # ONE helper for every integer column in every st.dataframe on the site. Before
@@ -33,18 +35,48 @@ def num_col(label: str, decimals: int = 1, **kw):
 _INFERNO_CSS = "#000004,#420a68,#932667,#dd513a,#fca50a,#fcffa4"
 
 
-def cdi_legend(max_cdi: float | None = None, width_px: int = 400) -> None:
+def _no_demand_key(n: int | None) -> str:
+    """Legend row for the off-ramp slate hexes. Returns '' when the caller did
+    not pass a count, so pages that do not draw them are unchanged.
+
+    The swatch is drawn at a higher alpha than the map layer (0.45 against
+    0.16): on the map the fill sits over a dark basemap across thousands of
+    contiguous hexes, where 0.16 is already a visible field, but a single 11 px
+    chip on the card surface at that alpha is invisible. The outline colour is
+    the map's exactly, which is what actually identifies the shape.
+    """
+    if n is None:
+        return ""
+    r, g, b, _ = theme.NO_DEMAND_FILL
+    lr, lg, lb, _ = theme.NO_DEMAND_LINE
+    return (
+        "<div class='lyr-item' style='margin-top:8px'>"
+        f"<span class='dot' style='border-radius:2px;background:rgba({r},{g},{b},.45);"
+        f"border:1px solid rgba({lr},{lg},{lb},.85)'></span>"
+        f"No measurable demand — {n:,} hexes, no population and no activity "
+        "recorded (see Validation &amp; Data)</div>"
+    )
+
+
+def cdi_legend(max_cdi: float | None = None, width_px: int = 400,
+               no_demand: int | None = None) -> None:
     """The CDI colour bar. 0-100 is a FIXED inferno ramp so a value keeps its
     colour at every lens and weight setting; when the view exceeds 100 an
     over-range segment is appended in proportion and the true range is stated.
-    Pass max_cdi = the largest value currently on screen."""
+    Pass max_cdi = the largest value currently on screen.
+
+    no_demand: count of hexes drawn OFF the ramp in neutral slate because
+    pop_est and activity_score are both 0. Pass it whenever the frame draws
+    them, so the grey field has a key -- without one it reads as a third,
+    unexplained colour rather than as "no measurement here"."""
     over = max_cdi is not None and max_cdi > 100.0
     if not over:
         st.markdown(
             f"<div class='leg-wrap' style='max-width:{width_px}px'>"
             "<div class='leg-label'>Charging Desert Index</div>"
             "<div class='leg-bar'></div>"
-            "<div class='leg-scale'><span>0</span><span>50</span><span>100</span></div></div>",
+            "<div class='leg-scale'><span>0</span><span>50</span><span>100</span></div>"
+            f"{_no_demand_key(no_demand)}</div>",
             unsafe_allow_html=True)
         return
     main_pct = 100.0 / max_cdi * 100.0          # share of the bar that is 0-100
@@ -61,7 +93,8 @@ def cdi_legend(max_cdi: float | None = None, width_px: int = 400) -> None:
         f"<span style='margin-left:8px'>{max_cdi:.1f}</span></div>"
         f"<div class='leg-scale'><span>0 – {max_cdi:.1f} at this setting. "
         "0–100 is fixed, so a value keeps its colour everywhere; the pale "
-        "segment is above the baseline peak.</span></div></div>",
+        "segment is above the baseline peak.</span></div>"
+        f"{_no_demand_key(no_demand)}</div>",
         unsafe_allow_html=True)
 
 

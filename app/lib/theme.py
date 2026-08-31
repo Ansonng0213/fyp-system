@@ -28,6 +28,15 @@ RECOMMENDED = [0, 255, 136]            # #00FF88 green
 DESERT_OUTLINE = [255, 59, 48]         # #FF3B30 red
 DISTRICT_BORDER = [255, 255, 255]      # white, thin
 
+# "no measurable demand" — pop_est == 0 AND activity_score == 0. Deliberately a
+# NEUTRAL GREY, outside the inferno ramp, because these hexes are an absence of
+# evidence, not a low score. 2,175 of 4,003 hexes qualify and 76% of Petaling's
+# area is among them (CLAUDE.md trap 21), so the fill is kept faint and the
+# outline carries the shape; the field must read as a backdrop, never as data.
+NO_DEMAND_FILL = [88, 96, 112, 40]     # slate, low alpha
+NO_DEMAND_LINE = [126, 135, 150, 105]  # slate, thin outline
+NO_DEMAND_HEX = "#586070"              # same slate for matplotlib (cdi_map.png)
+
 # inferno anchors: (t in 0..1, r, g, b)
 _INFERNO = [
     (0.0, 0, 0, 4),
@@ -42,7 +51,8 @@ _INFERNO = [
 OVER_TOP = (255, 255, 255)      # the "off the top of the scale" colour
 
 
-def cdi_to_rgb(cdi: float, alpha: int = 180, over_max: float | None = None) -> list[int]:
+def cdi_to_rgb(cdi: float, alpha: int = 180, over_max: float | None = None,
+               zero_visible: bool = False) -> list[int]:
     """CDI value -> inferno [r, g, b, a]. CDI == 0 is transparent (undrawn);
     faint low values render faint, which is honest and preserves real intensity
     differences. Matches the pipeline inferno palette. Shared by all live maps.
@@ -58,9 +68,17 @@ def cdi_to_rgb(cdi: float, alpha: int = 180, over_max: float | None = None) -> l
     over_max = the largest value on screen and anything above 100 fades from the
     inferno ceiling toward white, in proportion. Omit over_max to clamp (correct
     when nothing exceeds 100).
+
+    zero_visible: CDI 0 is normally transparent, which is right where 0 means
+    "no demand measured". But 41 hexes -- all of them in Kuala Lumpur -- reach 0
+    with real population and activity, because their supply_raw is at or above
+    the p99 cap so supply_gap is exactly 0. Those are the BEST-SERVED hexes in
+    the study area, which is a finding, and leaving them undrawn made them look
+    the same as an unmapped hole. Pass zero_visible=True for a frame that has
+    already separated the no-demand hexes into their own layer.
     """
     if cdi <= 0:
-        return [0, 0, 0, 0]
+        return [0, 0, 4, alpha] if zero_visible else [0, 0, 0, 0]
     if cdi > 100 and over_max and over_max > 100:
         f = min(1.0, (cdi - 100.0) / (over_max - 100.0))
         r0, g0, b0 = _INFERNO[-1][1:]

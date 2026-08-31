@@ -125,6 +125,22 @@ def reason_of(r, eq_on: bool) -> str:
 
 view["reason"] = [reason_of(r, equity_on) for r in view.itertuples()]
 
+# --- "no measurable demand" vs "low CDI but populated" -----------------------
+# 2,175 of the 4,003 hexes have pop_est == 0 AND activity_score == 0, so their
+# CDI is 0 by construction. They used to be drawn at alpha 0 -- i.e. not drawn
+# -- while the 41 BEST-SERVED hexes (all in Kuala Lumpur, supply_raw at or above
+# the p99 cap, so supply_gap is exactly 0) sat at the black end of the inferno
+# ramp. Against the dark basemap both were the same dark shape, which read the
+# same finding two ways: "nobody lives here" (Puchong and USJ Taipan, an OSM
+# tagging gap -- CLAUDE.md trap 21) and "everybody here already has a charger"
+# (a result). They are now separated by CHANNEL, not by lightness: no-demand
+# hexes leave the ramp entirely for neutral slate, and every demand-bearing hex
+# is drawn, including at CDI 0.
+#
+# The masks themselves are built AFTER the colouring block below, because the
+# market-interest branch reassigns `view` with a merge (new RangeIndex) and a
+# boolean Series built here would no longer align to it.
+
 # --- optional market-interest layer (stage 11, DIAGNOSTIC) -------------------
 # Predicted probability that a hex holds a public charger, i.e. commercial
 # INTEREST. Deliberately a different colour ramp from the CDI so the two are
@@ -155,8 +171,22 @@ if show_market:
                    for d, p, c in zip(view["district"], view["market_p"], view["cdi_live"])]
 else:
     CDI_MAX = float(view["cdi_live"].max())
-    view["fill_color"] = [theme.cdi_to_rgb(v, over_max=CDI_MAX) for v in view["cdi_live"]]
+    view["fill_color"] = [theme.cdi_to_rgb(v, over_max=CDI_MAX, zero_visible=True)
+                          for v in view["cdi_live"]]
     view["tip"] = [f"{d}\n{rs}" for d, rs in zip(view["district"], view["reason"])]
+
+# no-demand split (see the note above). The market layer keeps its own full-frame
+# colouring: a predicted probability is defined for every hex, empty or not, and
+# splitting it would imply the model declines to score them.
+no_demand = (view["pop_est"] == 0) & (view["activity_score"] == 0)
+if show_market:
+    no_demand = no_demand & False
+nd_view = view[no_demand].copy()
+hex_view = view[~no_demand]
+if len(nd_view):
+    nd_view["tip"] = [f"{d}\nNo measurable demand\nNo population or activity "
+                      f"recorded here — nearest charger {k:.1f} km"
+                      for d, k in zip(nd_view["district"], nd_view["nearest_station_km"])]
 
 # ------------------------------------------------------------------ header + legend
 st.markdown(
@@ -183,7 +213,7 @@ if show_market:
         icon="⚠️",
     )
 else:
-    ui.cdi_legend(float(view["cdi_live"].max()))
+    ui.cdi_legend(float(view["cdi_live"].max()), no_demand=int(len(nd_view)))
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------------ KPI row (reactive)
@@ -215,10 +245,12 @@ st.caption("Click any hex on the map to inspect it. Hover for its reason string.
 # ------------------------------------------------------------------ build map layers
 # mask first (dims everything outside KV), then hexes, borders, highlight, stations
 layers = mapping.mask_layer(kv_mask)
+# slate first so the scored hexes draw over it
+layers += mapping.no_demand_layer(nd_view)
 layers.append(
     pdk.Layer(
         "H3HexagonLayer", id="cdi_layer",
-        data=view[["h3_index", "fill_color", "tip"]],
+        data=hex_view[["h3_index", "fill_color", "tip"]],
         get_hexagon="h3_index", get_fill_color="fill_color",
         pickable=True, auto_highlight=True, stroked=False, extruded=False, opacity=0.85,
     )
@@ -239,10 +271,19 @@ layers += mapping.station_layers(
     show_public=show_public, show_private=show_private,
 )
 
-view_state = pdk.ViewState(
-    latitude=float(view["lat"].mean()), longitude=float(view["lon"].mean()),
-    zoom=9.1 if len(sel_districts) > 2 else 10.3, pitch=0, bearing=0,
-)
+# FRAME the hexes in view rather than guessing a zoom from the district count
+# (review item D7). The old zoom 9.1 pulled in Kuala Kubu Bharu, Bukit Tinggi,
+# Karak and Kuala Klawang -- about twice the study area, the extra half of it
+# empty basemap. Fitting the bounds gives ~10.0 for the full grid, and it now
+# also follows the district multiselect. MAP_H is the pydeck_chart height below;
+# the two must stay in step. MAP_W is approximate -- the block container is
+# capped at 1440px and the map takes 72% of the row once the inspector opens --
+# and it only bites on the east-west district subsets, where longitude rather
+# than latitude binds the fit.
+MAP_H = 620
+MAP_W = 900 if selected_row is not None else 1180
+view_state = mapping.fit_view_state(view["lat"], view["lon"],
+                                    width_px=MAP_W, height_px=MAP_H)
 # tip values are PLAIN TEXT (no <b>/<br/> tags), so no pydeck version can render
 # tags literally; line breaks come from \n + white-space:pre-line, not <br/>
 tooltip = {
@@ -264,7 +305,7 @@ else:
     map_col, insp_col = st.container(), None
 
 with map_col:
-    st.pydeck_chart(deck, use_container_width=True, height=620,
+    st.pydeck_chart(deck, use_container_width=True, height=MAP_H,
                     selection_mode="single-object", on_select="rerun", key=MAP_KEY)
 
 if insp_col is not None:
@@ -286,8 +327,9 @@ if insp_col is not None:
                      f"{int(r['stations_5km'])} within 5 km"]
     rows_html = "".join(f"<div class='insp-row'><span>{k}</span><b>{v}</b></div>" for k, v in detail)
     maps_url = f"https://www.google.com/maps/@{r['lat']:.5f},{r['lon']:.5f},15z"
-    warn = ("<div class='insp-warn'>⚠ Low OpenStreetMap coverage here — "
-            "population/activity may be understated.</div>"
+    warn = ("<div class='insp-warn'>⚠ No measurable demand — drawn in slate, off "
+            "the CDI scale. No population or activity was recorded here, which "
+            "means either genuinely empty land or thin OpenStreetMap coverage.</div>"
             if r["pop_est"] == 0 and r["activity_score"] == 0 else "")
     insp_col.markdown(
         "<div class='insp-panel'>"

@@ -8,6 +8,8 @@ so a station tooltip takes priority over the hex tooltip on a dot.
 """
 from __future__ import annotations
 
+import math
+
 import pandas as pd
 import pydeck as pdk
 
@@ -99,3 +101,76 @@ def border_layers(districts_geo: dict, outline_geo: dict | None = None) -> list[
             line_width_min_pixels=1.2, pickable=False,
         ))
     return layers
+
+
+def no_demand_layer(df: pd.DataFrame, lid: str = "no_demand") -> list[pdk.Layer]:
+    """Hexes with NO measurable demand (pop_est == 0 AND activity_score == 0),
+    drawn in neutral slate with a thin outline instead of on the inferno ramp.
+
+    These are an ABSENCE OF EVIDENCE, not a low score. The dasymetric step gates
+    on OSM POIs (CLAUDE.md trap 21), so a hex lands here either because it is
+    genuinely empty -- Subang airport, the Bukit Cherakah reserve -- or because
+    OSM never tagged it, which is what removes USJ Taipan and Puchong Bandar. On
+    the inferno ramp both rendered near-black, i.e. identical to a well-served
+    Kuala Lumpur hex, so "nobody lives here" and "everybody here has a charger"
+    looked the same.
+
+    Still pickable, and still carrying a `tip` if the caller supplies one: the
+    hex inspector already has a low-OSM-coverage warning for exactly these
+    hexes, and dropping them out of the picking buffer would have quietly
+    orphaned it.
+    """
+    if not len(df):
+        return []
+    cols = ["h3_index", "tip"] if "tip" in df.columns else ["h3_index"]
+    return [pdk.Layer(
+        "H3HexagonLayer", id=lid, data=df[cols],
+        get_hexagon="h3_index", get_fill_color=theme.NO_DEMAND_FILL,
+        stroked=True, get_line_color=theme.NO_DEMAND_LINE, line_width_min_pixels=0.5,
+        filled=True, extruded=False, pickable=True, auto_highlight=True,
+    )]
+
+
+def fit_view_state(lats, lons, width_px: int = 1180, height_px: int = 620,
+                   pad_deg: float = 0.012, zoom_min: float = 7.5,
+                   zoom_max: float = 12.5, zoom_bleed: float = 0.06) -> pdk.ViewState:
+    """A ViewState that FRAMES the given points instead of guessing a zoom.
+
+    The explorer used to centre on the mean hex and pick zoom 9.1 or 10.3 by a
+    district count. At 9.1 the frame reached Kuala Kubu Bharu, Bukit Tinggi,
+    Karak and Kuala Klawang -- roughly twice the study area, most of it empty
+    basemap (review item D7). Fitting the bounds gives ~10.03 for the full grid,
+    and it also tracks the district multiselect, which the old heuristic could
+    not.
+
+    Standard Web Mercator: the world is 256 * 2**zoom px, so the zoom that makes
+    a span exactly fill the viewport is solved per axis and the tighter one wins.
+    `pad_deg` covers the hex radius (cell CENTRES are passed in, ~0.006 deg at
+    res 8) plus a little breathing room; `zoom_bleed` backs off a fraction of a
+    level so nothing is clipped by rounding.
+
+    `width_px` matters for 15 of the 127 district subsets -- the east-west ones
+    such as Klang + Hulu Langat, where longitude binds instead of latitude and
+    an over-stated width clips the sides by up to 0.39 of a zoom level. Pass the
+    container's real width; the caller knows whether the inspector panel is
+    taking 28% of the row.
+    """
+    lat0, lat1 = float(min(lats)) - pad_deg, float(max(lats)) + pad_deg
+    lon0, lon1 = float(min(lons)) - pad_deg, float(max(lons)) + pad_deg
+
+    def _merc_y(lat: float) -> float:
+        lat = max(-85.0, min(85.0, lat))
+        return math.log(math.tan(math.pi / 4 + math.radians(lat) / 2))
+
+    y0, y1 = _merc_y(lat0), _merc_y(lat1)
+    lon_span = max(lon1 - lon0, 1e-6)
+    y_span = max(y1 - y0, 1e-9)
+    zoom_x = math.log2(width_px * 360.0 / (256.0 * lon_span))
+    zoom_y = math.log2(height_px * 2 * math.pi / (256.0 * y_span))
+    zoom = max(zoom_min, min(zoom_max, min(zoom_x, zoom_y) - zoom_bleed))
+
+    # centre on the mercator midpoint, not the arithmetic mean of the latitudes:
+    # the mean is what left the frame sitting north of the study area
+    lat_c = math.degrees(2 * math.atan(math.exp((y0 + y1) / 2)) - math.pi / 2)
+    return pdk.ViewState(latitude=lat_c, longitude=(lon0 + lon1) / 2,
+                         zoom=zoom, pitch=0, bearing=0)

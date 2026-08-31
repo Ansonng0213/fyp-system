@@ -169,12 +169,16 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    is tagged "large population". Item 1 (dark-on-dark sweep) and item 3
    (WorldPop raster) remain open. Full page-by-page findings, including the
    dead "Inspect a hex" dropdown and the number-formatting inconsistencies, are
-   in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED: A1-A6, D1-D4
-   and D8. STILL OPEN, all deliberately deferred by the user: D5 (sidebar
-   multiselect clipping), D6 (CDI legend position), D7 (pydeck initial view
-   bounds) and the sidebar naming (trap 10). POLISH.md item 1 (dark-on-dark
-   sweep) is effectively done for the pages touched; item 3 (WorldPop) is
-   untouched and is the real fix for trap 21.
+   in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED: A1-A6, D1-D4,
+   D8, and **D7 for the CDI Explorer only** — `mapping.fit_view_state()` now
+   frames the hexes in view (Web Mercator per-axis solve, tighter axis wins),
+   giving zoom ~10.0 for the full grid against the old hand-picked 9.1, and it
+   follows the district multiselect. Pages 3 (Sites) and 6 (What-If) still use
+   mean-centre + a fixed zoom and would need the same helper. STILL OPEN, all
+   deliberately deferred by the user: D5 (sidebar multiselect clipping), D6
+   (CDI legend position) and the sidebar naming (trap 10). POLISH.md item 1
+   (dark-on-dark sweep) is effectively done for the pages touched; item 3
+   (WorldPop) is untouched and is the real fix for trap 21.
 10. **Sidebar page labels are raw filenames** ("WhatIf" with no space) and
     disagree with the Overview cards and page titles. Cosmetic, still open.
 11. **`KV_SHARE` is 0.629, and the derivation JSON says 0.6286.** They were
@@ -301,6 +305,28 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
     Quote the district-level Klang-vs-KL comparison as the headline; treat
     "KV overall 79.3%" as the figure most sensitive to this. POLISH.md item 3
     (WorldPop 100 m raster) is the real fix and would remove the gate entirely.
+22. **"No measurable demand" is a THIRD map channel, not a low CDI.** 2,175 of
+    the 4,003 hexes have `pop_est == 0` AND `activity_score == 0`, so their CDI
+    is 0 by construction. They used to be drawn at alpha 0 in the app and
+    filtered out with `cdi > 0` in `cdi_map.png` -- i.e. as bare canvas. The
+    trouble is that 41 hexes, ALL of them in Kuala Lumpur, also reach CDI 0 with
+    real population and activity, because their `supply_raw` is at or above the
+    p99 cap so `supply_gap` is exactly 0. Those are the BEST-SERVED hexes in the
+    study area. Both groups rendered as the same dark shape, so "nobody lives
+    here" (an OSM tagging gap -- trap 21) and "everybody here already has a
+    charger" (a result) were indistinguishable.
+    They are now separated by HUE, not lightness: no-demand hexes go to neutral
+    slate off the inferno ramp (`theme.NO_DEMAND_FILL` / `NO_DEMAND_LINE`, and
+    `NO_DEMAND_FACE` / `NO_DEMAND_EDGE` in `06_build_cdi.py`, which must stay in
+    step), and every demand-bearing hex is drawn including at CDI 0
+    (`cdi_to_rgb(..., zero_visible=True)`). `ui.cdi_legend(no_demand=n)` keys
+    the slate field; the static figure gets a matching legend patch.
+    Do NOT "clean this up" by folding the slate back onto the ramp -- that
+    re-creates the ambiguity. The slate is still pickable on purpose: the hex
+    inspector's low-coverage warning fires on exactly these hexes.
+    The market-interest layer deliberately keeps its own full-frame colouring;
+    a predicted probability is defined for an empty hex too, and splitting it
+    would imply the model declines to score them.
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.
