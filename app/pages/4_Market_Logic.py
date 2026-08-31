@@ -172,9 +172,44 @@ st.markdown(
     f"<span class='tick'>{champ['pr_auc__randomCV']:.4f}</span> under random CV and "
     f"<span class='tick'>{champ['pr_auc__spatialCV']:.4f}</span> under spatial-block CV, "
     f"against a random baseline of <b>{BASELINE:.4f}</b> — a "
-    f"<b>{champ['lift_over_random__randomCV']:.1f}×</b> lift. It wins under "
+    f"<b>{champ['lift_over_random__randomCV']:.1f}×</b> lift. It leads under "
     "both schemes, so the result is not an artefact of the split.</div>",
     unsafe_allow_html=True,
+)
+
+# HOW NARROW THE WIN IS -- stated here rather than left for a reader to compute
+# off the table above. Stage 11 selects the champion on random-CV PR-AUC alone
+# (11_operator_model.py:556) and then CHECKS whether the same model leads
+# spatially; it does. That check, not the margin, is what the choice rests on.
+_ru_rand = cs.iloc[1]                                   # runner-up, random CV
+_spat = comp.sort_values("pr_auc__spatialCV", ascending=False).reset_index(drop=True)
+_spat_best, _ru_spat = _spat.iloc[0], _spat.iloc[1]
+_gap_rand = float(champ["pr_auc__randomCV"]) - float(_ru_rand["pr_auc__randomCV"])
+_gap_spat = float(_spat_best["pr_auc__spatialCV"]) - float(_ru_spat["pr_auc__spatialCV"])
+_same_champ = (_spat_best["model"] == champ["model"]
+               and _spat_best["variant"] == champ["variant"])
+_ru_changes = not (_ru_spat["model"] == _ru_rand["model"]
+                   and _ru_spat["variant"] == _ru_rand["variant"])
+st.caption(
+    f"**The margin is not decisive, and it should not be read as one.** "
+    f"{CHAMP} leads {_ru_rand['model']} ({_ru_rand['variant']}) by "
+    f"**{_gap_rand:+.4f}** under random CV "
+    f"({float(champ['pr_auc__randomCV']):.4f} against "
+    f"{float(_ru_rand['pr_auc__randomCV']):.4f}), and "
+    + (f"leads {_ru_spat['model']} ({_ru_spat['variant']}) by **{_gap_spat:+.4f}** "
+       f"under spatial-block CV ({float(_spat_best['pr_auc__spatialCV']):.4f} against "
+       f"{float(_ru_spat['pr_auc__spatialCV']):.4f})."
+       if _same_champ else
+       f"is beaten under spatial-block CV by {_spat_best['model']} "
+       f"({_spat_best['variant']}).")
+    + (f" The runner-up is not even the same build in the two schemes — "
+       f"{_ru_rand['model']} ({_ru_rand['variant']}) under random CV, "
+       f"{_ru_spat['model']} ({_ru_spat['variant']}) under spatial. " if _ru_changes else " ")
+    + "Differences this small are inside the noise of a 222-positive dataset. "
+    "The champion is selected on random-CV PR-AUC and then checked against the "
+    "spatial scheme; what recommends it is that it **leads under both**, not "
+    "that it wins either by a margin worth defending. Any of the top three "
+    "tree ensembles would support the same conclusions on this page."
 )
 
 st.write("")
@@ -206,6 +241,37 @@ st.caption(
     f"{_eng.min():+.4f} and {_eng.max():+.4f} — essentially nothing. "
     f"All {len(ab)} configurations are reported, not only the best."
 )
+
+# SPATIAL >= RANDOM. Blocking folds by geography normally COSTS accuracy, so a
+# set scoring at least as well under spatial CV looks wrong at a glance. It is a
+# robustness signal: those sets carry no location identity, so there is nothing
+# for spatial blocking to take away, and the residual difference is noise. The
+# sets that DO lose ground under blocking are the informative half of this --
+# D adds lat/lon and district dummies, i.e. exactly the features that can
+# memorise where things are. Computed from the CSV, never asserted.
+ab["_d"] = ab["pr_auc_spatial_cv"] - ab["pr_auc_random_cv"]
+_up = ab[ab["_d"] >= 0].sort_values("_d", ascending=False)
+_dD = ab.loc[ab["set"] == "D"].iloc[0]
+if len(_up):
+    _up_best = _up.iloc[0]
+    _up_names = ", ".join(f"**{s}**" for s in sorted(_up["set"]))
+    st.caption(
+        f"**Sets {_up_names} score at least as well under spatial-block CV as "
+        f"under random CV**, led by **{_up_best['set']}** "
+        f"({float(_up_best['pr_auc_random_cv']):.4f} → "
+        f"{float(_up_best['pr_auc_spatial_cv']):.4f}, "
+        f"**{float(_up_best['_d']):+.4f}**). Blocking folds by geography normally "
+        "*costs* accuracy, so that reads as odd at first. It is a robustness "
+        "signal, not an anomaly: none of those sets carries a coordinate or a "
+        "district identity, so spatial blocking has nothing to strip out, and a "
+        "gap this small is noise on 222 positives. "
+        f"The prediction set **D** moves the other way "
+        f"(**{float(_dD['_d']):+.4f}**), and that is the expected signature — "
+        "D is the only set that adds lat/lon and district dummies, i.e. exactly "
+        "the features that can memorise *where* rather than learn *what*, which "
+        "is what spatial blocking is designed to penalise. The coefficients "
+        "above are read from **C**, which carries no geography at all."
+    )
 
 st.write("")
 st.markdown("<hr>", unsafe_allow_html=True)

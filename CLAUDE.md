@@ -82,6 +82,20 @@ optional polish and the user's outstanding tasks (API-key revocation).
   stages 06/07, shown live in the What-If scenario comparison. `11b` is a
   read-only companion that re-derives the same fits for the full coefficient
   and SHAP tables; it re-searches no hyperparameters.
+  **Do not oversell the champion.** XGBoost tuned leads by 0.0036 over
+  RandomForest tuned on random CV and 0.0040 over RandomForest BASE on spatial
+  CV -- and the runner-up is not the same build in the two schemes. Stage 11
+  picks the champion on random-CV PR-AUC alone (`11_operator_model.py:556`) and
+  then checks the spatial scheme; what recommends XGBoost is that it leads under
+  BOTH, not the margin, which is noise on 222 positives. Any of the top three
+  tree ensembles supports the same conclusions. The Market Logic page says this
+  in its own words -- do not "tighten" it into a claim of a clear win.
+  Related, and easy to misread: ablation sets **A, C, E, G, H score at least as
+  well under spatial CV as under random CV** (C by the most, +0.0037). That is
+  not an anomaly -- none of them carries a coordinate or district identity, so
+  spatial blocking has nothing to strip. The set that DROPS is **D** (-0.0044),
+  the only one with lat/lon and district dummies, which is exactly the expected
+  signature. (B drops most at -0.0246, but it is a 3-feature set and noisy.)
 - **Stage 11 outputs are PAIRED to the committed `hex_cdi_v1.csv`** (commit
   a1da38f ships both). Regenerating stage 06 in isolation silently breaks that
   pairing — see the traps section.
