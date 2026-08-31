@@ -44,6 +44,45 @@ def cumulative_series():
 
 
 @st.cache_data(show_spinner=False)
+def catchment_cdi():
+    """Population-weighted mean CDI of the hexes within 2 km of each site.
+
+    The table used to show only the HOST hex's CDI, which reads as a
+    contradiction on the sites the optimizer likes most: rank 7 sits on a
+    Gombak hex with CDI 0.2 and zero residents, yet brings 50,148 people into
+    coverage. Both numbers are right -- the host is a road/venue cell, the need
+    is in the ring around it -- but the table showed only the half that looks
+    wrong.
+
+    Population-weighted, not a plain mean: 54% of hexes have no measurable
+    demand and therefore CDI 0 by construction (CLAUDE.md trap 22), so an
+    unweighted mean is mostly a count of empty land. Weighting by pop_est gives
+    the CDI actually EXPERIENCED by the people inside the catchment -- rank 7
+    reads 37.7 that way against 12.7 unweighted.
+
+    Display-side aggregation of values stage 06 already computed; no CDI is
+    recomputed here (architecture rule 1). Same haversine as
+    coverage_before_after() below.
+    """
+    h = data.load_cdi()
+    sites = data.load_recommended_sites().sort_values("rank")
+    R = 6371.0
+    hlat = np.radians(h["lat"].to_numpy())[:, None]
+    hlon = np.radians(h["lon"].to_numpy())[:, None]
+    slat = np.radians(sites["lat"].to_numpy())[None, :]
+    slon = np.radians(sites["lon"].to_numpy())[None, :]
+    d = 2 * R * np.arcsin(np.sqrt(np.sin((slat - hlat) / 2) ** 2 +
+                                  np.cos(hlat) * np.cos(slat) * np.sin((slon - hlon) / 2) ** 2))
+    within = d <= 2.0
+    cdi = h["cdi"].to_numpy()
+    pop = h["pop_est"].to_numpy()
+    num = (within * (cdi * pop)[:, None]).sum(axis=0)
+    den = (within * pop[:, None]).sum(axis=0)
+    out = np.divide(num, den, out=np.zeros_like(num), where=den > 0)
+    return pd.DataFrame({"rank": sites["rank"].to_numpy(), "catchment_cdi": out})
+
+
+@st.cache_data(show_spinner=False)
 def coverage_before_after(n: int):
     """Per-district 2 km coverage before, and after the top-n sites (a hex is
     covered if its centroid is within 2 km of an existing public station OR a
@@ -74,7 +113,11 @@ with st.sidebar:
     st.markdown("<div class='ctl-title'>Sites to build</div>", unsafe_allow_html=True)
     n_sites = st.slider("Number of sites", 1, len(rec), len(rec),
                         help="Show the top-N ranked sites — drag down to see the marginal value of each.")
-    st.caption("Sites are ranked by how many new people they bring within 2 km (greedy maximal coverage).")
+    # NOT "ranked by how many new people they bring" -- that was wrong. The
+    # greedy maximises demand gain (equity-weighted); headcount is reported, not
+    # optimised, and the two disagree on the order. See the callout above the map.
+    st.caption("Sites are ranked by equity-weighted **demand gain** within 2 km "
+               "(greedy maximal coverage), not by headcount alone.")
     st.divider()
 
     st.markdown("<div class='ctl-title'>Map layers</div>", unsafe_allow_html=True)
@@ -91,7 +134,23 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-shown = rec.head(n_sites).copy()
+shown = rec.head(n_sites).copy().merge(catchment_cdi(), on="rank", how="left")
+
+
+def _rank_inversion_example() -> str:
+    """The concrete proof that the ranking is not by headcount: the highest-
+    ranked site that a LATER site beats on people newly covered. Read from the
+    CSV, never hardcoded -- a regeneration can reorder these (the greedy breaks
+    ties by first index and the hex row order is not deterministic, CLAUDE.md
+    trap 19), and a stale example would undercut the very point it makes."""
+    top = rec.iloc[0]
+    later = rec[rec["pop_newly_covered"] > top["pop_newly_covered"]]
+    if later.empty:
+        return ""
+    ex = later.iloc[0]
+    return (f" That is why rank {int(ex['rank'])} brings more people "
+            f"({ex['pop_newly_covered']:,.0f}) than rank {int(top['rank'])} "
+            f"({top['pop_newly_covered']:,.0f}) yet still ranks below it.")
 
 # ------------------------------------------------ selected site (from table, prev run)
 sel_state = st.session_state.get(TABLE_KEY)
@@ -172,8 +231,12 @@ if selected is not None:
         pickable=False, parameters={"depthTest": False},
     ))
 
-view_state = pdk.ViewState(latitude=float(hx["lat"].mean()), longitude=float(hx["lon"].mean()),
-                           zoom=9.1, pitch=0, bearing=0)
+# FRAME the study area rather than guessing (review item D7, same fix as the CDI
+# Explorer). Mean-centre + zoom 9.1 pulled Puncak Alam, Semenyih and Jenjarom
+# into the frame; the hex layer is KV-wide, so the fit is taken from the grid,
+# not from the sites, which would crop the backdrop as the slider moves.
+MAP_H = 560
+view_state = mapping.fit_view_state(hx["lat"], hx["lon"], height_px=MAP_H)
 tooltip = {
     "html": "{tip}",
     "style": {"backgroundColor": theme.SURFACE, "color": theme.TEXT, "fontSize": "12px",
@@ -187,8 +250,8 @@ deck = pdk.Deck(layers=layers, initial_view_state=view_state,
 # ------------------------------------------------------------------ header + KPIs
 st.markdown(
     "<div class='page-title'>Recommendations</div>"
-    "<div class='page-sub'>Where to build next, ranked by people brought within 2 km of public "
-    "charging · greedy maximal coverage</div>",
+    "<div class='page-sub'>Where to build next · greedy maximal coverage, ranked by equity-weighted "
+    "demand gain within 2 km · coverage reported as people brought within 2 km of public charging</div>",
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -212,31 +275,56 @@ st.write("")
 st.info("**Why some sites sit in low-CDI hexes — this is intended, not a bug.** The Charging Desert "
         "Index shows *where* underserved people are; the optimizer picks the best *position* to serve "
         "them. A 2 km catchment placed at the edge of a desert pocket can cover the whole pocket, even "
-        "if the host hex itself already has a charger nearby.")
+        "if the host hex itself already has a charger nearby. The table gives both numbers: "
+        "**host hex CDI** and the population-weighted **catchment CDI** within 2 km.\n\n"
+        "**The ranking and the headline are different quantities, deliberately.** The greedy maximises "
+        "**demand gain** — the sum of `demand_pressure` over the hexes a site newly covers, which "
+        "carries the *equity multiplier* — so a lower-income area outranks a richer one at equal "
+        "population. The headline reports **people newly covered**, which is plainer and carries no "
+        "equity weighting." + _rank_inversion_example())
 
-st.pydeck_chart(deck, use_container_width=True, height=560)
+st.pydeck_chart(deck, use_container_width=True, height=MAP_H)
 
 st.write("")
 st.markdown("<hr>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------------ table + scorecard
-tbl_col, card_col = st.columns([0.6, 0.4], gap="large")
+# 0.66/0.34, was 0.60/0.40: the catchment-CDI column made this a six-column
+# table and "Nearest existing km" fell off the right edge.
+tbl_col, card_col = st.columns([0.66, 0.34], gap="large")
 
 with tbl_col:
     ui.section_header("Recommended sites")
-    table_df = shown[["rank", "district", "cdi", "pop_newly_covered", "nearest_existing_km"]]
+    table_df = shown[["rank", "district", "cdi", "catchment_cdi",
+                      "pop_newly_covered", "nearest_existing_km"]]
     st.dataframe(
         table_df, key=TABLE_KEY, on_select="rerun", selection_mode="single-row",
         hide_index=True, use_container_width=True, height=430,
         column_config={
             "rank": st.column_config.NumberColumn("Rank", width="small"),
             "district": st.column_config.TextColumn("District"),
-            "cdi": ui.num_col("CDI", 0, width="small"),
+            # "CDI" alone was ambiguous, and on the sites the optimizer likes
+            # most it looked self-contradictory: rank 7 reads CDI 0.2 beside
+            # 50,148 people newly covered. Naming it as the HOST hex and putting
+            # the catchment beside it resolves that in the table itself.
+            "cdi": ui.num_col("Host hex CDI", 0,
+                              help="CDI of the single hex the site sits in. Often low: "
+                                   "a site is placed on a road or venue cell at the EDGE "
+                                   "of a desert pocket so its 2 km catchment covers the "
+                                   "whole pocket."),
+            "catchment_cdi": ui.num_col("Catchment CDI", 0,
+                                        help="Population-weighted mean CDI of the hexes "
+                                             "within 2 km — the severity actually "
+                                             "experienced by the people this site would "
+                                             "serve. This is the number that explains the "
+                                             "ranking."),
             "pop_newly_covered": ui.int_col("People newly covered"),
-            "nearest_existing_km": ui.num_col("Nearest existing (km)", 1),
+            "nearest_existing_km": ui.num_col("Nearest existing km", 1),
         },
     )
-    st.caption("Click a row to open its scorecard and highlight it on the map. Click a column header to sort.")
+    st.caption("Click a row to open its scorecard and highlight it on the map. Click a column header to sort. "
+               "A low **host hex CDI** next to a high **catchment CDI** is the normal pattern, "
+               "not an error — see the note above the map.")
 
 with card_col:
     ui.section_header("Site scorecard")
@@ -250,10 +338,11 @@ with card_col:
             ("District", r["district"]),
             ("Location", f"{r['lat']:.5f}, {r['lon']:.5f}"),
             ("Host-hex CDI", f"{r['cdi']:.0f}"),
+            ("Catchment CDI (2 km)", f"{r['catchment_cdi']:.0f}"),
             ("Host-hex population", f"{r['hex_pop']:,.0f}"),
             ("Host-hex activity", f"{r['hex_activity']:.0f}"),
             ("People newly covered", f"{r['pop_newly_covered']:,.0f}"),
-            ("Demand gain (weighted)", f"{r['demand_gain']:.2f}"),
+            ("Demand gain (what the greedy maximised)", f"{r['demand_gain']:.2f}"),
             ("Nearest existing station", f"{r['nearest_existing_km']:.1f} km"),
         ]
         rows_html = "".join(f"<div class='insp-row'><span>{k}</span><b>{v}</b></div>" for k, v in rows)

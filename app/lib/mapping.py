@@ -132,22 +132,25 @@ def no_demand_layer(df: pd.DataFrame, lid: str = "no_demand") -> list[pdk.Layer]
 
 
 def fit_view_state(lats, lons, width_px: int = 1180, height_px: int = 620,
-                   pad_deg: float = 0.012, zoom_min: float = 7.5,
+                   pad_deg: float = 0.030, zoom_min: float = 7.5,
                    zoom_max: float = 12.5, zoom_bleed: float = 0.06) -> pdk.ViewState:
     """A ViewState that FRAMES the given points instead of guessing a zoom.
 
     The explorer used to centre on the mean hex and pick zoom 9.1 or 10.3 by a
     district count. At 9.1 the frame reached Kuala Kubu Bharu, Bukit Tinggi,
     Karak and Kuala Klawang -- roughly twice the study area, most of it empty
-    basemap (review item D7). Fitting the bounds gives ~10.03 for the full grid,
+    basemap (review item D7). Fitting the bounds gives ~9.9 for the full grid,
     and it also tracks the district multiselect, which the old heuristic could
     not.
 
     Standard Web Mercator: the world is 256 * 2**zoom px, so the zoom that makes
     a span exactly fill the viewport is solved per axis and the tighter one wins.
     `pad_deg` covers the hex radius (cell CENTRES are passed in, ~0.006 deg at
-    res 8) plus a little breathing room; `zoom_bleed` backs off a fraction of a
-    level so nothing is clipped by rounding.
+    res 8) plus room for anything drawn ON a boundary hex: at 0.012 the fit was
+    geometrically correct but site markers near the northern KV edge were drawn
+    half off the frame, since a marker is ~15 px and the margin was ~1.3 km.
+    0.030 buys ~3 km a side and costs 0.06 of a zoom level. `zoom_bleed` backs
+    off a further fraction so nothing is clipped by rounding.
 
     `width_px` matters for 15 of the 127 district subsets -- the east-west ones
     such as Klang + Hulu Langat, where longitude binds instead of latitude and

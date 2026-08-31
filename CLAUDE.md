@@ -170,11 +170,12 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    (WorldPop raster) remain open. Full page-by-page findings, including the
    dead "Inspect a hex" dropdown and the number-formatting inconsistencies, are
    in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED: A1-A6, D1-D4,
-   D8, and **D7 for the CDI Explorer only** — `mapping.fit_view_state()` now
-   frames the hexes in view (Web Mercator per-axis solve, tighter axis wins),
-   giving zoom ~10.0 for the full grid against the old hand-picked 9.1, and it
-   follows the district multiselect. Pages 3 (Sites) and 6 (What-If) still use
-   mean-centre + a fixed zoom and would need the same helper. STILL OPEN, all
+   D7 and D8. **D7 is now closed on all three interactive maps** — CDI Explorer,
+   Sites and What-If all call `mapping.fit_view_state()` (Web Mercator per-axis
+   solve, tighter axis wins), giving ~9.9 for the full grid against the old
+   hand-picked 9.1 / 8.7, and the Explorer's fit follows the district
+   multiselect. Pass the container's REAL width: longitude binds for 15 of the
+   127 district subsets and an over-stated width clips the sides. STILL OPEN,
    deliberately deferred by the user: D5 (sidebar multiselect clipping), D6
    (CDI legend position) and the sidebar naming (trap 10). POLISH.md item 1
    (dark-on-dark sweep) is effectively done for the pages touched; item 3
@@ -327,6 +328,23 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
     The market-interest layer deliberately keeps its own full-frame colouring;
     a predicted probability is defined for an empty hex too, and splitting it
     would imply the model declines to score them.
+23. **The greedy optimises `demand_gain`; the headline reports
+    `pop_newly_covered`. They disagree on the order, deliberately.**
+    `07_recommender.py:83` picks `argmax` of the sum of `demand_pressure` over
+    the hexes a site newly covers -- and `demand_pressure` carries the EQUITY
+    MULTIPLIER, so a lower-income district outranks a richer one at equal
+    population. `demand_gain` is strictly decreasing down the 20; headcount is
+    NOT (rank 3 brings 172,796 people against rank 1's 129,556). The Sites page
+    used to say in two places that sites were "ranked by how many new people
+    they bring", which was simply wrong; both now name demand gain, and the
+    callout above the map states the two-quantity split. The worked example is
+    derived from the CSV, never hardcoded -- trap 19 can reorder these.
+    Related: the site table shows **Host hex CDI** beside **Catchment CDI**
+    (population-weighted mean CDI within 2 km, computed display-side on stage-06
+    values). Host CDI alone read as a contradiction on the sites the optimizer
+    likes most -- rank 7 is a Gombak hex at CDI 0.2 with zero residents that
+    covers 50,148 people; its catchment reads 37.7. Do not drop the second
+    column: the first one on its own makes the recommender look broken.
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.

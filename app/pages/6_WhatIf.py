@@ -433,10 +433,16 @@ with st.expander("How to read these", expanded=False):
 st.write("")
 
 # ------------------------------------------------------------------ maps
-c_lat = float(np.mean([p["lat"] for p in pins]))
-c_lon = float(np.mean([p["lon"] for p in pins]))
-zoom = 10.5 if len(pins) == 1 else (9.4 if len(pins) <= MAX_PINS else 8.7)
+# FRAME the study area (review item D7, same helper as the CDI Explorer and
+# Sites). The maps used to centre on the mean PIN with zoom by pin count --
+# 10.5 / 9.4 / 8.7 -- which framed the wrong thing twice over: the hex layer is
+# KV-wide in every mode, so a pin-centred frame cropped most of what was drawn,
+# and the 20-pin presets fell to 8.7 and pulled in a screenful of empty basemap.
+# Fitting the grid gives ~10.0 full-width and ~9.5 in the side-by-side pair,
+# i.e. tighter than the old zoom in every case.
 pins_df = pd.DataFrame(pins)
+VS_FULL = mapping.fit_view_state(base["lat"], base["lon"], width_px=1180, height_px=520)
+VS_HALF = mapping.fit_view_state(base["lat"], base["lon"], width_px=575, height_px=430)
 
 
 def _dashed_rings(pin_list, radius_km=2.0, dashes=36):
@@ -459,7 +465,7 @@ tooltip = {"html": "{tip}", "style": {"backgroundColor": theme.SURFACE, "color":
            "padding": "6px 8px", "maxWidth": "290px", "whiteSpace": "pre-line", "lineHeight": "1.4"}}
 
 
-def make_deck(values, height_zoom, kind="cdi", ghost=False, max_abs=0.0):
+def make_deck(values, view_state, kind="cdi", ghost=False, max_abs=0.0):
     mdf = base[["h3_index", "district", "pop_est"]].copy()
     if kind == "change":
         mdf["fill_color"] = [_change_to_rgb(v, max_abs) for v in values]
@@ -497,9 +503,7 @@ def make_deck(values, height_zoom, kind="cdi", ghost=False, max_abs=0.0):
                                 radius_min_pixels=9, radius_max_pixels=15, stroked=True,
                                 get_line_color=[255, 255, 255, 255], line_width_min_pixels=2,
                                 pickable=False, parameters={"depthTest": False}))
-    return pdk.Deck(layers=layers,
-                    initial_view_state=pdk.ViewState(latitude=c_lat, longitude=c_lon, zoom=height_zoom,
-                                                     pitch=0, bearing=0),
+    return pdk.Deck(layers=layers, initial_view_state=view_state,
                     map_provider="carto", map_style=pdk.map_styles.CARTO_DARK, tooltip=tooltip)
 
 
@@ -514,7 +518,7 @@ if map_layout == "Change":
         "<div class='leg-bar' style='background:linear-gradient(90deg,#202634,#00FF88)'></div>"
         f"<div class='leg-scale'><span>0 (no change)</span><span>−{MAX_ABS:.1f} (most improved)</span></div>"
         "</div>", unsafe_allow_html=True)
-    st.pydeck_chart(make_deck(delta_cdi, zoom, kind="change", max_abs=MAX_ABS),
+    st.pydeck_chart(make_deck(delta_cdi, VS_FULL, kind="change", max_abs=MAX_ABS),
                     use_container_width=True, height=520,
                     selection_mode="single-object", on_select="rerun", key=MAP_KEY)
     st.caption(f"Scaled to the largest change on this map — **{CHANGE_RANGE}** — not the 0–100 CDI ramp, "
@@ -524,17 +528,17 @@ elif map_layout == "Side by side":
     cB, cA = st.columns(2, gap="medium")
     with cB:
         ui.section_header("Before")
-        st.pydeck_chart(make_deck(before_cdi, zoom - 0.4, ghost=True), use_container_width=True, height=430)
+        st.pydeck_chart(make_deck(before_cdi, VS_HALF, ghost=True), use_container_width=True, height=430)
     with cA:
         ui.section_header("After")
-        st.pydeck_chart(make_deck(after_cdi, zoom - 0.4), use_container_width=True, height=430,
+        st.pydeck_chart(make_deck(after_cdi, VS_HALF), use_container_width=True, height=430,
                         selection_mode="single-object", on_select="rerun", key=MAP_KEY)
     st.caption("Same colour scale and centre on both maps. On **Before** the stations are hollow with a "
                "dashed 2 km ring — they do not exist yet; on **After** they are solid. "
                "Click a hex on the After map to add a station.")
 else:
     cdi_arr = after_cdi if map_view == "After" else before_cdi
-    st.pydeck_chart(make_deck(cdi_arr, zoom, ghost=(map_view == "Before")),
+    st.pydeck_chart(make_deck(cdi_arr, VS_FULL, ghost=(map_view == "Before")),
                     use_container_width=True, height=520,
                     selection_mode="single-object", on_select="rerun", key=MAP_KEY)
     st.caption(f"Showing CDI **{map_view.lower()}** · "
