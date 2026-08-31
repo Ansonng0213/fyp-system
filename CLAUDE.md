@@ -222,6 +222,14 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
     marginals equals the union exactly, so truncation is the ONLY cause.
     Change `int(` -> `round(` ONLY at a final full regeneration -- it moves a
     figure already published in the report.
+18. **`operator_crosscheck_template.csv` is the ONLY artifact holding
+    hand-entered data.** Stage 08 MERGES into it -- `merge_preserving_manual()`
+    refreshes the seven computed columns and carries everything else across on
+    `h3_index`. Do NOT "simplify" that back to a plain `to_csv()`: the old code
+    rewrote 12 columns over a 15-column file and destroyed the PlugShare
+    fieldwork on every full run, silently. Every run now prints
+    "MANUAL VALUES PRESERVED: n of m" and warns if a manual row no longer
+    matches a selected zone.
 
 ## Working style with this user
 - Undergraduate student, non-native English: explain plainly, no jargon walls.
