@@ -150,9 +150,16 @@ st.write("")
 
 # ----------------------------------------------------------------- coverage chart
 ui.section_header("Coverage gap by district")
+# Below-average districts carry the equity argument, so they get their own
+# colour: one uniform blue made the reader do the comparison themselves
+# (review item D8). The split is computed, never hardcoded — if the data
+# changes, the colouring follows.
+_BELOW, _ABOVE = "#E8833A", "#3E7BFA"
+bar_colors = [_BELOW if v < cov["kv"] else _ABOVE for v in cov["pct"]]
+n_below = sum(v < cov["kv"] for v in cov["pct"])
 fig = go.Figure(go.Bar(
     x=cov["pct"], y=cov["districts"], orientation="h",
-    marker=dict(color="#3E7BFA", cornerradius=4),
+    marker=dict(color=bar_colors, cornerradius=4),
     text=[f"{v:.1f}%" for v in cov["pct"]], textposition="outside", cliponaxis=False,
     textfont=dict(color=theme.TEXT, size=12),
     hovertemplate="%{y}: %{x:.1f}% within 2 km<extra></extra>",
@@ -170,7 +177,14 @@ fig.update_layout(
     yaxis=dict(autorange="reversed"),
 )
 st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
-st.caption("Population within 2 km of a public + operational charger. Worst-served districts first.")
+st.caption(
+    f"Population within 2 km of a public + operational charger. Worst-served districts first. "
+    f"<span style='color:{_BELOW};font-weight:600'>Amber</span> = the {n_below} districts below "
+    f"the KV average of {cov['kv']:.1f}%; "
+    f"<span style='color:{_ABOVE};font-weight:600'>blue</span> = the "
+    f"{len(cov['pct']) - n_below} above it.",
+    unsafe_allow_html=True,
+)
 
 st.write("")
 
@@ -190,10 +204,16 @@ ui.steps_row([
 st.write("")
 
 # ----------------------------------------------------------------- validation trust strip
+# The forecast claim is about MODEL SELECTION, not accuracy. Stage 12
+# superseded the old "17.6% MAPE vs ARIMA 37.5%" line: that single 2025 split
+# flattered Prophet, which sits 5th of 10 at h=6 and 8th at h=12 under
+# rolling origin. What survives is the reason the logistic form was chosen —
+# it is the only one whose trend saturates, so its 2030 stays bounded.
 st.markdown(
     "<div class='trust-strip'><b>Validated:</b> demand layer recovers held-out real stations at "
-    "<span class='tick'>5.3× chance</span> · forecast backtest "
-    "<span class='tick'>17.6% MAPE</span> (vs ARIMA 37.5%) · district population totals "
+    "<span class='tick'>5.3× chance</span> · forecast chosen from "
+    "<span class='tick'>six model families</span> over 980 rolling-origin folds — the logistic "
+    "form is the only one whose 2030 projection stays bounded · district population totals "
     "preserved exactly.</div>",
     unsafe_allow_html=True,
 )
@@ -213,7 +233,8 @@ ui.nav_row([
     {"index": "PAGE 3", "title": "Market Logic", "href": "Market_Logic",
      "desc": "Diagnostic — what actually drives commercial siting, and where the market builds next. Not a recommendation."},
     {"index": "PAGE 4", "title": "Demand Forecast", "href": "Forecast",
-     "desc": "EV demand to 2030 (Prophet vs ARIMA) and the district-level public-port gap."},
+     "desc": "EV demand to 2030 — six model families, base and tuned — and the "
+             "district-level public-port gap."},
 ])
 st.write("")
 ui.nav_row([

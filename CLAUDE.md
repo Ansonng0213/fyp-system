@@ -169,10 +169,12 @@ Things earlier sessions invalidated. Each one has bitten or nearly bitten.
    is tagged "large population". Item 1 (dark-on-dark sweep) and item 3
    (WorldPop raster) remain open. Full page-by-page findings, including the
    dead "Inspect a hex" dropdown and the number-formatting inconsistencies, are
-   in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED: A1-A6 and
-   D1-D4. The only one left open is the sidebar naming (trap 10), deliberately
-   deferred. POLISH.md item 1 (dark-on-dark sweep) is effectively done for the
-   pages touched; item 3 (WorldPop) is untouched.
+   in `docs/DASHBOARD_REVIEW_2026-08-24.md`. Review items CLOSED: A1-A6, D1-D4
+   and D8. STILL OPEN, all deliberately deferred by the user: D5 (sidebar
+   multiselect clipping), D6 (CDI legend position), D7 (pydeck initial view
+   bounds) and the sidebar naming (trap 10). POLISH.md item 1 (dark-on-dark
+   sweep) is effectively done for the pages touched; item 3 (WorldPop) is
+   untouched and is the real fix for trap 21.
 10. **Sidebar page labels are raw filenames** ("WhatIf" with no space) and
     disagree with the Overview cards and page titles. Cosmetic, still open.
 11. **`KV_SHARE` is 0.629, and the derivation JSON says 0.6286.** They were
